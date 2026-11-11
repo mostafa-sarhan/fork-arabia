@@ -6,6 +6,7 @@ import {
 } from '../../components/ui/Button'
 import { IconButton } from '../../components/ui/IconButton'
 import { CheckIcon, GlobeIcon, MailIcon } from '../../components/ui/icons'
+import { SectionHeading } from '../../components/ui/SectionHeading'
 import { useLanguage } from '../../lib/i18n/useLanguage'
 import type { TranslationKey } from '../../lib/i18n/translations'
 import { DocSection } from './DocSection'
@@ -37,7 +38,7 @@ const sizes: ButtonSize[] = ['sm', 'md', 'lg']
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <h3 className="text-h4 font-semibold text-ink">{title}</h3>
+      <SectionHeading level={3} title={title} />
       <div className="mt-4 flex flex-wrap items-center gap-3">{children}</div>
     </div>
   )

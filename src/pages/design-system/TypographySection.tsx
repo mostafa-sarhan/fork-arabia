@@ -1,3 +1,4 @@
+import { SectionHeading } from '../../components/ui/SectionHeading'
 import { cn } from '../../lib/cn'
 import { useLanguage } from '../../lib/i18n/useLanguage'
 import { translations } from '../../lib/i18n/translations'
@@ -96,9 +97,7 @@ export function TypographySection() {
     >
       <div className="space-y-10">
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.type.bilingual')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.type.bilingual')} />
           <div className="mt-4 grid gap-6 rounded-lg border border-line bg-surface p-6 sm:p-8 md:grid-cols-2">
             <div
               dir="rtl"
@@ -130,9 +129,7 @@ export function TypographySection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.type.scale')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.type.scale')} />
           <div className="mt-2">
             {rows.map((row) => (
               <div

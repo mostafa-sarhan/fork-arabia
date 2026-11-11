@@ -3,6 +3,7 @@ import { Divider } from '../../components/layout/Divider'
 import { Grid } from '../../components/layout/Grid'
 import { Section } from '../../components/layout/Section'
 import { Stack } from '../../components/layout/Stack'
+import { SectionHeading } from '../../components/ui/SectionHeading'
 import { cn } from '../../lib/cn'
 import { useLanguage } from '../../lib/i18n/useLanguage'
 import { DocSection } from './DocSection'
@@ -88,9 +89,7 @@ export function LayoutSection() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('layout.spacing')}
-          </h3>
+          <SectionHeading level={3} title={t('layout.spacing')} />
           <ul className="mt-4 space-y-3">
             {spacingScale.map((item) => (
               <li key={item.label} className="flex items-center gap-4">
@@ -109,9 +108,7 @@ export function LayoutSection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('layout.radius')}
-          </h3>
+          <SectionHeading level={3} title={t('layout.radius')} />
           <div className="mt-4 flex flex-wrap gap-4">
             {radiusScale.map((item) => (
               <div key={item.label} className="text-center">

@@ -63,9 +63,7 @@ export function ComponentSection() {
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-h4 font-semibold text-ink">
-              {t('ds.components.badges')}
-            </h3>
+            <SectionHeading level={3} title={t('ds.components.badges')} />
             <div className="mt-3 flex flex-wrap items-center gap-2">
               {badgeVariants.map((variant) => (
                 <Badge key={variant} variant={variant}>
@@ -76,9 +74,7 @@ export function ComponentSection() {
           </div>
 
           <div>
-            <h3 className="text-h4 font-semibold text-ink">
-              {t('ds.components.breadcrumb')}
-            </h3>
+            <SectionHeading level={3} title={t('ds.components.breadcrumb')} />
             <Breadcrumb
               className="mt-3"
               items={[

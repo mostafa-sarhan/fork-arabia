@@ -1,3 +1,4 @@
+import { SectionHeading } from '../../components/ui/SectionHeading'
 import { cn } from '../../lib/cn'
 import {
   AA_LARGE,
@@ -492,9 +493,7 @@ export function ColorSection() {
     >
       <div className="space-y-10">
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.colors.official')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.colors.official')} />
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {OFFICIAL.map((swatch) => (
               <SwatchCard
@@ -507,9 +506,7 @@ export function ColorSection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.colors.supporting')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.colors.supporting')} />
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {SUPPORTING.map((swatch) => (
               <SwatchCard
@@ -522,9 +519,7 @@ export function ColorSection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.colors.rules')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.colors.rules')} />
           <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
             {t('ds.colors.rulesDesc')}
           </p>
@@ -548,9 +543,7 @@ export function ColorSection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.colors.roles')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.colors.roles')} />
           <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
             {t('ds.colors.rolesDesc')}
           </p>
@@ -607,9 +600,7 @@ export function ColorSection() {
         </div>
 
         <div>
-          <h3 className="text-h4 font-semibold text-ink">
-            {t('ds.colors.contrast')}
-          </h3>
+          <SectionHeading level={3} title={t('ds.colors.contrast')} />
           <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
             {t('ds.colors.contrastDesc')}
           </p>
