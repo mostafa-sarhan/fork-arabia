@@ -104,13 +104,6 @@ export function CardDescription({
   )
 }
 
-export function CardContent({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('px-6 pb-6', className)} {...props} />
-}
-
 export function CardFooter({
   className,
   ...props
