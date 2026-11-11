@@ -7,11 +7,13 @@ export type IconButtonSize = 'sm' | 'md'
 const base =
   'inline-flex items-center justify-center rounded-md transition-colors duration-200 ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:pointer-events-none disabled:opacity-50'
 
+/** The pressed states mirror Button's, variant for variant. */
 const variants: Record<IconButtonVariant, string> = {
-  solid: 'bg-navy text-white hover:bg-navy-strong',
+  solid: 'bg-navy text-white hover:bg-navy-strong active:bg-navy-strong',
   outline:
-    'border border-line-strong bg-surface text-ink hover:border-petrol hover:text-petrol',
-  ghost: 'text-ink-muted hover:bg-navy-soft hover:text-ink',
+    'border border-line-strong bg-surface text-ink hover:border-petrol hover:text-petrol active:bg-navy-soft',
+  ghost:
+    'text-ink-muted hover:bg-navy-soft hover:text-ink active:bg-navy-soft active:text-ink',
 }
 
 const sizes: Record<IconButtonSize, string> = {
@@ -37,8 +39,12 @@ export function IconButton({
   return (
     <button
       type={type}
+      /*
+       * aria-label alone: a title duplicating it made assistive technology
+       * announce the same string twice and added a hover tooltip that never
+       * appears for keyboard or touch users.
+       */
       aria-label={label}
-      title={label}
       className={cn(base, variants[variant], sizes[size], className)}
       {...props}
     >
