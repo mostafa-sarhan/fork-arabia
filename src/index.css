@@ -1,6 +1,15 @@
 @import 'tailwindcss';
 
 /*
+ * src/lib/cn.ts is a registry of token NAMES, not of classes: it tells
+ * tailwind-merge which theme scales exist. Scanning it would generate CSS for
+ * words that merely appear in that list (`shadow`, for instance) and that
+ * nothing renders, so it is excluded from class detection. Never put a real
+ * class name in that file.
+ */
+@source not './lib/cn.ts';
+
+/*
  * FORK ARABIA — Design Tokens
  * Single source of truth for color, type, spacing, radius, elevation,
  * containers, breakpoints, motion, and layering.
