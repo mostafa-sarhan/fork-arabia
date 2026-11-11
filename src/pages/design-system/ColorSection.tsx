@@ -397,7 +397,7 @@ function ContrastTable({
 
   return (
     <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface">
-      <table className="w-full min-w-3xl border-collapse text-body-sm">
+      <table className="w-full min-w-narrow border-collapse text-body-sm">
         <thead>
           <tr className="border-b border-line text-caption font-semibold text-ink-muted">
             <th scope="col" className="px-4 py-3 text-start">
@@ -520,7 +520,7 @@ export function ColorSection() {
 
         <div>
           <SectionHeading level={3} title={t('ds.colors.rules')} />
-          <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
+          <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.colors.rulesDesc')}
           </p>
           <ul className="mt-4 space-y-3">
@@ -544,11 +544,11 @@ export function ColorSection() {
 
         <div>
           <SectionHeading level={3} title={t('ds.colors.roles')} />
-          <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
+          <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.colors.rolesDesc')}
           </p>
           <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface">
-            <table className="w-full min-w-2xl border-collapse text-body-sm">
+            <table className="w-full min-w-panel border-collapse text-body-sm">
               <thead>
                 <tr className="border-b border-line text-caption font-semibold text-ink-muted">
                   <th scope="col" className="px-4 py-3 text-start">
@@ -601,7 +601,7 @@ export function ColorSection() {
 
         <div>
           <SectionHeading level={3} title={t('ds.colors.contrast')} />
-          <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
+          <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.colors.contrastDesc')}
           </p>
 
@@ -613,7 +613,7 @@ export function ColorSection() {
           <h4 className="mt-8 text-body font-semibold text-ink">
             {t('ds.colors.prohibited')}
           </h4>
-          <p className="mt-2 max-w-3xl text-body-sm text-ink-muted">
+          <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.colors.prohibitedDesc')}
           </p>
           <ContrastTable pairs={PROHIBITED} palette={palette} showReason />

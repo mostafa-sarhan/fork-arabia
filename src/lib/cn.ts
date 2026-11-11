@@ -74,7 +74,14 @@ const spacing = [
 ]
 
 /** --container-* : the layout widths. */
-const container = ['narrow', 'content', 'wide']
+const container = [
+  'compact',
+  'measure',
+  'panel',
+  'narrow',
+  'content',
+  'wide',
+]
 
 /** --radius-* */
 const radius = ['xs', 'sm', 'md', 'lg', 'xl']

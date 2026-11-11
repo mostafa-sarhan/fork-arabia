@@ -177,6 +177,11 @@
   /* ------------------------------------------------------------------ */
   /* Containers and breakpoints                                          */
   /* ------------------------------------------------------------------ */
+  --container-compact: 24rem;
+  /* Named for the typographic measure; `prose` would collide with
+     Tailwind's built-in max-w-prose (65ch). */
+  --container-measure: 36rem;
+  --container-panel: 42rem;
   --container-narrow: 48rem;
   --container-content: 80rem;
   --container-wide: 90rem;

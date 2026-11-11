@@ -34,7 +34,7 @@ export default function ComingSoon() {
 
       <main className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section">
         <Container>
-          <div className="mx-auto max-w-2xl animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
+          <div className="mx-auto max-w-panel animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
             <Badge variant="accent" className="tracking-latin-wide">
               <span
                 className="size-1.5 rounded-full bg-turquoise"
@@ -48,11 +48,11 @@ export default function ComingSoon() {
               <span className="text-subheading">{t('soon.titleB')}</span>
             </h1>
 
-            <p className="mx-auto mt-5 max-w-xl text-body-lg text-ink-muted text-pretty">
+            <p className="mx-auto mt-5 max-w-measure text-body-lg text-ink-muted text-pretty">
               {t('soon.description')}
             </p>
 
-            <div className="mx-auto mt-10 max-w-sm">
+            <div className="mx-auto mt-10 max-w-compact">
               <div className="flex items-center justify-between gap-3 text-caption text-ink-muted">
                 <span>{t('soon.progress')}</span>
                 <span className="inline-flex items-center gap-1" aria-hidden="true">
