@@ -92,7 +92,7 @@ export default function DesignSystem() {
             <LanguageSwitcher />
             <a
               href="/"
-              className="hidden items-center gap-1.5 rounded-sm text-body-sm font-medium text-petrol transition-colors duration-200 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-sm text-body-sm font-medium text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 sm:inline-flex"
             >
               {t('nav.backToSite')}
               <ArrowRightIcon className="size-4 rtl:-scale-x-100" />

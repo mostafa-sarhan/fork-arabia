@@ -30,7 +30,7 @@ export function Breadcrumb({ items, label, className }: BreadcrumbProps) {
               {item.href && !isLast ? (
                 <a
                   href={item.href}
-                  className="rounded-sm transition-colors duration-200 hover:text-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2"
+                  className="rounded-sm transition-colors duration-200 hover:text-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2"
                 >
                   {item.label}
                 </a>

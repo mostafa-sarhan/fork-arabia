@@ -40,13 +40,13 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <p className="text-overline uppercase tracking-brand-wide text-petrol">
+        <p className="text-overline uppercase tracking-brand-wide text-subheading">
           {eyebrow}
         </p>
       ) : null}
       <Heading
         className={cn(
-          'font-display text-ink',
+          'font-display text-heading',
           levels[level].size,
           levels[level].weight,
           eyebrow ? 'mt-3' : null,

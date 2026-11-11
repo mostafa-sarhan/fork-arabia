@@ -51,7 +51,7 @@ export function ComponentSection() {
           <CardFooter>
             <a
               href="#components"
-              className="inline-flex items-center gap-1.5 rounded-sm text-body-sm font-semibold text-petrol transition-colors duration-200 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-1.5 rounded-sm text-body-sm font-semibold text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2"
             >
               {t('card.learnMore')}
               <ArrowRightIcon className="size-4 rtl:-scale-x-100" />

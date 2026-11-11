@@ -43,9 +43,9 @@ export default function ComingSoon() {
               {t('soon.eyebrow')}
             </Badge>
 
-            <h1 className="mt-6 font-display text-h1 font-bold text-ink">
+            <h1 className="mt-6 font-display text-h1 font-bold text-heading">
               {t('soon.titleA')}{' '}
-              <span className="text-petrol">{t('soon.titleB')}</span>
+              <span className="text-subheading">{t('soon.titleB')}</span>
             </h1>
 
             <p className="mx-auto mt-5 max-w-xl text-body-lg text-ink-muted text-pretty">
