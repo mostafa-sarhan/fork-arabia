@@ -98,13 +98,18 @@
   --color-petrol-strong: #0d3b50;
 
   --color-turquoise: #19afb0;
+  /* Interactive lift for accent surfaces. Hover must get LIGHTER, not darker,
+     so that on-accent navy text keeps a passing ratio (5.86:1). */
+  --color-turquoise-lift: #2bbfc0;
+  /* Decorative/graphical only. Navy on this shade is 3.46:1 and fails AA for
+     normal-size text. Never place body or button text on it. */
   --color-turquoise-strong: #149192;
   --color-turquoise-soft: #e7f7f7;
 
   --color-page: #f5f7fa;
   --color-surface: #ffffff;
 
-  --color-ink: #182f59;
+  --color-ink: var(--color-navy);
   --color-ink-muted: #5b6b80;
   --color-line: #e2e8f0;
   --color-line-strong: #cbd5e1;
@@ -112,6 +117,28 @@
   --color-danger: #dc2626;
   --color-danger-strong: #b91c1c;
   --color-danger-soft: #fef2f2;
+
+  /* ------------------------------------------------------------------ */
+  /* Semantic color roles                                                */
+  /* ------------------------------------------------------------------ */
+  /*
+   * These never introduce a new hex value: each one points at a brand token
+   * via var(), so the brand palette stays the single source of truth and a
+   * role can be re-pointed in one place.
+   *
+   * Role rules (see /design-system > Colors for measured ratios):
+   *   Navy      body text, headings, dark backgrounds.
+   *   Petrol    sub-headings, links, secondary emphasis.
+   *   Turquoise buttons, highlights and decoration ONLY. It is 2.69:1 on
+   *             white, so it must never carry text on a light surface, and
+   *             anything placed ON it must be navy (4.91:1), never white
+   *             (2.69:1).
+   */
+  --color-on-accent: var(--color-navy);
+  --color-heading: var(--color-navy);
+  --color-subheading: var(--color-petrol);
+  --color-link: var(--color-petrol);
+  --color-link-hover: var(--color-navy);
 
   /* ------------------------------------------------------------------ */
   /* Spacing, gutters, and section rhythm                                */
@@ -263,7 +290,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    color: var(--color-ink);
+    color: var(--color-heading);
     text-wrap: balance;
   }
 
