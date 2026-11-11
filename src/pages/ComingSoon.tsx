@@ -32,7 +32,7 @@ export default function ComingSoon() {
         </Container>
       </header>
 
-      <main className="relative z-10 flex flex-1 items-center py-section-sm sm:py-section">
+      <main className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section">
         <Container>
           <div className="mx-auto max-w-2xl animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
             <Badge variant="accent" className="tracking-latin-wide">
@@ -75,7 +75,7 @@ export default function ComingSoon() {
         </Container>
       </main>
 
-      <footer className="relative z-10 border-t border-line bg-surface">
+      <footer className="relative z-raised border-t border-line bg-surface">
         <Container className="flex flex-col items-center justify-between gap-2 py-5 text-caption text-ink-muted sm:flex-row">
           <span>
             © {YEAR} {t('brand.legal')}. {t('soon.rights')}

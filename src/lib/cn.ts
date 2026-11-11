@@ -98,7 +98,16 @@ const animate = ['fade-up', 'shimmer', 'dot']
 const breakpoint = ['sm', 'md', 'lg', 'xl', '2xl']
 
 /** The z-index layering scale, exposed through @utility rules. */
-const zLayers = ['sticky', 'nav', 'dropdown', 'overlay', 'modal', 'toast']
+const zLayers = [
+  'base',
+  'raised',
+  'sticky',
+  'nav',
+  'dropdown',
+  'overlay',
+  'modal',
+  'toast',
+]
 
 /**
  * The Latin-only typographic utilities. They all write `letter-spacing`, so
