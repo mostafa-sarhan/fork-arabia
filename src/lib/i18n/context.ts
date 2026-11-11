@@ -1,7 +1,6 @@
 import { createContext } from 'react'
-import type { Language, TranslationKey } from './translations'
-
-export type Direction = 'rtl' | 'ltr'
+import type { Direction, Language } from './languageConfig'
+import type { TranslationKey } from './translations'
 
 export type LanguageContextValue = {
   language: Language

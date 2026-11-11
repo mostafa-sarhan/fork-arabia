@@ -2,8 +2,54 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Resolves the language before first paint, so an English visitor never
+      sees a flash of RTL while the bundle loads. The lang and dir attributes
+      on <html> above are only the no-JS fallback.
+
+      The config object below is a placeholder that vite.config.ts fills in
+      from src/lib/i18n/languageConfig.ts, so the storage key, the allowed
+      values, the default and the direction map are defined once for both
+      this script and LanguageProvider. Only the precedence
+      (?lang= -> stored -> default) is written twice; keep it in step with
+      resolveInitialLanguage().
+
+      Keep this script ahead of every stylesheet and bundle.
+    -->
+    <script>
+      (function () {
+        var config = %LANGUAGE_BOOT_CONFIG%
+        var resolved = null
+
+        try {
+          var query = new URLSearchParams(window.location.search).get(
+            config.queryParam
+          )
+
+          if (config.languages.indexOf(query) !== -1) {
+            resolved = query
+          } else {
+            var stored = window.localStorage.getItem(config.storageKey)
+
+            if (config.languages.indexOf(stored) !== -1) {
+              resolved = stored
+            }
+          }
+        } catch {
+          // Storage and URL parsing can both throw in restricted contexts.
+        }
+
+        var language = resolved || config.defaultLanguage
+        var root = document.documentElement
+
+        root.lang = language
+        root.dir = config.directions[language]
+      })()
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#182F59" />
     <meta
       name="description"

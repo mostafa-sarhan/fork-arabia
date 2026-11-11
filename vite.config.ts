@@ -1,8 +1,34 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
+import { languageBootConfig } from './src/lib/i18n/languageConfig.ts'
 
-// https://vite.dev/config/
+const PLACEHOLDER = '%LANGUAGE_BOOT_CONFIG%'
+
+/**
+ * Inlines the shared language constants into the boot script in index.html.
+ *
+ * That script has to run before the bundle loads, so it cannot import
+ * src/lib/i18n/languageConfig.ts. Injecting the values here keeps one
+ * definition of the storage key, the allowed values, the default and the
+ * direction map for both the script and LanguageProvider.
+ */
+function languageBootConfigPlugin(): Plugin {
+  return {
+    name: 'fork-arabia:language-boot-config',
+    transformIndexHtml(html) {
+      if (!html.includes(PLACEHOLDER)) {
+        throw new Error(
+          `index.html is missing the ${PLACEHOLDER} placeholder, so the ` +
+            'pre-paint language script would not receive its configuration.',
+        )
+      }
+
+      return html.replaceAll(PLACEHOLDER, JSON.stringify(languageBootConfig))
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), languageBootConfigPlugin()],
 })

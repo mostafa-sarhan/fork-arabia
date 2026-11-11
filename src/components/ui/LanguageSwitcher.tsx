@@ -1,6 +1,6 @@
 import { cn } from '../../lib/cn'
 import { useLanguage } from '../../lib/i18n/useLanguage'
-import type { Language } from '../../lib/i18n/translations'
+import type { Language } from '../../lib/i18n/languageConfig'
 
 const options: Array<{ value: Language; short: string }> = [
   { value: 'ar', short: 'AR' },

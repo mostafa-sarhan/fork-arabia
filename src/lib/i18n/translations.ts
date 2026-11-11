@@ -1,5 +1,3 @@
-export type Language = 'ar' | 'en'
-
 const en = {
   'brand.name': 'FORK ARABIA',
   'brand.suffix': 'LIMITED',

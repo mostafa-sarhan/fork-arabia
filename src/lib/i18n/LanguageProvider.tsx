@@ -5,40 +5,56 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { LanguageContext, type Direction } from './context'
+import { LanguageContext } from './context'
 import {
-  translations,
+  DEFAULT_LANGUAGE,
+  DIRECTIONS,
+  isLanguage,
+  LANGUAGE_QUERY_PARAM,
+  LANGUAGE_STORAGE_KEY,
   type Language,
-  type TranslationKey,
-} from './translations'
+} from './languageConfig'
+import { translations, type TranslationKey } from './translations'
 
-const STORAGE_KEY = 'fork-arabia-language'
-
-function getInitialLanguage(): Language {
+/**
+ * Query parameter first, then the stored preference, then the default.
+ *
+ * The boot script in `index.html` mirrors this order so the document is
+ * already in the right language and direction at first paint. Both read the
+ * constants from `./languageConfig`, so only the ordering is stated twice —
+ * keep the two in step.
+ */
+function resolveInitialLanguage(): Language {
   if (typeof window === 'undefined') {
-    return 'ar'
+    return DEFAULT_LANGUAGE
   }
 
   try {
-    const query = new URLSearchParams(window.location.search).get('lang')
-    if (query === 'ar' || query === 'en') {
+    const query = new URLSearchParams(window.location.search).get(
+      LANGUAGE_QUERY_PARAM,
+    )
+
+    if (isLanguage(query)) {
       return query
     }
 
-    const stored = window.localStorage.getItem(STORAGE_KEY)
-    if (stored === 'ar' || stored === 'en') {
+    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
+
+    if (isLanguage(stored)) {
       return stored
     }
   } catch {
     // Storage can be unavailable in restricted browsing contexts.
   }
 
-  return 'ar'
+  return DEFAULT_LANGUAGE
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(getInitialLanguage)
-  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr'
+  const [language, setLanguageState] = useState<Language>(
+    resolveInitialLanguage,
+  )
+  const direction = DIRECTIONS[language]
 
   useEffect(() => {
     const root = document.documentElement
@@ -46,7 +62,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     root.dir = direction
 
     try {
-      window.localStorage.setItem(STORAGE_KEY, language)
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language)
     } catch {
       // Persisting the preference is optional.
     }
