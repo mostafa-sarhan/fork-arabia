@@ -68,13 +68,39 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, [language, direction])
 
-  const setLanguage = useCallback((next: Language) => {
-    setLanguageState(next)
+  /**
+   * Keeps ?lang= in step with the UI. Without it a visitor who arrives on
+   * ?lang=en and then switches to Arabic copies a URL that reopens in
+   * English. replaceState is used rather than pushState so switching
+   * language does not add a history entry the back button has to walk
+   * through. A URL with no ?lang= is left clean until the first switch.
+   */
+  const syncQueryParam = useCallback((next: Language) => {
+    try {
+      const url = new URL(window.location.href)
+
+      if (url.searchParams.get(LANGUAGE_QUERY_PARAM) === next) {
+        return
+      }
+
+      url.searchParams.set(LANGUAGE_QUERY_PARAM, next)
+      window.history.replaceState(window.history.state, '', url)
+    } catch {
+      // History access can be unavailable in restricted browsing contexts.
+    }
   }, [])
 
+  const setLanguage = useCallback(
+    (next: Language) => {
+      setLanguageState(next)
+      syncQueryParam(next)
+    },
+    [syncQueryParam],
+  )
+
   const toggleLanguage = useCallback(() => {
-    setLanguageState((current) => (current === 'ar' ? 'en' : 'ar'))
-  }, [])
+    setLanguage(language === 'ar' ? 'en' : 'ar')
+  }, [language, setLanguage])
 
   const t = useCallback(
     (key: TranslationKey) => translations[language][key],
