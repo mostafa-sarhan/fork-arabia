@@ -3,6 +3,7 @@ import { Logo } from '../components/brand/Logo'
 import { Container } from '../components/layout/Container'
 import { Badge } from '../components/ui/Badge'
 import { LanguageSwitcher } from '../components/ui/LanguageSwitcher'
+import { SkipLink } from '../components/ui/SkipLink'
 import { useLanguage } from '../lib/i18n/useLanguage'
 
 const YEAR = new Date().getFullYear()
@@ -16,6 +17,7 @@ export default function ComingSoon() {
 
   return (
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-page">
+      <SkipLink />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-grid"
@@ -32,7 +34,11 @@ export default function ComingSoon() {
         </Container>
       </header>
 
-      <main className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section">
+      <main
+        id="main"
+        tabIndex={-1}
+        className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section focus:outline-none"
+      >
         <Container>
           <div className="mx-auto max-w-panel animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
             <Badge variant="accent" className="tracking-latin-wide">

@@ -4,6 +4,7 @@ import { Container } from '../components/layout/Container'
 import { Badge } from '../components/ui/Badge'
 import { LanguageSwitcher } from '../components/ui/LanguageSwitcher'
 import { SectionHeading } from '../components/ui/SectionHeading'
+import { SkipLink } from '../components/ui/SkipLink'
 import { ArrowRightIcon } from '../components/ui/icons'
 import { cn } from '../lib/cn'
 import { useLanguage } from '../lib/i18n/useLanguage'
@@ -75,6 +76,7 @@ export default function DesignSystem() {
 
   return (
     <div className="min-h-svh bg-page">
+      <SkipLink />
       <header className="sticky top-0 z-sticky border-b border-line bg-surface">
         <Container className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-3 sm:gap-4">
@@ -101,7 +103,7 @@ export default function DesignSystem() {
         </Container>
       </header>
 
-      <main>
+      <main id="main" tabIndex={-1} className="focus:outline-none">
         <div className="border-b border-line bg-surface">
           <Container className="py-12 sm:py-16">
           <div className="flex flex-wrap items-center gap-3">

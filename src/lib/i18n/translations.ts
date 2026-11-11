@@ -8,6 +8,8 @@ const en = {
   'lang.arabic': 'Arabic',
   'lang.english': 'English',
 
+  'a11y.skipToContent': 'Skip to content',
+
   'nav.home': 'Home',
   'nav.services': 'Services',
   'nav.designSystem': 'Design System',
@@ -267,6 +269,8 @@ const ar: Record<keyof typeof en, string> = {
   'lang.label': 'اللغة',
   'lang.arabic': 'العربية',
   'lang.english': 'الإنجليزية',
+
+  'a11y.skipToContent': 'تخطَّ إلى المحتوى',
 
   'nav.home': 'الرئيسية',
   'nav.services': 'الخدمات',
