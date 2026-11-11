@@ -85,9 +85,6 @@ const shadows = ['xs', 'card', 'raised']
 /** --font-* : both families resolve through the same stack. */
 const font = ['sans', 'display']
 
-/** --font-weight-* */
-const fontWeight = ['regular', 'medium', 'semibold', 'bold']
-
 /** --tracking-* */
 const tracking = ['brand', 'brand-wide']
 
@@ -121,7 +118,6 @@ export const cn = extendTailwindMerge({
       radius,
       shadow: shadows,
       font,
-      'font-weight': fontWeight,
       tracking,
       ease,
       animate,
