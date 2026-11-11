@@ -1,5 +1,6 @@
 import type { SelectHTMLAttributes } from 'react'
 import { cn } from '../../lib/cn'
+import { fieldBase, fieldInvalid } from './fieldStyles'
 import { ChevronDownIcon } from './icons'
 
 export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
@@ -17,8 +18,10 @@ export function Select({
       <select
         aria-invalid={invalid || undefined}
         className={cn(
-          'h-11 w-full appearance-none rounded-md border border-line-strong bg-surface ps-3.5 pe-10 text-body text-ink transition-colors duration-200 focus:border-petrol focus:outline-none focus:ring-2 focus:ring-petrol/20 disabled:cursor-not-allowed disabled:bg-page disabled:text-ink-muted',
-          invalid && 'border-danger focus:border-danger focus:ring-danger/20',
+          fieldBase,
+          // pe-10 replaces the shared pe-3.5 to clear the chevron.
+          'h-11 appearance-none pe-10',
+          invalid && fieldInvalid,
           className,
         )}
         {...props}
