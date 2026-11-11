@@ -261,6 +261,34 @@
   }
 }
 
+/*
+ * Latin-only optical tightening, the counterpart of the two utilities above.
+ *
+ * The negative letter-spacing on the display/h1/h2/h3 tokens is a Latin
+ * optical adjustment: it closes the gaps that ascender-heavy Latin shapes
+ * open up at large sizes. Arabic is drawn with its own optical sidebearings
+ * and must keep letter-spacing: normal.
+ *
+ * The guard cannot live in the token itself. A custom property that contains
+ * var() is substituted where it is DECLARED, so a token written as
+ * `var(--something-language-dependent)` resolves once on :root and inherits
+ * that single value into every subtree — which would tighten Arabic on an
+ * English page. Setting `letter-spacing` on the element instead resolves
+ * :lang() against the element's own computed language, so a lang="ar" island
+ * in an English page, and a lang="en" island in an Arabic page, are both
+ * correct with no JS branching.
+ *
+ * `:not(:lang(en))` also outranks the single-class font-size utility it
+ * overrides, so the result does not depend on stylesheet order.
+ *
+ * Pair it with every text-display / text-h1 / text-h2 / text-h3 usage.
+ */
+@utility tracking-latin-tight {
+  &:not(:lang(en)) {
+    letter-spacing: normal;
+  }
+}
+
 @utility bg-grid {
   background-image:
     linear-gradient(to right, rgb(24 47 89 / 0.045) 1px, transparent 1px),

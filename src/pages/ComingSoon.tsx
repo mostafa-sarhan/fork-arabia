@@ -43,7 +43,7 @@ export default function ComingSoon() {
               {t('soon.eyebrow')}
             </Badge>
 
-            <h1 className="mt-6 font-display text-h1 font-bold text-heading">
+            <h1 className="mt-6 font-display text-h1 font-bold tracking-latin-tight text-heading">
               {t('soon.titleA')}{' '}
               <span className="text-subheading">{t('soon.titleB')}</span>
             </h1>

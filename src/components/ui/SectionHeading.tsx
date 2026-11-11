@@ -46,7 +46,7 @@ export function SectionHeading({
       ) : null}
       <Heading
         className={cn(
-          'font-display text-heading',
+          'font-display text-heading tracking-latin-tight',
           levels[level].size,
           levels[level].weight,
           eyebrow ? 'mt-3' : null,

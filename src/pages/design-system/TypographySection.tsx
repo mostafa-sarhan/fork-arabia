@@ -10,25 +10,25 @@ export function TypographySection() {
     {
       label: t('type.display'),
       token: 'text-display',
-      className: 'text-display font-bold',
+      className: 'text-display font-bold tracking-latin-tight',
       sample: t('type.sample.display'),
     },
     {
       label: t('type.h1'),
       token: 'text-h1',
-      className: 'text-h1 font-bold',
+      className: 'text-h1 font-bold tracking-latin-tight',
       sample: t('type.sample.heading'),
     },
     {
       label: t('type.h2'),
       token: 'text-h2',
-      className: 'text-h2 font-semibold',
+      className: 'text-h2 font-semibold tracking-latin-tight',
       sample: t('type.sample.heading'),
     },
     {
       label: t('type.h3'),
       token: 'text-h3',
-      className: 'text-h3 font-semibold',
+      className: 'text-h3 font-semibold tracking-latin-tight',
       sample: t('type.sample.short'),
     },
     {
@@ -108,7 +108,7 @@ export function TypographySection() {
               <p className="text-overline font-semibold tracking-latin-wide text-subheading">
                 {translations.ar['type.overline']}
               </p>
-              <p className="mt-3 text-h3 font-semibold text-ink">
+              <p className="mt-3 text-h3 font-semibold tracking-latin-tight text-ink">
                 {translations.ar['type.sample.display']}
               </p>
               <p className="mt-3 text-body text-ink-muted">
@@ -119,7 +119,7 @@ export function TypographySection() {
               <p className="text-overline font-semibold tracking-latin-wide text-subheading">
                 {translations.en['type.overline']}
               </p>
-              <p className="mt-3 text-h3 font-semibold text-ink">
+              <p className="mt-3 text-h3 font-semibold tracking-latin-tight text-ink">
                 {translations.en['type.sample.display']}
               </p>
               <p className="mt-3 text-body text-ink-muted">
