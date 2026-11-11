@@ -37,7 +37,7 @@ export function ComponentSection() {
       description={t('ds.components.desc')}
     >
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card interactive>
+        <Card as="a" href="#components" className="group">
           <CardHeader>
             <div className="flex items-start justify-between gap-4">
               <span className="grid size-10 place-items-center rounded-md bg-navy-soft text-petrol">
@@ -49,13 +49,15 @@ export function ComponentSection() {
             <CardDescription>{t('card.serviceDesc')}</CardDescription>
           </CardHeader>
           <CardFooter>
-            <a
-              href="#components"
-              className="inline-flex items-center gap-1.5 rounded-sm text-body-sm font-semibold text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2"
-            >
+            {/*
+              The card itself is the link, so this stays a span: a nested
+              anchor would be invalid and would put two tab stops on one
+              target. The colour still answers a hover on the card.
+            */}
+            <span className="inline-flex items-center gap-1.5 text-body-sm font-semibold text-link transition-colors duration-200 group-hover:text-link-hover">
               {t('card.learnMore')}
               <ArrowRightIcon className="size-4 rtl:-scale-x-100" />
-            </a>
+            </span>
           </CardFooter>
         </Card>
 
