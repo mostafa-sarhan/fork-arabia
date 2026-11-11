@@ -123,10 +123,8 @@ const en = {
   'pair.destructiveButton': 'Destructive button label',
   'pair.whiteOnTurquoise': 'White text on turquoise',
   'pair.turquoiseOnWhite': 'Turquoise text on white',
-  'pair.navyOnTurquoiseStrong': 'Navy text on dark turquoise',
   'pair.reason.useOnAccent': 'Use navy on turquoise instead',
   'pair.reason.usePetrol': 'Use petrol for text instead',
-  'pair.reason.useLift': 'Use the turquoise lift shade instead',
 
   'ds.type.title': 'Typography',
   'ds.type.desc':
@@ -385,10 +383,8 @@ const ar: Record<keyof typeof en, string> = {
   'pair.destructiveButton': 'نص زر الحذف',
   'pair.whiteOnTurquoise': 'نص أبيض على تركوازي',
   'pair.turquoiseOnWhite': 'نص تركوازي على أبيض',
-  'pair.navyOnTurquoiseStrong': 'نص كحلي على تركوازي داكن',
   'pair.reason.useOnAccent': 'استخدم الكحلي على التركوازي بدلاً منه',
   'pair.reason.usePetrol': 'استخدم الأزرق البترولي للنص بدلاً منه',
-  'pair.reason.useLift': 'استخدم درجة التركوازي الفاتح بدلاً منها',
 
   'ds.type.title': 'الطباعة',
   'ds.type.desc':

@@ -28,7 +28,6 @@ const TOKENS = [
   '--color-petrol',
   '--color-turquoise',
   '--color-turquoise-lift',
-  '--color-turquoise-strong',
   '--color-turquoise-soft',
   '--color-page',
   '--color-surface',
@@ -346,12 +345,6 @@ const PROHIBITED: Pair[] = [
     foreground: '--color-turquoise',
     background: '--color-surface',
     reasonKey: 'pair.reason.usePetrol',
-  },
-  {
-    labelKey: 'pair.navyOnTurquoiseStrong',
-    foreground: '--color-on-accent',
-    background: '--color-turquoise-strong',
-    reasonKey: 'pair.reason.useLift',
   },
 ]
 

@@ -102,12 +102,10 @@
   --color-petrol-strong: #0d3b50;
 
   --color-turquoise: #19afb0;
-  /* Interactive lift for accent surfaces. Hover must get LIGHTER, not darker,
-     so that on-accent navy text keeps a passing ratio (5.86:1). */
+  /* Interactive lift for accent surfaces. An accent surface carries navy
+     text, so its hover and active states must get LIGHTER: darkening the
+     surface drops the text below AA. Navy on this shade is 5.86:1. */
   --color-turquoise-lift: #2bbfc0;
-  /* Decorative/graphical only. Navy on this shade is 3.46:1 and fails AA for
-     normal-size text. Never place body or button text on it. */
-  --color-turquoise-strong: #149192;
   --color-turquoise-soft: #e7f7f7;
 
   --color-page: #f5f7fa;
