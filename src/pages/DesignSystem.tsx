@@ -121,7 +121,7 @@ export default function DesignSystem() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <nav aria-label={t('ds.onThisPage')}>
-              <p className="text-overline uppercase tracking-brand-wide text-ink-muted">
+              <p className="text-overline tracking-latin-wide text-ink-muted">
                 {t('ds.onThisPage')}
               </p>
               <ul className="mt-3 flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">

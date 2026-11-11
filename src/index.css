@@ -81,7 +81,11 @@
 
   --text-overline: 0.6875rem;
   --text-overline--line-height: 1.4;
-  --text-overline--letter-spacing: 0.16em;
+  /*
+   * Deliberately script-neutral: no letter-spacing here. The Latin-only
+   * tracking lives in the `tracking-latin*` utilities below, which gate it
+   * behind :lang(en) so Arabic never receives it.
+   */
   --text-overline--font-weight: 600;
 
   --tracking-brand: 0.16em;
@@ -226,6 +230,35 @@
 
 @utility z-toast {
   z-index: var(--z-toast);
+}
+
+/*
+ * Latin-only typographic treatment.
+ *
+ * Arabic is a connected script: any positive letter-spacing severs the
+ * joins between letters, and text-transform has no meaning for it. These
+ * utilities therefore reset both by default and re-apply the brand tracking
+ * only where the computed language is English, so the same class is safe on
+ * either side of a language switch and inside any lang="" subtree.
+ */
+@utility tracking-latin {
+  letter-spacing: normal;
+  text-transform: none;
+
+  &:lang(en) {
+    letter-spacing: var(--tracking-brand);
+    text-transform: uppercase;
+  }
+}
+
+@utility tracking-latin-wide {
+  letter-spacing: normal;
+  text-transform: none;
+
+  &:lang(en) {
+    letter-spacing: var(--tracking-brand-wide);
+    text-transform: uppercase;
+  }
 }
 
 @utility bg-grid {

@@ -40,7 +40,7 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <p className="text-overline uppercase tracking-brand-wide text-subheading">
+        <p className="text-overline tracking-latin-wide text-subheading">
           {eyebrow}
         </p>
       ) : null}

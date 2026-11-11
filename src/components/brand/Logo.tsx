@@ -8,8 +8,7 @@ export type LogoProps = {
 }
 
 export function Logo({ className, showSuffix = true }: LogoProps) {
-  const { t, language } = useLanguage()
-  const isEnglish = language === 'en'
+  const { t } = useLanguage()
 
   return (
     <a
@@ -24,21 +23,11 @@ export function Logo({ className, showSuffix = true }: LogoProps) {
         <ForkIcon className="size-5" />
       </span>
       <span className="flex min-w-0 flex-col">
-        <span
-          className={cn(
-            'font-display text-body-sm font-bold text-ink',
-            isEnglish && 'tracking-brand',
-          )}
-        >
+        <span className="font-display text-body-sm font-bold tracking-latin text-heading">
           {t('brand.name')}
         </span>
         {showSuffix ? (
-          <span
-            className={cn(
-              'mt-0.5 text-overline font-medium text-ink-muted',
-              isEnglish && 'tracking-brand-wide',
-            )}
-          >
+          <span className="mt-0.5 text-overline font-medium tracking-latin-wide text-ink-muted">
             {t('brand.suffix')}
           </span>
         ) : null}

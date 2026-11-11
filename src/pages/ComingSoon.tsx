@@ -35,7 +35,7 @@ export default function ComingSoon() {
       <main className="relative z-10 flex flex-1 items-center py-section-sm sm:py-section">
         <Container>
           <div className="mx-auto max-w-2xl animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
-            <Badge variant="accent" className="uppercase tracking-brand-wide">
+            <Badge variant="accent" className="tracking-latin-wide">
               <span
                 className="size-1.5 rounded-full bg-turquoise"
                 aria-hidden="true"

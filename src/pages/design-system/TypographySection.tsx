@@ -83,7 +83,7 @@ export function TypographySection() {
       label: t('type.overline'),
       token: 'text-overline',
       className:
-        'text-overline font-semibold uppercase tracking-brand-wide text-subheading',
+        'text-overline font-semibold tracking-latin-wide text-subheading',
       sample: t('heading.eyebrow'),
     },
   ]
@@ -105,7 +105,7 @@ export function TypographySection() {
               lang="ar"
               className="md:border-e md:border-line md:pe-8"
             >
-              <p className="text-overline font-semibold text-subheading">
+              <p className="text-overline font-semibold tracking-latin-wide text-subheading">
                 {translations.ar['type.overline']}
               </p>
               <p className="mt-3 text-h3 font-semibold text-ink">
@@ -116,7 +116,7 @@ export function TypographySection() {
               </p>
             </div>
             <div dir="ltr" lang="en" className="md:ps-2">
-              <p className="text-overline font-semibold uppercase tracking-brand-wide text-subheading">
+              <p className="text-overline font-semibold tracking-latin-wide text-subheading">
                 {translations.en['type.overline']}
               </p>
               <p className="mt-3 text-h3 font-semibold text-ink">
