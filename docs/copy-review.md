@@ -5,12 +5,12 @@ company profile has no equivalent. The Arabic beside it is transcribed
 verbatim from the storyboard and is **not** up for review here — only the
 English is.
 
-Each is marked `proposed` in the data. Approving one means replacing
-`draft('…', '…')` with `copy('…', '…')` in the file named; editing one means
+Each is written with `draft('…', '…')` in the data. Approving one means
+changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-23 strings await approval.
+24 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -37,3 +37,4 @@ afterwards to regenerate this list.
 | `premiumResidency` | رسوم سنوية | Limited duration | `sectorContent.ts` |
 | `premiumResidency` | رسم لمرة واحدة | Unlimited duration | `sectorContent.ts` |
 | `premiumResidency` | كفاءات | Talent | `sectorContent.ts` |
+| `—` | فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان. | FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman. | `siteCopy.ts` |

@@ -7,7 +7,7 @@
  * nothing renders, so it is excluded from class detection. Never put a real
  * class name in that file.
  */
-@source not './lib/cn.ts';
+@source not '../lib/cn.ts';
 
 /*
  * FORK ARABIA — Design Tokens

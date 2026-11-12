@@ -1,9 +1,13 @@
 import { Container } from '@/components/layout/Container'
 import { Badge } from '@/components/ui/Badge'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import { usePageMeta } from '@/lib/usePageMeta'
 
-export default function ComingSoon() {
+/** The home page: the only page that is indexable while the site is built. */
+export default function HomePage() {
   const { t } = useLanguage()
+
+  usePageMeta({ titleKey: 'soon.eyebrow' })
 
   return (
     <div className="relative flex min-h-main flex-col overflow-hidden bg-page">

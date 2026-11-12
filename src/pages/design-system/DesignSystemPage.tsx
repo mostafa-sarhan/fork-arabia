@@ -5,16 +5,17 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { cn } from '@/lib/cn'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import type { TranslationKey } from '@/lib/i18n/translations'
-import { ButtonSection } from './design-system/ButtonSection'
-import { ColorSection } from './design-system/ColorSection'
-import { ComponentSection } from './design-system/ComponentSection'
-import { DirectionSection } from './design-system/DirectionSection'
-import { FormSection } from './design-system/FormSection'
-import { IconSection } from './design-system/IconSection'
-import { LayoutSection } from './design-system/LayoutSection'
-import { NavbarSection } from './design-system/NavbarSection'
-import { NavigationSection } from './design-system/NavigationSection'
-import { TypographySection } from './design-system/TypographySection'
+import { usePageMeta } from '@/lib/usePageMeta'
+import { ButtonSection } from './ButtonSection'
+import { ColorSection } from './ColorSection'
+import { ComponentSection } from './ComponentSection'
+import { DirectionSection } from './DirectionSection'
+import { FormSection } from './FormSection'
+import { IconSection } from './IconSection'
+import { LayoutSection } from './LayoutSection'
+import { NavbarSection } from './NavbarSection'
+import { NavigationSection } from './NavigationSection'
+import { TypographySection } from './TypographySection'
 
 const SECTIONS = [
   { id: 'colors', labelKey: 'ds.section.colors' },
@@ -66,9 +67,11 @@ function useActiveSection(): string {
   return active
 }
 
-export default function DesignSystem() {
+export default function DesignSystemPage() {
   const { t, direction } = useLanguage()
   const active = useActiveSection()
+
+  usePageMeta({ titleKey: 'ds.title', indexable: false })
 
   return (
     <div className="min-h-main bg-page">

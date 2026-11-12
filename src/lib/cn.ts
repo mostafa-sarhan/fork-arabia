@@ -17,7 +17,7 @@ import { extendTailwindMerge, type ClassNameValue } from 'tailwind-merge'
  * be silently reduced to a single class.
  *
  * Keep these lists in step with the @theme block and the @utility rules in
- * src/index.css.
+ * src/styles/index.css.
  */
 
 /** --text-* : the type scale, resolved as font sizes. */

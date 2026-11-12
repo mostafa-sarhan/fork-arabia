@@ -1,15 +1,134 @@
-import { Fragment } from 'react'
+import { Fragment, useCallback, useEffect, useId, useRef } from 'react'
 import { Link } from 'react-router'
-import {
-  useLanguageMenu,
-  type LanguageMenuState,
-} from '@/components/navbar/useLanguageMenu'
 import { cn } from '@/lib/cn'
 import { useLanguageOptions, type LanguageOption } from '@/lib/i18n/languageSwap'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import { useNavbar } from './useNavbar'
 
 /** ArrowDown and ArrowUp, as the step they take through the options. */
 const STEPS: Record<string, number> = { ArrowDown: 1, ArrowUp: -1 }
+
+export type LanguageMenuState = {
+  isOpen: boolean
+  panelId: string
+  toggle: () => void
+  openNow: () => void
+  closeNow: () => void
+  registerTrigger: (node: HTMLButtonElement | null) => void
+  registerPanel: (node: HTMLDivElement | null) => void
+}
+
+/**
+ * The open/closed state of the language menu, shared by its trigger and its
+ * panel.
+ *
+ * Unlike the services panel it has no hover behaviour: the language control
+ * is not an item a pointer crosses on its way somewhere else, so a panel
+ * that opened on hover would appear whenever someone crossed the gap between
+ * the navigation and the buttons. It opens on click, Enter or Space, and on
+ * ArrowDown.
+ */
+function useLanguageMenu(): LanguageMenuState {
+  const { openMenu, setOpenMenu } = useNavbar()
+  const panelId = useId()
+  const isOpen = openMenu === 'language'
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
+  const panelRef = useRef<HTMLDivElement | null>(null)
+
+  /* Callback refs: the trigger and the panel are two different components. */
+  const registerTrigger = useCallback((node: HTMLButtonElement | null) => {
+    triggerRef.current = node
+  }, [])
+
+  const registerPanel = useCallback((node: HTMLDivElement | null) => {
+    panelRef.current = node
+  }, [])
+
+  const openNow = useCallback(() => setOpenMenu('language'), [setOpenMenu])
+  const closeNow = useCallback(() => setOpenMenu(null), [setOpenMenu])
+
+  const toggle = useCallback(() => {
+    if (isOpen) {
+      closeNow()
+      return
+    }
+
+    openNow()
+  }, [closeNow, isOpen, openNow])
+
+  /*
+   * Focus enters the menu when it opens, landing on the language already in
+   * use — the menu-button pattern, and the only arrangement the arrow keys
+   * have somewhere to start from.
+   */
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    const panel = panelRef.current
+    const landing =
+      panel?.querySelector<HTMLElement>('[data-menu-item][aria-current]') ??
+      panel?.querySelector<HTMLElement>('[data-menu-item]')
+
+    landing?.focus()
+  }, [isOpen])
+
+  /*
+   * Escape, a click outside and focus leaving all close it. Escape is the
+   * only one that returns focus to the trigger: it is the only one where the
+   * visitor has not already said where they want to be.
+   */
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    const isInside = (target: EventTarget | null) =>
+      target instanceof Node &&
+      (triggerRef.current?.contains(target) === true ||
+        panelRef.current?.contains(target) === true)
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeNow()
+        triggerRef.current?.focus()
+      }
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!isInside(event.target)) {
+        closeNow()
+      }
+    }
+
+    const onFocusIn = (event: FocusEvent) => {
+      if (!isInside(event.target)) {
+        closeNow()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('focusin', onFocusIn)
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('focusin', onFocusIn)
+    }
+  }, [closeNow, isOpen])
+
+  return {
+    isOpen,
+    panelId,
+    toggle,
+    openNow,
+    closeNow,
+    registerTrigger,
+    registerPanel,
+  }
+}
 
 /**
  * One option: its two-letter code, and nothing else on screen.
@@ -67,8 +186,7 @@ function LanguageOptionLink({
  * weight and muted colour.
  *
  * It names where you are and opens a list, rather than naming where you
- * would go — the arrangement that answers "what am I reading?" first, and
- * that still reads correctly once a third language exists.
+ * would go — the arrangement that answers "what am I reading?" first.
  */
 export function LanguageMenuTrigger({
   menu,

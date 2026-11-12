@@ -1,14 +1,146 @@
+import { useCallback, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router'
 import { Container } from '@/components/layout/Container'
-import type { ServicesMenuState } from '@/components/navbar/useServicesMenu'
+import { LocalizedLink } from '@/components/LocalizedLink'
 import { ICONS } from '@/components/ui/iconRegistry'
 import { ArrowRightIcon, ChevronDownIcon } from '@/components/ui/icons'
+import { PATHS, sectorPath } from '@/config/paths'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
 import { Copy } from '@/lib/i18n/Copy'
+import { isPathActive } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import { isRouteActive, ROUTE_PATHS, sectorPath } from '@/lib/routing/routes'
+import { useNavbar } from './useNavbar'
+
+const OPEN_DELAY = 120
+const CLOSE_DELAY = 180
+
+/** The panel is anchored to the bar, so one fixed id is enough. */
+const PANEL_ID = 'services-menu'
+
+export type ServicesMenuState = {
+  isOpen: boolean
+  panelId: string
+  openNow: () => void
+  closeNow: () => void
+  openSoon: () => void
+  closeSoon: () => void
+  registerTrigger: (node: HTMLElement | null) => void
+  registerPanel: (node: HTMLElement | null) => void
+}
+
+/**
+ * The open/closed state of the services panel, shared by the trigger in the
+ * bar and the panel below it — which is why the navbar creates it once and
+ * passes it to both.
+ *
+ * Pointer and keyboard want opposite things here. A pointer wants hover, but
+ * opening instantly would flash the panel open when crossing the item on the
+ * way elsewhere, and closing instantly would snatch it away mid-reach across
+ * the gap below it. Hence a short, cancellable delay on each side, which
+ * click and keyboard bypass.
+ */
+// oxlint-disable-next-line react/only-export-components -- the trigger and the panel share this state
+export function useServicesMenu(): ServicesMenuState {
+  const { openMenu, setOpenMenu } = useNavbar()
+  const isOpen = openMenu === 'services'
+  const timer = useRef<number | undefined>(undefined)
+  const triggerRef = useRef<HTMLElement | null>(null)
+  const panelRef = useRef<HTMLElement | null>(null)
+
+  /*
+   * Callback refs rather than ref objects in the return value: the elements
+   * belong to two different components, and a function is the only shape
+   * that does not read a ref during someone else's render.
+   */
+  const registerTrigger = useCallback((node: HTMLElement | null) => {
+    triggerRef.current = node
+  }, [])
+
+  const registerPanel = useCallback((node: HTMLElement | null) => {
+    panelRef.current = node
+  }, [])
+
+  const clear = useCallback(() => {
+    if (timer.current !== undefined) {
+      window.clearTimeout(timer.current)
+      timer.current = undefined
+    }
+  }, [])
+
+  const openNow = useCallback(() => {
+    clear()
+    setOpenMenu('services')
+  }, [clear, setOpenMenu])
+
+  const closeNow = useCallback(() => {
+    clear()
+    setOpenMenu(null)
+  }, [clear, setOpenMenu])
+
+  const openSoon = useCallback(() => {
+    clear()
+    timer.current = window.setTimeout(() => setOpenMenu('services'), OPEN_DELAY)
+  }, [clear, setOpenMenu])
+
+  const closeSoon = useCallback(() => {
+    clear()
+    timer.current = window.setTimeout(() => setOpenMenu(null), CLOSE_DELAY)
+  }, [clear, setOpenMenu])
+
+  useEffect(() => clear, [clear])
+
+  /* Escape, a click outside, and focus leaving all mean the same thing. */
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    const isInside = (target: EventTarget | null) =>
+      target instanceof Node &&
+      (triggerRef.current?.contains(target) === true ||
+        panelRef.current?.contains(target) === true)
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeNow()
+      }
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!isInside(event.target)) {
+        closeNow()
+      }
+    }
+
+    const onFocusIn = (event: FocusEvent) => {
+      if (!isInside(event.target)) {
+        closeNow()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('focusin', onFocusIn)
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('focusin', onFocusIn)
+    }
+  }, [closeNow, isOpen])
+
+  return {
+    isOpen,
+    panelId: PANEL_ID,
+    openNow,
+    closeNow,
+    openSoon,
+    closeSoon,
+    registerTrigger,
+    registerPanel,
+  }
+}
 
 /**
  * The navigation item: a link and a disclosure, side by side.
@@ -20,8 +152,8 @@ import { isRouteActive, ROUTE_PATHS, sectorPath } from '@/lib/routing/routes'
  */
 export function ServicesMenuTrigger({ menu }: { menu: ServicesMenuState }) {
   const { t } = useLanguage()
-  const location = useLocation()
-  const isActive = isRouteActive(location.pathname, 'services')
+  const { pathname } = useLocation()
+  const isActive = isPathActive(pathname, PATHS.services)
   const { registerTrigger, openSoon, closeSoon, openNow, closeNow } = menu
 
   return (
@@ -32,7 +164,7 @@ export function ServicesMenuTrigger({ menu }: { menu: ServicesMenuState }) {
       className="flex items-center"
     >
       <LocalizedLink
-        to={ROUTE_PATHS.services}
+        to={PATHS.services}
         aria-current={isActive ? 'page' : undefined}
         className={cn(
           'relative inline-flex h-10 items-center rounded-md ps-3 pe-1 text-nav transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
@@ -200,7 +332,7 @@ export function ServicesMenuPanel({
 
         <div className="mt-5 border-t border-line pt-4">
           <LocalizedLink
-            to={ROUTE_PATHS.services}
+            to={PATHS.services}
             data-menu-item=""
             onClick={closeNow}
             className="inline-flex items-center gap-2 rounded-sm text-body-sm font-semibold text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface"

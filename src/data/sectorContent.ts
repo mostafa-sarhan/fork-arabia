@@ -1,15 +1,5 @@
-import { proposed, type Localized } from '@/lib/i18n/localized'
+import { copy, draft, type Localized } from '@/lib/i18n/localized'
 import type { SectorId } from './sectorIndex'
-
-const copy = (arabic: string, english: string): Localized => ({
-    ar: arabic,
-    en: english,
-  })
-
-const draft = (arabic: string, english: string): Localized => ({
-    ar: arabic,
-    en: proposed(english),
-  })
 
 export type SectorService = {
   readonly title: Localized

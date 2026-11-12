@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router'
-import { useNavbar } from '@/components/navbar/NavbarContext'
+import { useNavbar } from '@/components/navbar/useNavbar'
 import { CloseIcon, GlobeIcon } from '@/components/ui/icons'
+import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
 import { isLanguage, type Language } from '@/lib/i18n/languageConfig'
 import { useLanguageSwap } from '@/lib/i18n/languageSwap'
+import { isPathActive } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { canonicalPathname, ROUTE_PATHS } from '@/lib/routing/routes'
 
 const STORAGE_KEY = 'fork-arabia-language-suggestion'
 const DELAY = 1500
@@ -61,13 +62,12 @@ function remember(): void {
  */
 export function LanguageSuggestion() {
   const { language } = useLanguage()
-  const { isMenuOpen } = useNavbar()
+  const { isMobileMenuOpen } = useNavbar()
   const location = useLocation()
   const [isOpen, setOpen] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 
-  const isDesignSystem =
-    canonicalPathname(location.pathname) === ROUTE_PATHS.designSystem
+  const isDesignSystem = isPathActive(location.pathname, PATHS.designSystem)
 
   const dismiss = useCallback(() => {
     remember()
@@ -112,7 +112,7 @@ export function LanguageSuggestion() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [dismiss, isOpen])
 
-  if (!isOpen || isMenuOpen) {
+  if (!isOpen || isMobileMenuOpen) {
     return null
   }
 

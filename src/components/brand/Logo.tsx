@@ -3,9 +3,9 @@ import {
   type BrandLockupSize,
   type BrandLockupTone,
 } from '@/components/brand/BrandLockup'
+import { LocalizedLink } from '@/components/LocalizedLink'
+import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import { ROUTE_PATHS } from '@/lib/routing/routes'
 
 export type LogoProps = {
   className?: string
@@ -25,7 +25,7 @@ export type LogoProps = {
 export function Logo({ className, tone = 'brand', size = 'header' }: LogoProps) {
   return (
     <LocalizedLink
-      to={ROUTE_PATHS.home}
+      to={PATHS.home}
       className={cn(
         'inline-flex rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2',
         tone === 'white' &&

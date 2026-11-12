@@ -5,8 +5,8 @@ import type {
   Ref,
 } from 'react'
 import { cn } from '@/lib/cn'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import type { CanonicalPath } from '@/lib/routing/routes'
+import { LocalizedLink } from '@/components/LocalizedLink'
+import type { SitePath } from '@/config/paths'
 import { Spinner } from './Spinner'
 
 export type ButtonVariant =
@@ -67,7 +67,7 @@ type AsButton = SharedProps &
 
 /** A link to another page of this site, by canonical path. */
 type AsInternalLink = SharedProps & {
-  to: CanonicalPath
+  to: SitePath
   href?: never
   ref?: Ref<HTMLAnchorElement>
   'aria-label'?: string

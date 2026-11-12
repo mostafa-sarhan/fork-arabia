@@ -1,13 +1,13 @@
 import { cn } from '@/lib/cn'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import type { CanonicalPath } from '@/lib/routing/routes'
+import { LocalizedLink } from '@/components/LocalizedLink'
+import type { SitePath } from '@/config/paths'
 import { ChevronRightIcon } from './icons'
 
 export type BreadcrumbItem = {
   label: string
   /** A page of this site, named by its canonical path. */
-  to?: CanonicalPath
+  to?: SitePath
   /** Anything the router does not own: a hash target or another origin. */
   href?: string
 }

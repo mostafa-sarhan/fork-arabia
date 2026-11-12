@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/icons'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { ROUTE_PATHS } from '@/lib/routing/routes'
+import { PATHS } from '@/config/paths'
 import type { TranslationKey } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
@@ -91,7 +91,7 @@ export function ButtonSection() {
             description={t('ds.buttons.linksDesc')}
           />
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <Button to={ROUTE_PATHS.contact} variant="primary">
+            <Button to={PATHS.contact} variant="primary">
               {t('btn.internalLink')}
             </Button>
             <Button
@@ -102,7 +102,7 @@ export function ButtonSection() {
               {t('btn.externalLink')}
             </Button>
             <IconButton
-              to={ROUTE_PATHS.contact}
+              to={PATHS.contact}
               label={t('btn.internalLink')}
               variant="outline"
             >

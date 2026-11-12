@@ -10,17 +10,25 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 
-const FILES = ['src/data/sectorIndex.ts', 'src/data/sectorContent.ts']
+const FILES = [
+  'src/data/sectorIndex.ts',
+  'src/data/sectorContent.ts',
+  'src/data/siteCopy.ts',
+]
 
-/** Matches draft('<arabic>', '<english>') across line breaks. */
+/**
+ * Matches draft('<arabic>', '<english>') across line breaks. `draft` is the
+ * helper in `src/lib/i18n/localized.ts` that marks its English `proposed`;
+ * `copy` is the same pair with both halves approved, and is not listed here.
+ */
 const DRAFT = /draft\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
 
 /**
- * The sector a character offset falls inside.
+ * The sector a character offset falls inside, for the first column.
  *
- * Both files key their entries by the sector id — the index as an `id`
- * field, the content as the object key — so the nearest one above the
- * match is the owner.
+ * The sector files key their entries by id — the index as an `id` field, the
+ * content as the object key — so the nearest one above the match owns it.
+ * Copy that belongs to no sector keeps the dash.
  */
 function sectorAt(source, offset) {
   let current = '—'
@@ -52,8 +60,8 @@ const lines = [
   'verbatim from the storyboard and is **not** up for review here — only the',
   'English is.',
   '',
-  'Each is marked `proposed` in the data. Approving one means replacing',
-  "`draft('…', '…')` with `copy('…', '…')` in the file named; editing one means",
+  "Each is written with `draft('…', '…')` in the data. Approving one means",
+  "changing that call to `copy('…', '…')` in the file named; editing one means",
   'changing the English string in place. Re-run `node scripts/copy-review.mjs`',
   'afterwards to regenerate this list.',
   '',

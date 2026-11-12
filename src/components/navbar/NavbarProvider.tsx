@@ -7,58 +7,79 @@ import {
   type ReactNode,
 } from 'react'
 import { useLocation } from 'react-router'
-import { NavbarContext, useNavbar } from '@/components/navbar/NavbarContext'
+import { NavbarContext, useNavbar, type NavbarMenu } from './useNavbar'
 
 /**
- * Owns the mobile menu's open state.
+ * The state of the whole navbar: which popover is open, and whether the
+ * mobile sheet is open.
  *
- * The state belongs to the navbar, but opening the sheet also has to make the
- * rest of the page inert — and that is the navbar's sibling, not its child.
- * So the state lives in context and the layout reads it through
- * `InertWhileMenuOpen`.
+ * Both are stored as the page they were opened on, so a navigation closes
+ * them by definition rather than through an effect chasing the router. One
+ * `openMenu` value is also what keeps the services panel and the language
+ * menu from ever covering each other: opening one closes the other.
+ *
+ * The sheet's state lives here rather than in the navbar because opening it
+ * has to make the rest of the page inert, and that is the navbar's sibling —
+ * which is what `InertWhileMenuOpen` wraps.
  */
 export function NavbarProvider({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
-  const menuId = useId()
+  const mobileMenuId = useId()
   const toggleRef = useRef<HTMLButtonElement | null>(null)
-  /*
-   * The state is "which page the sheet was opened on", not "is it open", so a
-   * route change closes it by definition rather than through an effect
-   * chasing the router.
-   */
-  const [openedOn, setOpenedOn] = useState<string | null>(null)
-  const isMenuOpen = openedOn === pathname
+  const [opened, setOpened] = useState<{
+    menu: NavbarMenu
+    pathname: string
+  } | null>(null)
+  const [mobileOpenedOn, setMobileOpenedOn] = useState<string | null>(null)
 
-  const openMenu = useCallback(() => setOpenedOn(pathname), [pathname])
+  const openMenu = opened?.pathname === pathname ? opened.menu : null
+  const isMobileMenuOpen = mobileOpenedOn === pathname
 
-  const closeMenu = useCallback(() => {
-    setOpenedOn(null)
+  const setOpenMenu = useCallback(
+    (menu: NavbarMenu | null) => setOpened(menu ? { menu, pathname } : null),
+    [pathname],
+  )
+
+  const closeMobileMenu = useCallback(() => {
+    setMobileOpenedOn(null)
     toggleRef.current?.focus()
   }, [])
 
-  const toggleMenu = useCallback(() => {
-    if (isMenuOpen) {
-      closeMenu()
+  const toggleMobileMenu = useCallback(() => {
+    if (isMobileMenuOpen) {
+      closeMobileMenu()
       return
     }
 
-    openMenu()
-  }, [closeMenu, isMenuOpen, openMenu])
+    setMobileOpenedOn(pathname)
+  }, [closeMobileMenu, isMobileMenuOpen, pathname])
 
-  const registerToggle = useCallback((node: HTMLButtonElement | null) => {
-    toggleRef.current = node
-  }, [])
+  const registerMobileToggle = useCallback(
+    (node: HTMLButtonElement | null) => {
+      toggleRef.current = node
+    },
+    [],
+  )
 
   const value = useMemo(
     () => ({
-      isMenuOpen,
-      menuId,
       openMenu,
-      closeMenu,
-      toggleMenu,
-      registerToggle,
+      setOpenMenu,
+      isMobileMenuOpen,
+      mobileMenuId,
+      toggleMobileMenu,
+      closeMobileMenu,
+      registerMobileToggle,
     }),
-    [closeMenu, isMenuOpen, menuId, openMenu, registerToggle, toggleMenu],
+    [
+      closeMobileMenu,
+      isMobileMenuOpen,
+      mobileMenuId,
+      openMenu,
+      registerMobileToggle,
+      setOpenMenu,
+      toggleMobileMenu,
+    ],
   )
 
   return (
@@ -67,11 +88,12 @@ export function NavbarProvider({ children }: { children: ReactNode }) {
 }
 
 /**
- * Everything the sheet covers. `inert` — not merely `hidden` — takes it out
- * of the focus order and the accessibility tree while the sheet is open.
+ * Everything the mobile sheet covers. `inert` — not merely `hidden` — takes
+ * it out of the focus order and the accessibility tree while the sheet is
+ * open.
  */
 export function InertWhileMenuOpen({ children }: { children: ReactNode }) {
-  const { isMenuOpen } = useNavbar()
+  const { isMobileMenuOpen } = useNavbar()
 
-  return <div inert={isMenuOpen}>{children}</div>
+  return <div inert={isMobileMenuOpen}>{children}</div>
 }

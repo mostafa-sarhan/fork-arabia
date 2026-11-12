@@ -1,11 +1,11 @@
 import { useLocation } from 'react-router'
-import { languagePathname } from '@/lib/routing/routes'
 import {
   DIRECTIONS,
   LANGUAGES,
   type Direction,
   type Language,
 } from './languageConfig'
+import { samePathInLanguage } from './localizePath'
 import { useLanguage } from './useLanguage'
 
 /**
@@ -65,7 +65,7 @@ export function useLanguageSwap(): LanguageSwap {
     language: other,
     direction: DIRECTIONS[other],
     to: {
-      pathname: languagePathname(location.pathname, other),
+      pathname: samePathInLanguage(location.pathname, other),
       search: location.search,
       hash: location.hash,
     },
@@ -102,7 +102,7 @@ export function useLanguageOptions(): readonly LanguageOption[] {
     code: candidate.toUpperCase(),
     endonym: LANGUAGE_SELF[candidate].endonym,
     to: {
-      pathname: languagePathname(location.pathname, candidate),
+      pathname: samePathInLanguage(location.pathname, candidate),
       search: location.search,
       hash: location.hash,
     },

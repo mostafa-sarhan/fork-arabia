@@ -1,6 +1,8 @@
 import { Footer } from '@/components/footer'
-import { ServicesMenuPanel } from '@/components/navbar/ServicesMenu'
-import type { ServicesMenuState } from '@/components/navbar/useServicesMenu'
+import {
+  ServicesMenuPanel,
+  type ServicesMenuState,
+} from '@/components/navbar/ServicesMenu'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import type { TranslationKey } from '@/lib/i18n/translations'
 import { useLanguage } from '@/lib/i18n/useLanguage'

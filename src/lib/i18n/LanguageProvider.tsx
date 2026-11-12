@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useMemo, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import {
-  languageFromPathname,
-  languagePathname,
-} from '@/lib/routing/routes'
 import { LanguageContext } from './context'
+import { languageFromPathname, samePathInLanguage } from './localizePath'
 import { DIRECTIONS, type Language } from './languageConfig'
 import { translations, type TranslationKey } from './translations'
 
@@ -36,7 +33,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLanguage = useCallback(
     (next: Language) => {
       navigate({
-        pathname: languagePathname(location.pathname, next),
+        pathname: samePathInLanguage(location.pathname, next),
         search: location.search,
         hash: location.hash,
       })

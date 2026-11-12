@@ -1,5 +1,5 @@
 import type { IconName } from '@/components/ui/iconRegistry'
-import type { Localized } from '@/lib/i18n/localized'
+import { copy, type Localized } from '@/lib/i18n/localized'
 
 /**
 * The nine service sectors, as every list of them needs to know them.
@@ -16,12 +16,6 @@ import type { Localized } from '@/lib/i18n/localized'
 * where the profile had no English, the wording is ours and marked
 * proposed — see `docs/copy-review.md`.
 */
-
-/** The same text in both languages, each from its own source document. */
-const copy = (arabic: string, english: string): Localized => ({
-    ar: arabic,
-    en: english,
-  })
 
 export type Sector = {
   readonly id: string
@@ -177,7 +171,7 @@ export type SectorSlug = (typeof SECTOR_INDEX)[number]['slug']
 export type SectorId = (typeof SECTOR_INDEX)[number]['id']
 
 /** The literal type of one entry, so a slug stays a `SectorSlug`. */
-type SectorEntry = (typeof SECTOR_INDEX)[number]
+export type SectorEntry = (typeof SECTOR_INDEX)[number]
 
 const BY_SLUG = new Map<string, SectorEntry>(
   SECTOR_INDEX.map((sector) => [sector.slug, sector]),

@@ -5,8 +5,8 @@ import type {
   Ref,
 } from 'react'
 import { cn } from '@/lib/cn'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import type { CanonicalPath } from '@/lib/routing/routes'
+import { LocalizedLink } from '@/components/LocalizedLink'
+import type { SitePath } from '@/config/paths'
 
 export type IconButtonVariant = 'solid' | 'outline' | 'ghost'
 export type IconButtonSize = 'sm' | 'md'
@@ -52,7 +52,7 @@ type AsButton = SharedProps &
   }
 
 type AsInternalLink = SharedProps & {
-  to: CanonicalPath
+  to: SitePath
   href?: never
   ref?: Ref<HTMLAnchorElement>
   onClick?: AnchorHTMLAttributes<HTMLAnchorElement>['onClick']

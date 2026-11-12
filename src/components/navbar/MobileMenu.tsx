@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef, useState, type ComponentType } from 'react'
 import { useLocation } from 'react-router'
-import { LanguageSheetOptions } from '@/components/navbar/LanguageMenu'
-import { useNavbar } from '@/components/navbar/NavbarContext'
+import { LocalizedLink } from '@/components/LocalizedLink'
 import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
 import { ICONS } from '@/components/ui/iconRegistry'
@@ -14,14 +13,16 @@ import {
   PhoneIcon,
   type IconProps,
 } from '@/components/ui/icons'
+import { SITE_CONTACT, type ContactChannel } from '@/config/contact'
+import { NAV_ACTIONS, PRIMARY_NAV } from '@/config/navigation'
+import { PATHS, sectorPath } from '@/config/paths'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
 import { Copy } from '@/lib/i18n/Copy'
+import { isPathActive } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { NAV_ACTIONS, PRIMARY_NAV } from '@/lib/navigation'
-import { LocalizedLink } from '@/lib/routing/LocalizedLink'
-import { isRouteActive, ROUTE_PATHS, sectorPath } from '@/lib/routing/routes'
-import { SITE_CONTACT, type ContactChannel } from '@/lib/siteContact'
+import { LanguageSheetOptions } from './LanguageMenu'
+import { useNavbar } from './useNavbar'
 
 const CHANNEL_ICONS: Record<ContactChannel['id'], ComponentType<IconProps>> = {
   riyadh: PhoneIcon,
@@ -36,20 +37,25 @@ const FOCUSABLE =
 /** The control that opens and closes the sheet, below the desktop bar. */
 export function MobileMenuToggle() {
   const { t } = useLanguage()
-  const { isMenuOpen, menuId, toggleMenu, registerToggle } = useNavbar()
+  const {
+    isMobileMenuOpen,
+    mobileMenuId,
+    toggleMobileMenu,
+    registerMobileToggle,
+  } = useNavbar()
 
   return (
     <IconButton
-      ref={registerToggle}
-      label={isMenuOpen ? t('a11y.closeMenu') : t('a11y.openMenu')}
+      ref={registerMobileToggle}
+      label={isMobileMenuOpen ? t('a11y.closeMenu') : t('a11y.openMenu')}
       variant="outline"
       size="sm"
-      aria-expanded={isMenuOpen}
-      aria-controls={menuId}
-      onClick={toggleMenu}
+      aria-expanded={isMobileMenuOpen}
+      aria-controls={mobileMenuId}
+      onClick={toggleMobileMenu}
       className="xl:hidden"
     >
-      {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+      {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
     </IconButton>
   )
 }
@@ -69,7 +75,7 @@ export function MobileMenuToggle() {
 export function MobileMenu() {
   const { t } = useLanguage()
   const location = useLocation()
-  const { isMenuOpen, menuId, closeMenu } = useNavbar()
+  const { isMobileMenuOpen, mobileMenuId, closeMobileMenu } = useNavbar()
   const panelRef = useRef<HTMLDivElement>(null)
   const sectorsId = useId()
   const [areSectorsOpen, setSectorsOpen] = useState(false)
@@ -83,7 +89,7 @@ export function MobileMenu() {
   useEffect(() => {
     const panel = panelRef.current
 
-    if (!isMenuOpen || !panel) {
+    if (!isMobileMenuOpen || !panel) {
       return
     }
 
@@ -94,7 +100,7 @@ export function MobileMenu() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        closeMenu()
+        closeMobileMenu()
         return
       }
 
@@ -122,11 +128,11 @@ export function MobileMenu() {
     document.addEventListener('keydown', onKeyDown)
 
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [closeMenu, isMenuOpen])
+  }, [closeMobileMenu, isMobileMenuOpen])
 
   /** The page must not scroll underneath the sheet. */
   useEffect(() => {
-    if (!isMenuOpen) {
+    if (!isMobileMenuOpen) {
       return
     }
 
@@ -137,29 +143,29 @@ export function MobileMenu() {
     return () => {
       document.body.style.overflow = previous
     }
-  }, [isMenuOpen])
+  }, [isMobileMenuOpen])
 
   return (
     <>
       <div
         aria-hidden="true"
-        onClick={closeMenu}
+        onClick={closeMobileMenu}
         className={cn(
           'fixed inset-0 z-overlay bg-navy/40 transition-opacity duration-300 xl:hidden',
-          isMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+          isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
         )}
       />
 
       <div
-        id={menuId}
+        id={mobileMenuId}
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={t('nav.primary')}
-        inert={!isMenuOpen}
+        inert={!isMobileMenuOpen}
         className={cn(
           'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-transform duration-300 ease-emphasized xl:hidden',
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
         )}
       >
         <nav
@@ -168,14 +174,14 @@ export function MobileMenu() {
         >
           <ul className="flex flex-col">
             {PRIMARY_NAV.map((item) => {
-              const isActive = isRouteActive(location.pathname, item.routeId)
-              const isServices = item.routeId === 'services'
+              const isActive = isPathActive(location.pathname, item.path)
+              const isServices = item.path === PATHS.services
 
               return (
-                <li key={item.routeId}>
+                <li key={item.path}>
                   <div className="flex items-center">
                     <LocalizedLink
-                      to={ROUTE_PATHS[item.routeId]}
+                      to={item.path}
                       aria-current={isActive ? 'page' : undefined}
                       className={cn(
                         'relative flex min-h-12 flex-1 items-center rounded-md px-3 text-body-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
@@ -252,8 +258,8 @@ export function MobileMenu() {
         <div className="flex flex-col gap-3 border-b border-line px-gutter py-6">
           {NAV_ACTIONS.map((action) => (
             <Button
-              key={action.routeId}
-              to={ROUTE_PATHS[action.routeId]}
+              key={action.path}
+              to={action.path}
               variant={action.variant}
               fullWidth
             >

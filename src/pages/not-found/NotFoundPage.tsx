@@ -1,8 +1,9 @@
 import { Container } from '@/components/layout/Container'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { PATHS } from '@/config/paths'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { ROUTE_PATHS } from '@/lib/routing/routes'
+import { usePageMeta } from '@/lib/usePageMeta'
 
 /**
  * Rendered for every path no route claims, in the language the path asks for:
@@ -11,8 +12,10 @@ import { ROUTE_PATHS } from '@/lib/routing/routes'
  * and the visitor can switch language or walk back without using the back
  * button.
  */
-export default function NotFound() {
+export default function NotFoundPage() {
   const { t } = useLanguage()
+
+  usePageMeta({ titleKey: 'notFound.title', indexable: false })
 
   return (
     <div className="relative flex min-h-main flex-col bg-page">
@@ -30,10 +33,10 @@ export default function NotFound() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button to={ROUTE_PATHS.home} variant="secondary">
+              <Button to={PATHS.home} variant="secondary">
                 {t('notFound.home')}
               </Button>
-              <Button to={ROUTE_PATHS.contact} variant="outline">
+              <Button to={PATHS.contact} variant="outline">
                 {t('nav.contact')}
               </Button>
             </div>

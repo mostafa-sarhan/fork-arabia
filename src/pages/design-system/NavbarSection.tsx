@@ -1,19 +1,18 @@
 import type { ReactNode } from 'react'
 import { Logo } from '@/components/brand/Logo'
-import { LanguageSuggestionCard } from '@/components/layout/LanguageSuggestion'
 import {
   LanguageMenuPanel,
   LanguageMenuTrigger,
+  type LanguageMenuState,
 } from '@/components/navbar/LanguageMenu'
-import { NavbarLink } from '@/components/navbar/NavbarLink'
-import type { LanguageMenuState } from '@/components/navbar/useLanguageMenu'
+import { NavbarLink } from '@/components/navbar/Navbar'
 import { Button } from '@/components/ui/Button'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { NAV_ACTIONS, PRIMARY_NAV } from '@/config/navigation'
+import { LanguageSuggestionCard } from '@/layouts/LanguageSuggestion'
 import { cn } from '@/lib/cn'
 import type { TranslationKey } from '@/lib/i18n/translations'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { NAV_ACTIONS, PRIMARY_NAV } from '@/lib/navigation'
-import { ROUTE_PATHS } from '@/lib/routing/routes'
 import { DocSection } from './DocSection'
 
 const LANGUAGE_NOTES: TranslationKey[] = [
@@ -98,7 +97,7 @@ function NavbarPreview({ isScrolled }: { isScrolled: boolean }) {
 
           <ul className="flex items-center gap-1">
             {PRIMARY_NAV.map((item, index) => (
-              <li key={item.routeId}>
+              <li key={item.path}>
                 <NavbarLink item={item} isActive={index === 0} />
               </li>
             ))}
@@ -109,8 +108,8 @@ function NavbarPreview({ isScrolled }: { isScrolled: boolean }) {
             <span aria-hidden="true" className="h-6 w-px bg-line" />
             {NAV_ACTIONS.map((action) => (
               <Button
-                key={action.routeId}
-                to={ROUTE_PATHS[action.routeId]}
+                key={action.path}
+                to={action.path}
                 variant={action.variant}
                 size="sm"
               >
