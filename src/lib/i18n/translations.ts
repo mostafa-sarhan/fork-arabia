@@ -1,6 +1,8 @@
 const en = {
   'brand.name': 'FORK ARABIA',
   'brand.legal': 'FORK ARABIA LIMITED',
+  /* The home page's document title: the full name, in both scripts. */
+  'home.title': 'FORK ARABIA LIMITED | فورك العربية المحدودة',
 
   'a11y.skipToContent': 'Skip to content',
   'a11y.loading': 'Loading…',
@@ -34,13 +36,6 @@ const en = {
   'contact.tanta': 'Tanta',
   'contact.whatsapp': 'WhatsApp',
   'contact.email': 'Email',
-
-  'soon.eyebrow': 'Coming Soon',
-  'soon.titleA': 'Something Great',
-  'soon.titleB': 'Is Coming Soon',
-  'soon.description':
-    "We're working on something special. A fresh experience is on its way — crafted with care, served soon.",
-  'soon.progress': 'Crafting the experience',
 
   'notFound.badge': 'Error 404',
   'notFound.title': 'This page does not exist',
@@ -265,6 +260,8 @@ const en = {
   'icon.info': 'Info',
   'icon.mail': 'Mail',
   'icon.phone': 'Phone',
+  'icon.photo': 'Photo — image placeholder',
+  'icon.pin': 'Pin — location',
   'icon.shield': 'Shield',
   'icon.briefcase': 'Briefcase',
   'icon.menu': 'Menu',
@@ -387,6 +384,7 @@ const en = {
 const ar: Record<keyof typeof en, string> = {
   'brand.name': 'فورك العربية',
   'brand.legal': 'فورك العربية المحدودة',
+  'home.title': 'فورك العربية المحدودة | FORK ARABIA LIMITED',
 
   'a11y.skipToContent': 'تخطَّ إلى المحتوى',
   'a11y.loading': 'جارٍ التحميل…',
@@ -419,13 +417,6 @@ const ar: Record<keyof typeof en, string> = {
   'contact.tanta': 'طنطا',
   'contact.whatsapp': 'واتساب',
   'contact.email': 'البريد الإلكتروني',
-
-  'soon.eyebrow': 'قريباً',
-  'soon.titleA': 'شيء استثنائي',
-  'soon.titleB': 'قادم قريباً',
-  'soon.description':
-    'نعمل على تجربة استثنائية. موقعنا الجديد في طريقه إليكم — مصمم بعناية، وجاهز قريباً.',
-  'soon.progress': 'نصمم التجربة',
 
   'notFound.badge': 'خطأ 404',
   'notFound.title': 'هذه الصفحة غير موجودة',
@@ -649,6 +640,8 @@ const ar: Record<keyof typeof en, string> = {
   'icon.info': 'معلومات',
   'icon.mail': 'بريد',
   'icon.phone': 'هاتف',
+  'icon.photo': 'صورة — بديل الصور',
+  'icon.pin': 'مؤشر موقع',
   'icon.shield': 'درع',
   'icon.briefcase': 'حقيبة أعمال',
   'icon.menu': 'قائمة',

@@ -54,6 +54,12 @@ export type PageMeta = {
   /** The page's title, as a key of the translation table. */
   titleKey: TranslationKey
   /**
+   * Whether the brand name is appended to the title. The home page's title
+   * is the company's own name, so it is the one page that sets this false
+   * rather than repeat it.
+   */
+  brandSuffix?: boolean
+  /**
    * Whether search engines may index this page. An unindexable page gets
    * `noindex` and no canonical or alternate links — a URL that should not be
    * found has no canonical form.
@@ -70,12 +76,18 @@ export type PageMeta = {
  * `window.location.origin`, so the same build is correct on a preview
  * deployment and in production.
  */
-export function usePageMeta({ titleKey, indexable = true }: PageMeta): void {
+export function usePageMeta({
+  titleKey,
+  brandSuffix = true,
+  indexable = true,
+}: PageMeta): void {
   const { language, t } = useLanguage()
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const title = `${t(titleKey)} — ${t('brand.name')}`
+    const title = brandSuffix
+      ? `${t(titleKey)} — ${t('brand.name')}`
+      : t(titleKey)
     const description = resolveCopy(SITE_DESCRIPTION, language)
 
     document.title = title
@@ -83,7 +95,7 @@ export function usePageMeta({ titleKey, indexable = true }: PageMeta): void {
     setMeta('meta[property="og:title"]', title)
     setMeta('meta[property="og:description"]', description)
     setMeta('meta[property="og:locale"]', OG_LOCALES[language])
-  }, [language, t, titleKey])
+  }, [brandSuffix, language, t, titleKey])
 
   useEffect(() => {
     const { origin } = window.location

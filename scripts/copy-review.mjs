@@ -14,6 +14,7 @@ const FILES = [
   'src/data/sectorIndex.ts',
   'src/data/sectorContent.ts',
   'src/data/siteCopy.ts',
+  'src/data/homeCopy.ts',
 ]
 
 /**

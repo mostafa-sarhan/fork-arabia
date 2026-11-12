@@ -18,6 +18,8 @@ const LABELS: Record<IconName, TranslationKey> = {
   info: 'icon.info',
   mail: 'icon.mail',
   phone: 'icon.phone',
+  photo: 'icon.photo',
+  pin: 'icon.pin',
   shield: 'icon.shield',
   briefcase: 'icon.briefcase',
   menu: 'icon.menu',

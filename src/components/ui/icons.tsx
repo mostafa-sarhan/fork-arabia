@@ -167,6 +167,27 @@ export function CalendarIcon(props: IconProps) {
   )
 }
 
+/** A photograph: the placeholder an undelivered image stands behind. */
+export function PhotoIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      <circle cx="8.5" cy="9.5" r="1.8" />
+      <path d="m3 17 5-4.5 4 3.5 3-2.5 6 5" />
+    </IconBase>
+  )
+}
+
+/** A place on a map, for a line about where the company is. */
+export function PinIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 21.5s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
+      <circle cx="12" cy="10" r="2.6" />
+    </IconBase>
+  )
+}
+
 /* -------------------------------------------------------------------------- */
 /* Sector icons — one per service sector, drawn on the same 24px grid         */
 /* -------------------------------------------------------------------------- */

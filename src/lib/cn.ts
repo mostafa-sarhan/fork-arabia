@@ -23,6 +23,9 @@ import { extendTailwindMerge, type ClassNameValue } from 'tailwind-merge'
 /** --text-* : the type scale, resolved as font sizes. */
 const text = [
   'display',
+  'hero',
+  'lead',
+  'lead-lg',
   'h1',
   'h2',
   'h3',
@@ -35,6 +38,10 @@ const text = [
   'label',
   'nav',
   'overline',
+  'stat',
+  'stat-tablet',
+  'stat-mobile',
+  'stat-label',
 ]
 
 /** --color-* : brand, surface and semantic role colors. */
@@ -76,6 +83,9 @@ const spacing = [
   'section-sm',
   'section',
   'section-lg',
+  'hero-top',
+  'hero-bottom',
+  'stats-overlap',
 ]
 
 /** --container-* : the layout widths. */
@@ -84,12 +94,13 @@ const container = [
   'measure',
   'panel',
   'narrow',
+  'stats',
   'content',
   'wide',
 ]
 
 /** --radius-* */
-const radius = ['xs', 'sm', 'md', 'lg', 'xl']
+const radius = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
 
 /** --shadow-* */
 const shadows = ['xs', 'card', 'raised', 'header']
@@ -104,7 +115,7 @@ const tracking = ['brand', 'brand-wide']
 const ease = ['standard', 'emphasized']
 
 /** --animate-* */
-const animate = ['fade-up', 'shimmer', 'dot']
+const animate = ['fade-up', 'enter', 'shimmer', 'dot']
 
 /** --breakpoint-* */
 const breakpoint = ['sm', 'md', 'lg', 'xl', '2xl']
@@ -148,7 +159,7 @@ export const cn = extendTailwindMerge({
       z: [{ z: zLayers }],
       tracking: [{ tracking: trackingUtilities }],
       // bg-grid paints a background image, not a background color.
-      'bg-image': ['bg-grid'],
+      'bg-image': ['bg-grid', 'bg-hero-grid'],
     },
   },
 })
