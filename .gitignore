@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Client source material: PDFs and artwork used as a reference while building.
+# Never imported at runtime and never committed.
+_source

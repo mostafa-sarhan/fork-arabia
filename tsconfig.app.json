@@ -10,6 +10,17 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+
+    /*
+     * `@/*` is the one way to reach another folder. Relative imports stay for
+     * siblings inside the same folder; anything that would climb with `../`
+     * goes through the alias, so a file can be moved without rewriting the
+     * imports that point into it. vite.config.ts carries the matching
+     * `resolve.alias` — keep the two in step.
+     */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
