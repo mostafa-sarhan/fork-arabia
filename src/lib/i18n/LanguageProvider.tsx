@@ -1,101 +1,50 @@
+import { useCallback, useEffect, useMemo, type ReactNode } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+  languageFromPathname,
+  languagePathname,
+} from '@/lib/routing/routes'
 import { LanguageContext } from './context'
-import {
-  DEFAULT_LANGUAGE,
-  DIRECTIONS,
-  isLanguage,
-  LANGUAGE_QUERY_PARAM,
-  LANGUAGE_STORAGE_KEY,
-  type Language,
-} from './languageConfig'
+import { DIRECTIONS, type Language } from './languageConfig'
 import { translations, type TranslationKey } from './translations'
 
 /**
- * Query parameter first, then the stored preference, then the default.
+ * Supplies the language, its direction and the translator.
  *
- * The boot script in `index.html` mirrors this order so the document is
- * already in the right language and direction at first paint. Both read the
- * constants from `./languageConfig`, so only the ordering is stated twice —
- * keep the two in step.
+ * The language is read from the URL rather than held in state. It used to
+ * come from `?lang=`, falling back to a stored preference, which meant the
+ * same page had two addresses, a shared link could open in a language the
+ * sender never saw, and a crawler was shown Arabic for every URL. The path
+ * now decides, so the address bar and the page can never disagree, and
+ * nothing is remembered between visits — a link is the whole state.
+ *
+ * `setLanguage` is consequently a navigation. It keeps the current page, its
+ * query and its hash, and only exchanges the language prefix, so switching
+ * language never costs the visitor their place.
  */
-function resolveInitialLanguage(): Language {
-  if (typeof window === 'undefined') {
-    return DEFAULT_LANGUAGE
-  }
-
-  try {
-    const query = new URLSearchParams(window.location.search).get(
-      LANGUAGE_QUERY_PARAM,
-    )
-
-    if (isLanguage(query)) {
-      return query
-    }
-
-    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
-
-    if (isLanguage(stored)) {
-      return stored
-    }
-  } catch {
-    // Storage can be unavailable in restricted browsing contexts.
-  }
-
-  return DEFAULT_LANGUAGE
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(
-    resolveInitialLanguage,
-  )
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const language = languageFromPathname(location.pathname)
   const direction = DIRECTIONS[language]
 
   useEffect(() => {
     const root = document.documentElement
+
     root.lang = language
     root.dir = direction
-
-    try {
-      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language)
-    } catch {
-      // Persisting the preference is optional.
-    }
-  }, [language, direction])
-
-  /**
-   * Keeps ?lang= in step with the UI. Without it a visitor who arrives on
-   * ?lang=en and then switches to Arabic copies a URL that reopens in
-   * English. replaceState is used rather than pushState so switching
-   * language does not add a history entry the back button has to walk
-   * through. A URL with no ?lang= is left clean until the first switch.
-   */
-  const syncQueryParam = useCallback((next: Language) => {
-    try {
-      const url = new URL(window.location.href)
-
-      if (url.searchParams.get(LANGUAGE_QUERY_PARAM) === next) {
-        return
-      }
-
-      url.searchParams.set(LANGUAGE_QUERY_PARAM, next)
-      window.history.replaceState(window.history.state, '', url)
-    } catch {
-      // History access can be unavailable in restricted browsing contexts.
-    }
-  }, [])
+  }, [direction, language])
 
   const setLanguage = useCallback(
     (next: Language) => {
-      setLanguageState(next)
-      syncQueryParam(next)
+      navigate({
+        pathname: languagePathname(location.pathname, next),
+        search: location.search,
+        hash: location.hash,
+      })
     },
-    [syncQueryParam],
+    [location.hash, location.pathname, location.search, navigate],
   )
 
   const toggleLanguage = useCallback(() => {

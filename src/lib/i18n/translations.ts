@@ -2,18 +2,39 @@ const en = {
   'brand.name': 'FORK ARABIA',
   'brand.suffix': 'LIMITED',
   'brand.legal': 'FORK ARABIA LIMITED',
-  'brand.homeLabel': 'FORK ARABIA — Home',
 
-  'lang.label': 'Language',
-  'lang.arabic': 'Arabic',
-  'lang.english': 'English',
 
   'a11y.skipToContent': 'Skip to content',
+  'a11y.loading': 'Loading…',
+  'a11y.openMenu': 'Open menu',
+  'a11y.closeMenu': 'Close menu',
 
+  'nav.primary': 'Main navigation',
   'nav.home': 'Home',
-  'nav.services': 'Services',
+  'nav.about': 'About us',
+  'nav.services': 'Our services',
+  'nav.servicesMenu': 'Services menu',
+  'nav.allServices': 'All services',
+  'nav.presence': 'Our presence',
+  'nav.contact': 'Contact us',
+  'nav.bookConsultation': 'Book a consultation',
+  'nav.bookConsultationShort': 'Book',
+  'nav.requestQuote': 'Request a quote',
   'nav.designSystem': 'Design System',
-  'nav.backToSite': 'Back to site',
+
+  'lang.label': 'Language',
+
+  'page.preparing': 'This page is being prepared.',
+
+  'contact.shortcuts': 'Get in touch',
+  'footer.quickLinks': 'Quick links',
+  'footer.featured': 'Featured services',
+  'footer.social': 'Follow us',
+  'contact.riyadh': 'Riyadh (head office)',
+  'contact.tanta': 'Tanta',
+  'contact.whatsappLabel': 'WhatsApp',
+  'contact.whatsapp': 'WhatsApp',
+  'contact.email': 'Email',
 
   'soon.eyebrow': 'Coming Soon',
   'soon.titleA': 'Something Great',
@@ -23,6 +44,12 @@ const en = {
   'soon.progress': 'Crafting the experience',
   'soon.rights': 'All rights reserved.',
   'soon.established': 'EST. 2026',
+
+  'notFound.badge': 'Error 404',
+  'notFound.title': 'This page does not exist',
+  'notFound.desc':
+    'The address may have been mistyped, or the page may have moved. The home page is the quickest way back.',
+  'notFound.home': 'Go to the home page',
 
   'ds.title': 'Design System',
   'ds.subtitle':
@@ -40,6 +67,8 @@ const en = {
   'ds.section.layout': 'Layout',
   'ds.section.icons': 'Icons',
   'ds.section.direction': 'Direction & Language',
+  'ds.section.header': 'Header',
+  'ds.section.navigation': 'Menu & Footer',
 
   'ds.colors.title': 'Brand Colors',
   'ds.colors.desc':
@@ -93,6 +122,12 @@ const en = {
   'role.usage.subheading': 'Eyebrows, overlines and secondary emphasis',
   'role.usage.link': 'Inline links at rest',
   'role.usage.linkHover': 'Inline links on hover',
+  'role.disabledBg': 'Disabled surface',
+  'role.disabledFg': 'Disabled label',
+  'role.disabledBorder': 'Disabled border',
+  'role.usage.disabledBg': 'The surface of a control that cannot be used',
+  'role.usage.disabledFg': 'The label and icon of a disabled control',
+  'role.usage.disabledBorder': 'The border of a disabled control',
 
   'ds.colors.contrast': 'Contrast',
   'ds.colors.contrastDesc':
@@ -121,6 +156,7 @@ const en = {
   'pair.logoMark': 'Logo mark and icons on navy',
   'pair.errorText': 'Error message',
   'pair.destructiveButton': 'Destructive button label',
+  'pair.disabledControl': 'Disabled control label',
   'pair.whiteOnTurquoise': 'White text on turquoise',
   'pair.turquoiseOnWhite': 'Turquoise text on white',
   'pair.reason.useOnAccent': 'Use navy on turquoise instead',
@@ -239,6 +275,19 @@ const en = {
   'icon.phone': 'Phone',
   'icon.shield': 'Shield',
   'icon.briefcase': 'Briefcase',
+  'icon.menu': 'Menu',
+  'icon.close': 'Close',
+  'icon.chat': 'Chat',
+  'icon.calendar': 'Calendar',
+  'icon.scale': 'Scales — legal',
+  'icon.foundation': 'Foundation — company setup',
+  'icon.ledger': 'Ledger — finance',
+  'icon.orgChart': 'Org chart — governance',
+  'icon.medal': 'Medal — quality',
+  'icon.academic': 'Cap — training',
+  'icon.chip': 'Chip — technology',
+  'icon.supply': 'Layers — operations',
+  'icon.passport': 'Passport — residency',
 
   'ds.direction.title': 'Direction & Language',
   'ds.direction.desc':
@@ -256,6 +305,89 @@ const en = {
   'direction.note':
     'All components use logical start/end properties, so spacing and alignment remain correct when the direction changes.',
 
+  'ds.buttons.links': 'As a link',
+  'ds.buttons.linksDesc':
+    'The same action can be a button, a route link or an external link. One set of styles covers all three, and the element follows from the props: to for a route, href for anything else, neither for a button.',
+  'btn.internalLink': 'Internal route',
+  'btn.externalLink': 'External link',
+
+  'ds.nav.title': 'Services Menu & Footer',
+  'ds.nav.desc':
+    'The two places that list the whole site. Both read from the same configuration the pages do: the sectors data, the navigation list and the contact details.',
+  'ds.nav.menu': 'Services mega-menu',
+  'ds.nav.menuDesc':
+    'The nine sectors as the data defines them, three by three, under the header. Shown here in place; on the site it is anchored to the bottom edge of the bar.',
+  'ds.nav.menu.disclosure':
+    'The item is a link and a disclosure button side by side, so the services page stays reachable by keyboard while the chevron owns aria-expanded and aria-controls.',
+  'ds.nav.menu.pointer':
+    'A pointer opens it after 120ms and closes it after 180ms, so crossing the item on the way elsewhere does not flash it open and the gap between item and panel does not snatch it away.',
+  'ds.nav.menu.keyboard':
+    'Arrow keys walk the grid — one step along the row, three down a column, Home and End to the ends. Which arrow moves forward follows the writing direction.',
+  'ds.nav.menu.dismiss':
+    'Escape, a click outside, focus leaving and a route change all close it.',
+  'ds.nav.menu.mobile':
+    'Below the desktop breakpoint the same nine sectors are an expandable group inside the navigation sheet.',
+  'ds.nav.footer': 'Footer',
+  'ds.nav.footer.sources':
+    'Quick links come from the navigation configuration, the featured services from the sectors data by id, and the numbers from the contact configuration — nothing in the footer is a second copy of a list kept elsewhere.',
+  'ds.nav.footer.contrast':
+    'White on navy is 13.21:1 and the muted tone is 6.58:1, so the hierarchy is two passing levels rather than one legible and one faint. The focus ring turns turquoise, which is 4.9:1 on navy where petrol would be 1.6:1.',
+  'ds.nav.footer.numbers':
+    'Every number and address is rendered left-to-right, so a leading + is never moved to the wrong end inside an Arabic column.',
+  'ds.nav.footer.social':
+    'Social links are hidden until their addresses are supplied: an empty URL is the configured "not known" state rather than a dead link.',
+
+  'ds.header.title': 'Site Header',
+  'ds.header.desc':
+    'One sticky header is mounted for every route. It holds the brand, the primary navigation, the language switch and the two standing calls to action.',
+  'ds.header.default': 'Default state',
+  'ds.header.scrolled': 'After the page scrolls',
+  'ds.header.previewNote':
+    'Reduced-width specimen. The live bar runs the full width of the page. Its height and its logo are fixed per breakpoint; scrolling adds the shadow and changes nothing else.',
+  'ds.header.active':
+    'The current page is marked three times over: aria-current for assistive technology, navy and a heavier weight for everyone, and a turquoise bar as decoration. Turquoise is 2.69:1 on white, so it is never allowed to carry the state on its own.',
+  'ds.header.language': 'Language control',
+  'ds.header.language.closed': 'Closed',
+  'ds.header.language.open': 'Open',
+  'ds.header.language.suggestionLabel': 'Suggestion card',
+  'ds.header.language.trigger':
+    'The trigger is the two-letter code of the language in use and nothing else — no globe, no chevron — at the navigation’s own size, weight and muted colour, turning navy on hover and while open. It carries aria-haspopup, aria-expanded and aria-controls, and the code it shows is part of its accessible name.',
+  'ds.header.language.options':
+    'Both languages are offered as real links to this same page, each one its code on screen and its own name, in its own script and under its own lang, for a screen reader. The one in use is navy, semibold and aria-current. Path, query and hash all survive the switch.',
+  'ds.header.language.keyboard':
+    'A click, Enter, Space or ArrowDown opens it, and focus lands on the language already in use. The arrow keys move between the two options, Escape closes it and returns focus to the trigger, and Tab or a click outside closes it.',
+  'ds.header.language.exclusive':
+    'One popover at a time: opening the language menu closes the services panel, and opening the services panel closes the language menu. Both are anchored to the same bar, so neither is allowed to cover the other.',
+  'ds.header.language.mobile':
+    'Below the desktop breakpoint the same trigger sits beside the menu toggle, and the sheet carries the two codes as one inline pair. The footer keeps a plain link naming the other language.',
+  'ds.header.language.suggestion':
+    'A visitor whose browser prefers the other language is offered it once, in a card at the bottom inline-end corner written in the language being offered.',
+  'ds.header.language.once':
+    'The card is a region, not a dialog: it never takes focus, Escape closes it while it holds focus, and dismissing or accepting it stores a flag so it is never shown again.',
+
+  'ds.header.mobile': 'Mobile and tablet',
+  'ds.header.mobile.bar':
+    'Below the desktop breakpoint the bar keeps the brand, a compact accent "Book a consultation" and the menu toggle.',
+  'ds.header.mobile.panel':
+    'The menu is a full-height sheet that slides in from the inline-end side over a navy-tinted overlay, so it opens from the right in Arabic and from the left in English.',
+  'ds.header.mobile.contents':
+    'It carries the primary navigation at 48px targets, both actions full width, the language pair and the contact shortcuts.',
+  'ds.header.mobile.contact':
+    'Phone, WhatsApp and email come from one configuration module and are rendered left-to-right, so a number never reorders inside an Arabic sentence.',
+  'ds.header.a11y': 'Accessibility contract',
+  'ds.header.a11y.toggle':
+    'The toggle carries aria-expanded and aria-controls, and its name changes between "Open menu" and "Close menu" in both languages.',
+  'ds.header.a11y.focus':
+    'Focus moves into the sheet when it opens and is trapped inside it while it is open.',
+  'ds.header.a11y.dismiss':
+    'Escape and a click on the overlay both close it, and closing returns focus to the toggle.',
+  'ds.header.a11y.inert':
+    'The rest of the page is inert while the sheet is open and the body does not scroll.',
+  'ds.header.a11y.route':
+    'The sheet closes on a route change, so a link inside it never leaves it open over the new page.',
+  'ds.header.a11y.motion':
+    'Under prefers-reduced-motion the slide, the shadow transition and the indicator are all removed.',
+
   'footer.note': 'Internal development and visual reference.',
   'footer.rights': 'All rights reserved.',
 } as const
@@ -264,18 +396,39 @@ const ar: Record<keyof typeof en, string> = {
   'brand.name': 'فورك العربية',
   'brand.suffix': 'المحدودة',
   'brand.legal': 'فورك العربية المحدودة',
-  'brand.homeLabel': 'فورك العربية — الرئيسية',
 
-  'lang.label': 'اللغة',
-  'lang.arabic': 'العربية',
-  'lang.english': 'الإنجليزية',
 
   'a11y.skipToContent': 'تخطَّ إلى المحتوى',
+  'a11y.loading': 'جارٍ التحميل…',
+  'a11y.openMenu': 'فتح القائمة',
+  'a11y.closeMenu': 'إغلاق القائمة',
 
+  'nav.primary': 'التنقل الرئيسي',
   'nav.home': 'الرئيسية',
-  'nav.services': 'الخدمات',
+  'nav.about': 'من نحن',
+  'nav.services': 'خدماتنا',
+  'nav.servicesMenu': 'قائمة الخدمات',
+  'nav.allServices': 'كل الخدمات',
+  'nav.presence': 'تواجدنا',
+  'nav.contact': 'تواصل معنا',
+  'nav.bookConsultation': 'احجز استشارة',
+  'nav.bookConsultationShort': 'احجز',
+  'nav.requestQuote': 'اطلب عرض سعر',
   'nav.designSystem': 'نظام التصميم',
-  'nav.backToSite': 'العودة للموقع',
+
+  'lang.label': 'اللغة',
+
+  'page.preparing': 'هذه الصفحة قيد الإعداد.',
+
+  'contact.shortcuts': 'تواصل معنا',
+  'footer.quickLinks': 'روابط سريعة',
+  'footer.featured': 'أبرز الخدمات',
+  'footer.social': 'تابعنا',
+  'contact.riyadh': 'الرياض (المقر الرئيسي)',
+  'contact.tanta': 'طنطا',
+  'contact.whatsappLabel': 'واتساب',
+  'contact.whatsapp': 'واتساب',
+  'contact.email': 'البريد الإلكتروني',
 
   'soon.eyebrow': 'قريباً',
   'soon.titleA': 'شيء استثنائي',
@@ -285,6 +438,12 @@ const ar: Record<keyof typeof en, string> = {
   'soon.progress': 'نصمم التجربة',
   'soon.rights': 'جميع الحقوق محفوظة.',
   'soon.established': 'تأسست 2026',
+
+  'notFound.badge': 'خطأ 404',
+  'notFound.title': 'هذه الصفحة غير موجودة',
+  'notFound.desc':
+    'قد يكون العنوان مكتوباً بشكل خطأ، أو أن الصفحة انتقلت إلى موضع آخر. الصفحة الرئيسية هي أسرع طريق للعودة.',
+  'notFound.home': 'الانتقال إلى الصفحة الرئيسية',
 
   'ds.title': 'نظام التصميم',
   'ds.subtitle':
@@ -302,6 +461,8 @@ const ar: Record<keyof typeof en, string> = {
   'ds.section.layout': 'التخطيط',
   'ds.section.icons': 'الأيقونات',
   'ds.section.direction': 'الاتجاه واللغة',
+  'ds.section.header': 'الهيدر',
+  'ds.section.navigation': 'القائمة والفوتر',
 
   'ds.colors.title': 'ألوان الهوية',
   'ds.colors.desc':
@@ -355,6 +516,12 @@ const ar: Record<keyof typeof en, string> = {
   'role.usage.subheading': 'النصوص العلوية والعناوين الفرعية والتمييز الثانوي',
   'role.usage.link': 'الروابط في حالتها الطبيعية',
   'role.usage.linkHover': 'الروابط عند التمرير',
+  'role.disabledBg': 'سطح معطّل',
+  'role.disabledFg': 'نص معطّل',
+  'role.disabledBorder': 'حد معطّل',
+  'role.usage.disabledBg': 'سطح العنصر الذي لا يمكن استخدامه',
+  'role.usage.disabledFg': 'نص العنصر المعطّل وأيقونته',
+  'role.usage.disabledBorder': 'حد العنصر المعطّل',
 
   'ds.colors.contrast': 'التباين',
   'ds.colors.contrastDesc':
@@ -383,6 +550,7 @@ const ar: Record<keyof typeof en, string> = {
   'pair.logoMark': 'رمز الهوية والأيقونات على الكحلي',
   'pair.errorText': 'رسالة الخطأ',
   'pair.destructiveButton': 'نص زر الحذف',
+  'pair.disabledControl': 'نص عنصر معطّل',
   'pair.whiteOnTurquoise': 'نص أبيض على تركوازي',
   'pair.turquoiseOnWhite': 'نص تركوازي على أبيض',
   'pair.reason.useOnAccent': 'استخدم الكحلي على التركوازي بدلاً منه',
@@ -500,6 +668,19 @@ const ar: Record<keyof typeof en, string> = {
   'icon.phone': 'هاتف',
   'icon.shield': 'درع',
   'icon.briefcase': 'حقيبة أعمال',
+  'icon.menu': 'قائمة',
+  'icon.close': 'إغلاق',
+  'icon.chat': 'محادثة',
+  'icon.calendar': 'تقويم',
+  'icon.scale': 'ميزان — القانوني',
+  'icon.foundation': 'أساس — التأسيس',
+  'icon.ledger': 'دفتر — المالية',
+  'icon.orgChart': 'هيكل — الحوكمة',
+  'icon.medal': 'وسام — الجودة',
+  'icon.academic': 'قبعة — التدريب',
+  'icon.chip': 'شريحة — التقنية',
+  'icon.supply': 'طبقات — التشغيل',
+  'icon.passport': 'جواز — الإقامة',
 
   'ds.direction.title': 'الاتجاه واللغة',
   'ds.direction.desc':
@@ -516,6 +697,89 @@ const ar: Record<keyof typeof en, string> = {
   'direction.searchPlaceholder': 'ابحث في الخدمات',
   'direction.note':
     'تستخدم جميع المكونات خصائص منطقية مثل البداية والنهاية، لذا يبقى التباعد والمحاذاة صحيحين عند تبديل الاتجاه.',
+
+  'ds.buttons.links': 'كرابط',
+  'ds.buttons.linksDesc':
+    'الإجراء نفسه قد يكون زراً أو رابطاً لصفحة داخلية أو رابطاً خارجياً. مجموعة أنماط واحدة تغطي الحالات الثلاث، والعنصر يُختار من الخصائص: to للمسار الداخلي، وhref لما سواه، ولا شيء منهما للزر.',
+  'btn.internalLink': 'مسار داخلي',
+  'btn.externalLink': 'رابط خارجي',
+
+  'ds.nav.title': 'قائمة الخدمات والفوتر',
+  'ds.nav.desc':
+    'الموضعان اللذان يعرضان الموقع بالكامل. كلاهما يقرأ من المصادر نفسها التي تقرأ منها الصفحات: بيانات القطاعات، وقائمة التنقل، وبيانات التواصل.',
+  'ds.nav.menu': 'قائمة الخدمات الكبرى',
+  'ds.nav.menuDesc':
+    'القطاعات التسعة كما تعرّفها البيانات، ثلاثة في ثلاثة، أسفل الهيدر. تظهر هنا في مكانها، وفي الموقع ترتبط بالحافة السفلية للشريط.',
+  'ds.nav.menu.disclosure':
+    'العنصر رابط وزر إظهار متجاوران، فتبقى صفحة الخدمات في متناول لوحة المفاتيح، ويحمل السهم aria-expanded وaria-controls.',
+  'ds.nav.menu.pointer':
+    'يفتحها المؤشر بعد 120 جزءًا من الثانية ويغلقها بعد 180، فلا تومض عند المرور فوق العنصر في الطريق إلى غيره، ولا تختفي في المسافة بين العنصر واللوحة.',
+  'ds.nav.menu.keyboard':
+    'تتنقل أسهم لوحة المفاتيح داخل الشبكة: خطوة في الصف، وثلاث خطوات بين الصفوف، وHome وEnd للطرفين. والسهم الذي يتقدّم يتبع اتجاه الكتابة.',
+  'ds.nav.menu.dismiss':
+    'تُغلق بمفتاح Esc، أو بالنقر خارجها، أو بخروج التركيز منها، أو بتغيّر المسار.',
+  'ds.nav.menu.mobile':
+    'تحت نقطة انتقال سطح المكتب تظهر القطاعات التسعة نفسها كمجموعة قابلة للتوسيع داخل لوح التنقل.',
+  'ds.nav.footer': 'الفوتر',
+  'ds.nav.footer.sources':
+    'الروابط السريعة من إعداد التنقل، وأبرز الخدمات من بيانات القطاعات بالمعرّف، والأرقام من إعداد التواصل — فلا شيء في الفوتر نسخة ثانية من قائمة محفوظة في مكان آخر.',
+  'ds.nav.footer.contrast':
+    'الأبيض على الكحلي 13.21:1 واللون الهادئ 6.58:1، فالتدرّج مستويان مقروءان لا مستوى واضح وآخر باهت. وحلقة التركيز تتحول إلى التركوازي بنسبة 4.9:1 على الكحلي، حيث يصل البترولي إلى 1.6:1 فقط.',
+  'ds.nav.footer.numbers':
+    'كل رقم وبريد يُعرض من اليسار إلى اليمين، فلا تنتقل علامة + إلى الطرف الخطأ داخل عمود عربي.',
+  'ds.nav.footer.social':
+    'روابط التواصل مخفية حتى تُستلم عناوينها: الرابط الفارغ حالة «غير معروف» معرّفة في الإعداد، وليس رابطًا معطوبًا.',
+
+  'ds.header.title': 'هيدر الموقع',
+  'ds.header.desc':
+    'هيدر واحد ثابت أعلى كل صفحة، يضم الهوية والتنقل الرئيسي ومبدّل اللغة وإجراءَي الدعوة الأساسيين.',
+  'ds.header.default': 'الحالة الافتراضية',
+  'ds.header.scrolled': 'بعد تمرير الصفحة',
+  'ds.header.previewNote':
+    'نموذج بعرض مصغّر. الشريط الفعلي يمتد بعرض الصفحة، وارتفاعه وشعاره ثابتان عند كل نقطة انتقال؛ والتمرير يضيف الظل فقط دون أي تغيير آخر.',
+  'ds.header.active':
+    'الصفحة الحالية تُميَّز بثلاث وسائل: aria-current للتقنيات المساعدة، ولون كحلي بوزن أثقل للجميع، وشريط تركوازي كزخرفة. التركوازي على الأبيض 2.69:1، لذلك لا يُسمح له بحمل الحالة وحده.',
+  'ds.header.language': 'عنصر تبديل اللغة',
+  'ds.header.language.closed': 'مغلقة',
+  'ds.header.language.open': 'مفتوحة',
+  'ds.header.language.suggestionLabel': 'بطاقة الاقتراح',
+  'ds.header.language.trigger':
+    'الزر رمز اللغة المستخدمة حالياً من حرفين ولا شيء غيره — بلا كرة أرضية وبلا سهم — بحجم عناصر التنقل ووزنها ولونها الهادئ، ويصير كحلياً عند المرور عليه وأثناء فتح القائمة. ويحمل aria-haspopup وaria-expanded وaria-controls، والرمز الظاهر جزء من اسمه المقروء للتقنيات المساعدة.',
+  'ds.header.language.options':
+    'اللغتان معروضتان كرابطين حقيقيين إلى الصفحة نفسها، كل منهما رمزه على الشاشة واسم لغته بحروفها وتحت lang الخاص بها لقارئ الشاشة. واللغة المستخدمة حالياً كحلية وسميكة وتحمل aria-current. ويحتفظ التبديل بالمسار والاستعلام والمرساة.',
+  'ds.header.language.keyboard':
+    'يفتحها النقر أو Enter أو Space أو السهم السفلي، ويستقر التركيز على اللغة المستخدمة حالياً. وأسهم التنقل تنقل بين الخيارين، وEsc يغلقها ويعيد التركيز إلى الزر، ويغلقها Tab أو النقر خارجها.',
+  'ds.header.language.exclusive':
+    'لوح منسدل واحد في كل مرة: فتح قائمة اللغة يغلق لوح الخدمات، وفتح لوح الخدمات يغلق قائمة اللغة. وكلاهما معلّق بالشريط نفسه، فلا يغطي أحدهما الآخر.',
+  'ds.header.language.mobile':
+    'تحت نقطة انتقال سطح المكتب يبقى الزر نفسه بجانب زر القائمة، ويعرض اللوح الرمزين في سطر واحد متجاور. ويبقى في الفوتر رابط بسيط يسمّي اللغة الأخرى.',
+  'ds.header.language.suggestion':
+    'الزائر الذي يفضّل متصفحه اللغة الأخرى تُعرض عليه مرة واحدة في بطاقة أسفل الجهة الخلفية، مكتوبة باللغة المعروضة عليه.',
+  'ds.header.language.once':
+    'البطاقة منطقة لا نافذة حوار: لا تسحب التركيز، ويغلقها Esc أثناء وجود التركيز داخلها، ويُحفظ الإغلاق أو القبول فلا تظهر مرة أخرى.',
+
+  'ds.header.mobile': 'الجوال واللوحي',
+  'ds.header.mobile.bar':
+    'تحت نقطة انتقال سطح المكتب يبقى في الشريط: الهوية، وزر «احجز» المضغوط، وزر فتح القائمة.',
+  'ds.header.mobile.panel':
+    'القائمة لوح بارتفاع كامل ينزلق من الجهة الخلفية المنطقية فوق طبقة كحلية شفافة، أي من اليمين في العربية ومن اليسار في الإنجليزية.',
+  'ds.header.mobile.contents':
+    'يضم التنقل الرئيسي بمساحات لمس 48 بكسل، وكلا الإجراءين بعرض كامل، ومبدّل اللغة، واختصارات التواصل.',
+  'ds.header.mobile.contact':
+    'الهاتف والواتساب والبريد تأتي من وحدة إعداد واحدة وتُعرض من اليسار إلى اليمين، فلا يختل ترتيب الرقم داخل جملة عربية.',
+  'ds.header.a11y': 'التزامات إمكانية الوصول',
+  'ds.header.a11y.toggle':
+    'زر القائمة يحمل aria-expanded وaria-controls، ويتغير اسمه بين «فتح القائمة» و«إغلاق القائمة» في اللغتين.',
+  'ds.header.a11y.focus':
+    'ينتقل التركيز إلى داخل اللوح عند فتحه ويبقى محصوراً بداخله.',
+  'ds.header.a11y.dismiss':
+    'يُغلق اللوح بمفتاح Esc أو بالنقر على الطبقة الخلفية، ويعود التركيز إلى زر القائمة بعد الإغلاق.',
+  'ds.header.a11y.inert':
+    'بقية الصفحة معطّلة تماماً أثناء فتح اللوح، ولا يتحرك تمرير الصفحة خلفه.',
+  'ds.header.a11y.route':
+    'يُغلق اللوح عند تغيّر المسار، فلا يبقى مفتوحاً فوق الصفحة الجديدة.',
+  'ds.header.a11y.motion':
+    'مع تفضيل تقليل الحركة تُلغى حركة الانزلاق وظهور الظل ومؤشر التنقل.',
 
   'footer.note': 'مرجع داخلي للتطوير والمراجعة البصرية.',
   'footer.rights': 'جميع الحقوق محفوظة.',

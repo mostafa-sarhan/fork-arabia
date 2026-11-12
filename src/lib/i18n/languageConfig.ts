@@ -7,9 +7,9 @@
  *   2. The boot script in `index.html`, which has to run before the bundle
  *      loads and therefore cannot import anything. `vite.config.ts` injects
  *      `languageBootConfig` into that script's `%LANGUAGE_BOOT_CONFIG%`
- *      placeholder while transforming the HTML, so the storage key, the
- *      allowed values, the default and the direction map are defined here
- *      once and cannot drift apart.
+ *      placeholder while transforming the HTML, so the allowed values, the
+ *      default, the direction map and the URL prefixes are defined here once
+ *      and cannot drift apart.
  */
 
 export const LANGUAGES = ['ar', 'en'] as const
@@ -21,13 +21,30 @@ export type Direction = 'rtl' | 'ltr'
 /** Arabic is the primary language of the business, so it is the default. */
 export const DEFAULT_LANGUAGE: Language = 'ar'
 
-export const LANGUAGE_STORAGE_KEY = 'fork-arabia-language'
-
+/**
+ * Legacy only. The language used to be chosen with `?lang=`, which made the
+ * same page reachable at two URLs and left the choice invisible to crawlers.
+ * The path now decides (see `src/lib/routing/routes.ts`); this constant
+ * survives so old links can be redirected to their path equivalent.
+ */
 export const LANGUAGE_QUERY_PARAM = 'lang'
 
 export const DIRECTIONS: Record<Language, Direction> = {
   ar: 'rtl',
   en: 'ltr',
+}
+
+/**
+ * The first path segment that identifies each language.
+ *
+ * The default language owns the unprefixed tree, so its prefix is empty:
+ * `/design-system` is Arabic and `/en/design-system` is English. Exactly one
+ * language may have an empty prefix, and it must be `DEFAULT_LANGUAGE`,
+ * otherwise an unprefixed URL would be ambiguous.
+ */
+export const LANGUAGE_PATH_PREFIXES: Record<Language, string> = {
+  ar: '',
+  en: '/en',
 }
 
 export function isLanguage(value: unknown): value is Language {
@@ -43,7 +60,6 @@ export function isLanguage(value: unknown): value is Language {
 export const languageBootConfig = {
   languages: LANGUAGES,
   defaultLanguage: DEFAULT_LANGUAGE,
-  storageKey: LANGUAGE_STORAGE_KEY,
-  queryParam: LANGUAGE_QUERY_PARAM,
   directions: DIRECTIONS,
+  pathPrefixes: LANGUAGE_PATH_PREFIXES,
 }
