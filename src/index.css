@@ -146,6 +146,31 @@
   --color-link: var(--color-petrol);
   --color-link-hover: var(--color-navy);
 
+  /*
+   * Inactive controls.
+   *
+   * `opacity` used to do this job. It multiplies the label and the surface
+   * underneath it by the same factor, so it lowers contrast twice over: a
+   * disabled primary button landed at 1.80:1 and a disabled outline button
+   * at 2.94:1 — illegible rather than inactive. These three state the
+   * inactive surface, label and border outright, which keeps the label at
+   * 4.84:1 while the flat tint, the absent hover and the absent pointer
+   * carry the "not available" signal.
+   *
+   * Like the roles above they introduce no new hex value.
+   */
+  /*
+   * Text on a navy surface. White is the body colour at 13.21:1; the muted
+   * one is for secondary lines and still clears AA at 6.58:1, so the two
+   * read as a hierarchy rather than as "legible" and "nearly legible".
+   */
+  --color-on-navy: var(--color-surface);
+  --color-on-navy-muted: #a8b8d4;
+
+  --color-disabled-bg: var(--color-navy-soft);
+  --color-disabled-fg: var(--color-ink-muted);
+  --color-disabled-border: var(--color-line);
+
   /* ------------------------------------------------------------------ */
   /* Spacing, gutters, and section rhythm                                */
   /* ------------------------------------------------------------------ */
@@ -173,6 +198,9 @@
     0 1px 2px rgb(24 47 89 / 0.04), 0 12px 32px -16px rgb(24 47 89 / 0.16);
   --shadow-raised:
     0 2px 4px rgb(24 47 89 / 0.05), 0 24px 48px -24px rgb(24 47 89 / 0.22);
+  /* The scrolled header's edge: a hairline plus a wide, navy-tinted lift. */
+  --shadow-header:
+    0 1px 0 rgb(24 47 89 / 0.06), 0 10px 30px -22px rgb(24 47 89 / 0.35);
 
   /* ------------------------------------------------------------------ */
   /* Containers and breakpoints                                          */
@@ -205,6 +233,26 @@
 }
 
 :root {
+  /*
+   * The header owns a token rather than a class so that three things can
+   * agree on one number: the bar's own height, the scroll padding that keeps
+   * anchors from landing underneath it, and the sticky offset of the design
+   * system's section sidebar.
+   */
+  --header-height: 88px;
+  --header-height-mobile: 64px;
+
+  /*
+   * The logo's height at each place it appears. The lockup carries two
+   * lines of type inside one image, so it has to be taller than a bare
+   * mark would be to stay readable beside the navigation — which makes it
+   * a measurement worth naming rather than a class guessed at per call
+   * site. Width always follows the artwork's 2135:501 ratio.
+   */
+  --logo-height: 56px;
+  --logo-height-mobile: 44px;
+  --logo-height-footer: 60px;
+
   --z-base: 0;
   --z-raised: 10;
   --z-sticky: 30;
@@ -221,6 +269,108 @@
 
 @utility z-raised {
   z-index: var(--z-raised);
+}
+
+/*
+ * The brand lockup.
+ *
+ * One height drives everything: the mark is exactly `--lockup-height` tall
+ * and every other measurement is a fraction of it, so the whole lockup
+ * scales as one object and can never fall out of proportion. The
+ * fractions are measured from the supplied artwork
+ * (src/assets/brand/fork-arabia-logo.png, mark 474x501):
+ *
+ *   mark width        0.946 x height
+ *   text block height 0.505
+ *   gap text to mark  0.080
+ *   line gap          0.096
+ *   Arabic ink        0.240
+ *   Latin cap height  0.170
+ *
+ * The two font sizes are back-calculated from the ink the artwork shows,
+ * measured against what Cairo actually renders: 0.250 gives the Arabic its
+ * 0.240 of ink and 0.243 gives the Latin its 0.170 of cap height. Cairo is
+ * a wider face than the one the artwork was set in, so the lockup is
+ * wider than the original at the same height — the proportions that were
+ * matched are the vertical ones and the balance between the two lines.
+ *
+ * There are no transitions here on purpose: the logo is the first thing
+ * painted and must arrive at its final size.
+ */
+@utility lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--lockup-height) * 0.065);
+
+  & [data-lockup='mark'] {
+    height: var(--lockup-height);
+    width: calc(var(--lockup-height) * 0.946);
+    flex: none;
+  }
+
+  & [data-lockup='text'] {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--lockup-height) * 0.085);
+  }
+
+  & [data-lockup='ar'] {
+    font-size: calc(var(--lockup-height) * 0.25);
+    line-height: 1;
+  }
+
+  & [data-lockup='en'] {
+    font-size: calc(var(--lockup-height) * 0.243);
+    line-height: 1;
+
+    /*
+     * The lockup's own tracking, gated the same way every Latin
+     * treatment on this site is: only where the computed language is
+     * English, so the Arabic line above can never receive letter-spacing
+     * and have its joins severed. The value is the lockup's, not the
+     * brand step: at 0.16em the Latin line ran a fifth wider than the
+     * Arabic one, where the artwork has the two within a percent of each
+     * other.
+     */
+    &:lang(en) {
+      letter-spacing: 0.04em;
+    }
+  }
+}
+
+@utility lockup-sm {
+  --lockup-height: var(--logo-height-mobile);
+}
+
+@utility lockup-md {
+  --lockup-height: var(--logo-height);
+}
+
+@utility lockup-lg {
+  --lockup-height: var(--logo-height-footer);
+}
+
+@utility h-header {
+  height: var(--header-height);
+}
+
+@utility h-header-mobile {
+  height: var(--header-height-mobile);
+}
+
+/* The page area below the sticky header. */
+/** Clears the bar when content sits behind the sticky header. */
+@utility pt-header {
+  padding-top: var(--header-height);
+}
+
+@utility min-h-main {
+  min-height: calc(100svh - var(--header-height));
+}
+
+/** Sticky offset for anything that has to clear the header. */
+@utility top-below-header {
+  top: calc(var(--header-height) + var(--spacing-gutter));
 }
 
 @utility z-sticky {
@@ -348,6 +498,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /*
+     * Anchor targets and the skip link stop below the sticky header instead
+     * of underneath it. Stated once here rather than as a scroll-margin on
+     * every target.
+     */
+    scroll-padding-top: var(--header-height);
   }
 
   body {
