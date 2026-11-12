@@ -1,6 +1,6 @@
 import { usePageMeta } from '@/lib/usePageMeta'
-import { HomeHero } from './HomeHero'
-import { HomeStats } from './HomeStats'
+import { HeroSection } from './sections/HeroSection'
+import { StatsSection } from './sections/StatsSection'
 
 /**
  * The home page: the hero, then the four numbers that overlap its edge.
@@ -13,8 +13,8 @@ export default function HomePage() {
 
   return (
     <>
-      <HomeHero />
-      <HomeStats />
+      <HeroSection />
+      <StatsSection />
     </>
   )
 }

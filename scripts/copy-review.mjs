@@ -1,5 +1,5 @@
 /**
- * Regenerates docs/copy-review.md from the sector data.
+ * Regenerates docs/copy-review.md from the files that hold the copy.
  *
  * Every English string the client has not supplied is written in this
  * project and marked `proposed`. This script walks the data for those
@@ -14,7 +14,8 @@ const FILES = [
   'src/data/sectorIndex.ts',
   'src/data/sectorContent.ts',
   'src/data/siteCopy.ts',
-  'src/data/homeCopy.ts',
+  'src/pages/home/sections/HeroSection.tsx',
+  'src/pages/home/sections/StatsSection.tsx',
 ]
 
 /**
@@ -72,7 +73,7 @@ const lines = [
   '| --- | --- | --- | --- |',
   ...rows.map(
     (row) =>
-      `| \`${row.sector}\` | ${row.ar} | ${row.en} | \`${row.file.replace('src/data/', '')}\` |`,
+      `| \`${row.sector}\` | ${row.ar} | ${row.en} | \`${row.file.split('/').pop()}\` |`,
   ),
   '',
 ]

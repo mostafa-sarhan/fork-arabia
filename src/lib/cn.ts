@@ -24,8 +24,6 @@ import { extendTailwindMerge, type ClassNameValue } from 'tailwind-merge'
 const text = [
   'display',
   'hero',
-  'lead',
-  'lead-lg',
   'h1',
   'h2',
   'h3',
@@ -38,10 +36,6 @@ const text = [
   'label',
   'nav',
   'overline',
-  'stat',
-  'stat-tablet',
-  'stat-mobile',
-  'stat-label',
 ]
 
 /** --color-* : brand, surface and semantic role colors. */
@@ -83,9 +77,6 @@ const spacing = [
   'section-sm',
   'section',
   'section-lg',
-  'hero-top',
-  'hero-bottom',
-  'stats-overlap',
 ]
 
 /** --container-* : the layout widths. */
@@ -94,13 +85,12 @@ const container = [
   'measure',
   'panel',
   'narrow',
-  'stats',
   'content',
   'wide',
 ]
 
 /** --radius-* */
-const radius = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
+const radius = ['xs', 'sm', 'md', 'lg', 'xl', '2xl']
 
 /** --shadow-* */
 const shadows = ['xs', 'card', 'raised', 'header']
@@ -159,7 +149,7 @@ export const cn = extendTailwindMerge({
       z: [{ z: zLayers }],
       tracking: [{ tracking: trackingUtilities }],
       // bg-grid paints a background image, not a background color.
-      'bg-image': ['bg-grid', 'bg-hero-grid'],
+      'bg-image': ['bg-grid'],
     },
   },
 })

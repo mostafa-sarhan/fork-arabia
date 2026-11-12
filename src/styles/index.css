@@ -97,42 +97,10 @@
    * Heavier and tighter-leaded than --text-display, which is the scale's
    * general-purpose large size.
    */
-  /*
-   * The lead paragraph under a hero heading: the same airy leading at both
-   * sizes, 16px on phones and 20px from 1024 up.
-   */
-  --text-lead: 1rem;
-  --text-lead--line-height: 1.9;
-
-  --text-lead-lg: 1.25rem;
-  --text-lead-lg--line-height: 1.9;
-
   --text-hero: clamp(2.25rem, 3.4vw + 1.1rem, 3.75rem);
   --text-hero--line-height: 1.25;
   --text-hero--letter-spacing: -0.02em;
   --text-hero--font-weight: 800;
-
-  /*
-   * The statistics numbers. Three sizes rather than one fluid value: the
-   * number is biggest in the single card, a little smaller where that card
-   * has to hold four columns on a tablet, and biggest again — with room to
-   * spare — in the stacked cards on a phone.
-   */
-  --text-stat: 2.875rem;
-  --text-stat--line-height: 1.05;
-  --text-stat--font-weight: 800;
-
-  --text-stat-tablet: 2.5rem;
-  --text-stat-tablet--line-height: 1.05;
-  --text-stat-tablet--font-weight: 800;
-
-  --text-stat-mobile: 2.75rem;
-  --text-stat-mobile--line-height: 1.05;
-  --text-stat-mobile--font-weight: 800;
-
-  /** The label under a statistic, where --text-body-sm reads too small. */
-  --text-stat-label: 0.9375rem;
-  --text-stat-label--line-height: 1.5;
 
   --tracking-brand: 0.16em;
   --tracking-brand-wide: 0.22em;
@@ -222,15 +190,6 @@
   --spacing-section-sm: 3rem;
   --spacing-section: 5rem;
   --spacing-section-lg: 7rem;
-  /*
-   * The home hero's own rhythm. The bottom padding is the section rhythm
-   * plus the overlap, so the statistics card can be pulled up by
-   * --spacing-stats-overlap — half its own height — and still leave the
-   * hero's text clear of it.
-   */
-  --spacing-hero-top: 6rem;
-  --spacing-stats-overlap: 4.5rem;
-  --spacing-hero-bottom: 9.5rem;
 
   /* ------------------------------------------------------------------ */
   /* Radius                                                              */
@@ -240,10 +199,8 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
-  /* The home page's two large surfaces: the statistics card and the hero
-     image beside it. */
+  /* The large surfaces: the statistics cards and the hero's floating card. */
   --radius-2xl: 1.25rem;
-  --radius-3xl: 1.5rem;
 
   /* ------------------------------------------------------------------ */
   /* Elevation                                                           */
@@ -266,8 +223,6 @@
   --container-measure: 36rem;
   --container-panel: 42rem;
   --container-narrow: 48rem;
-  /* The statistics card, narrower than the content width it sits inside. */
-  --container-stats: 70rem;
   --container-content: 80rem;
   --container-wide: 90rem;
 
@@ -581,18 +536,6 @@
     linear-gradient(to bottom, rgb(24 47 89 / 0.045) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 76%);
-}
-
-/*
- * The hero's decorative grid: white hairlines on navy, in 56px cells. It is
- * the light counterpart of bg-grid above. It carries no mask: at 3.5% on
- * navy the lines are faint enough to run to the edge.
- */
-@utility bg-hero-grid {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
 }
 
 @keyframes fade-up {

@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-35 strings await approval.
+33 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -38,14 +38,12 @@ afterwards to regenerate this list.
 | `premiumResidency` | رسم لمرة واحدة | Unlimited duration | `sectorContent.ts` |
 | `premiumResidency` | كفاءات | Talent | `sectorContent.ts` |
 | `—` | فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان. | FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman. | `siteCopy.ts` |
-| `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `homeCopy.ts` |
-| `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `homeCopy.ts` |
-| `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `homeCopy.ts` |
-| `—` | صورة رئيسية: فريق العمل أو المكتب | Main image: the team or the office | `homeCopy.ts` |
-| `—` | صورة مؤقتة مرخّصة لحد ما تتوفر صور الشركة | A licensed placeholder until the company photographs are available | `homeCopy.ts` |
-| `—` | شريك مهني واحد منذ 2016 | One professional partner since 2016 | `homeCopy.ts` |
-| `—` | من الاستشارة للتنفيذ للمتابعة | From consultation to implementation and follow-up | `homeCopy.ts` |
-| `years` | سنوات خبرة | Years of experience | `homeCopy.ts` |
-| `clients` | عميل | Clients | `homeCopy.ts` |
-| `projects` | مشروع | Projects | `homeCopy.ts` |
-| `countries` | دول | Countries | `homeCopy.ts` |
+| `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `HeroSection.tsx` |
+| `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `HeroSection.tsx` |
+| `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
+| `—` | شريك مهني واحد منذ 2016 | One professional partner since 2016 | `HeroSection.tsx` |
+| `—` | من الاستشارة للتنفيذ للمتابعة | From consultation to implementation and follow-up | `HeroSection.tsx` |
+| `—` | سنوات خبرة | Years of experience | `StatsSection.tsx` |
+| `—` | عميل | Clients | `StatsSection.tsx` |
+| `—` | مشروع | Projects | `StatsSection.tsx` |
+| `—` | دول | Countries | `StatsSection.tsx` |
