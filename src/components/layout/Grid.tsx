@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 import { gapClasses, type Gap } from './spacing'
 
 export type GridColumns = 1 | 2 | 3 | 4

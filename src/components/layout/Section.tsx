@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 
 export type SectionSpacing = 'none' | 'sm' | 'md' | 'lg'
 export type SectionTone = 'default' | 'surface' | 'muted'
