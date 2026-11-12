@@ -1,53 +1,46 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
   <head>
+    <!-- Basics -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>فورك العربية المحدودة | FORK ARABIA LIMITED</title>
+    <meta
+      name="description"
+      content="فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان."
+    />
 
-    <script>
-      (function () {
-        var config = %LANGUAGE_BOOT_CONFIG%
-        var resolved = null
-
-        try {
-          var segment = '/' + window.location.pathname.split('/')[1]
-
-          for (var i = 0; i < config.languages.length; i++) {
-            var candidate = config.languages[i]
-            var prefix = config.pathPrefixes[candidate]
-
-            if (prefix && prefix === segment) {
-              resolved = candidate
-              break
-            }
-          }
-        } catch {
-          // URL parsing can throw in restricted contexts.
-        }
-
-        var language = resolved || config.defaultLanguage
-        var root = document.documentElement
-
-        root.lang = language
-        root.dir = config.directions[language]
-      })()
-    </script>
-
+    <!-- Brand -->
+    <meta name="theme-color" content="#182F59" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#182F59" />
+
+    <!-- Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FORK ARABIA LIMITED" />
     <meta
-      name="description"
-      content="FORK ARABIA LIMITED — Corporate, legal, financial, and technology services."
+      property="og:title"
+      content="فورك العربية المحدودة | FORK ARABIA LIMITED"
     />
+    <meta
+      property="og:description"
+      content="فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان."
+    />
+    <meta property="og:image" content="https://forkarabia.sa/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ar_SA" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>FORK ARABIA</title>
   </head>
   <body>
     <div id="root"></div>

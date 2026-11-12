@@ -1,15 +1,12 @@
 /**
  * The single definition of the project's languages.
  *
- * Two very different consumers need these values:
- *
- *   1. `LanguageProvider`, which imports this module normally.
- *   2. The boot script in `index.html`, which has to run before the bundle
- *      loads and therefore cannot import anything. `vite.config.ts` injects
- *      `languageBootConfig` into that script's `%LANGUAGE_BOOT_CONFIG%`
- *      placeholder while transforming the HTML, so the allowed values, the
- *      default, the direction map and the URL prefixes are defined here once
- *      and cannot drift apart.
+ * Two very different consumers need these values: `LanguageProvider`, which
+ * imports this module normally, and `src/boot/languageBoot.ts`, which runs
+ * before the bundle loads and is compiled into an inline script by
+ * `build/languageBootPlugin.ts`. Both read the same constants, so the
+ * allowed values, the default, the direction map and the URL prefixes
+ * cannot drift apart.
  */
 
 export const LANGUAGES = ['ar', 'en'] as const
@@ -51,15 +48,4 @@ export function isLanguage(value: unknown): value is Language {
   return (
     typeof value === 'string' && (LANGUAGES as readonly string[]).includes(value)
   )
-}
-
-/**
- * The serialisable subset handed to the boot script in `index.html`.
- * Keep every value JSON-safe: it is inlined with `JSON.stringify`.
- */
-export const languageBootConfig = {
-  languages: LANGUAGES,
-  defaultLanguage: DEFAULT_LANGUAGE,
-  directions: DIRECTIONS,
-  pathPrefixes: LANGUAGE_PATH_PREFIXES,
 }

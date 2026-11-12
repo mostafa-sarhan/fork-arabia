@@ -1,3 +1,5 @@
+import { SITE_URL } from '@/lib/site'
+
 /**
  * The company's own name, in both languages, in the order the logo lockup
  * sets them.
@@ -8,5 +10,5 @@
  */
 export const BRAND_FULL_NAME = 'FORK ARABIA LIMITED — فورك العربية المحدودة'
 
-/** Where the site lives, for the footer and for canonical copy. */
-export const BRAND_DOMAIN = 'forkarabia.sa'
+/** The bare host, for printing the address. `SITE_URL` is the link itself. */
+export const BRAND_DOMAIN = new URL(SITE_URL).host

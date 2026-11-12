@@ -8,6 +8,7 @@ import {
   FOOTER_FEATURED_SECTOR_IDS,
 } from '@/data/siteCopy'
 import { BRAND_DOMAIN } from '@/lib/brand'
+import { SITE_URL } from '@/lib/site'
 import { cn } from '@/lib/cn'
 import { Copy } from '@/lib/i18n/Copy'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -170,7 +171,7 @@ export function Footer() {
           <span className="flex items-center gap-5">
             <LanguageFooterLink className="font-medium" />
             <a
-              href={`https://${BRAND_DOMAIN}`}
+              href={SITE_URL}
               dir="ltr"
               className={cn(footerLink, 'font-medium')}
             >

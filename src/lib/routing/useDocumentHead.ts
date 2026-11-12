@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
+import { SITE_DESCRIPTION } from '@/data/siteCopy'
 import {
   DEFAULT_LANGUAGE,
   LANGUAGES,
+  type Language,
 } from '@/lib/i18n/languageConfig'
+import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { languagePathname, type RouteMeta } from './routes'
 
@@ -13,6 +16,25 @@ import { languagePathname, type RouteMeta } from './routes'
  * alternate can survive a navigation.
  */
 const MANAGED_ATTRIBUTE = 'data-route-head'
+
+/** What Open Graph calls each language, for `og:locale`. */
+const OG_LOCALES: Record<Language, string> = {
+  ar: 'ar_SA',
+  en: 'en_US',
+}
+
+/**
+ * Rewrites one of the Open Graph tags index.html already carries.
+ *
+ * These are updated in place rather than appended: a second `og:title` would
+ * not replace the first one, it would compete with it, and a crawler reads
+ * whichever it meets first.
+ */
+function setOpenGraph(property: string, content: string): void {
+  const tag = document.head.querySelector(`meta[property="${property}"]`)
+
+  tag?.setAttribute('content', content)
+}
 
 type ManagedTag =
   | { tag: 'link'; rel: string; href: string; hreflang?: string }
@@ -34,8 +56,13 @@ export function useDocumentHead(route: RouteMeta): void {
   const indexable = route.indexable !== false
 
   useEffect(() => {
-    document.title = `${t(route.titleKey)} — ${t('brand.name')}`
-  }, [route.titleKey, t])
+    const title = `${t(route.titleKey)} — ${t('brand.name')}`
+
+    document.title = title
+    setOpenGraph('og:title', title)
+    setOpenGraph('og:description', resolveCopy(SITE_DESCRIPTION, language).text)
+    setOpenGraph('og:locale', OG_LOCALES[language])
+  }, [language, route.titleKey, t])
 
   useEffect(() => {
     const { origin } = window.location
