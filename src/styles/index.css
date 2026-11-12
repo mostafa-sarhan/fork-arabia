@@ -353,6 +353,64 @@
   --lockup-height: var(--logo-height-footer);
 }
 
+/*
+ * A 44px touch area around a control that is drawn smaller than that.
+ *
+ * The navbar's controls are sized to fit a 320px bar, which leaves some of
+ * them under the 44px a finger wants. The area is added with a pseudo-element
+ * centred on the control, so it costs no layout width and the bar looks
+ * exactly as it did — only the region that answers a tap grows. Where two of
+ * them meet, the later control in the markup takes the overlap.
+ *
+ * `top`/`left` rather than logical insets on purpose: the box is centred on
+ * both axes, so the result is identical in either direction, where
+ * `inset-inline-start: 50%` would push it off centre in Arabic.
+ */
+@utility tap-target {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, calc(var(--spacing) * 11));
+    height: max(100%, calc(var(--spacing) * 11));
+    translate: -50% -50%;
+  }
+}
+
+/*
+ * The same area, grown to one side instead of from the centre.
+ *
+ * A control with a neighbour on one side and open space on the other takes
+ * its extra area from the open side only. Growing both ways would reach
+ * across the gap and cover the edge of the neighbour's own box — and the
+ * one on top is whichever comes later in the markup, so the neighbour
+ * would lose the last pixels of itself.
+ *
+ * `left` and `right` are cleared first: the centred rule above sets `left`,
+ * and a box with `left`, `right` and `width` all stated is over-constrained,
+ * which resolves differently in Arabic than in English.
+ */
+@utility tap-target-end {
+  &::after {
+    left: auto;
+    right: auto;
+    inset-inline-start: 0;
+    translate: 0 -50%;
+  }
+}
+
+@utility tap-target-start {
+  &::after {
+    left: auto;
+    right: auto;
+    inset-inline-end: 0;
+    translate: 0 -50%;
+  }
+}
+
 @utility h-header {
   height: var(--header-height);
 }

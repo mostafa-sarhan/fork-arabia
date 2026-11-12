@@ -21,7 +21,7 @@ import { cn } from '@/lib/cn'
 import { Copy } from '@/lib/i18n/Copy'
 import { isPathActive } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { LanguageSheetOptions } from './LanguageMenu'
+import { LanguageSheetRow } from './LanguageMenu'
 import { useNavbar } from './useNavbar'
 
 const CHANNEL_ICONS: Record<ContactChannel['id'], ComponentType<IconProps>> = {
@@ -53,7 +53,10 @@ export function MobileMenuToggle() {
       aria-expanded={isMobileMenuOpen}
       aria-controls={mobileMenuId}
       onClick={toggleMobileMenu}
-      className="xl:hidden"
+      /* 36x36 as drawn, 44x44 to a finger — taken out of the gutter
+         behind it, so the language trigger beside it keeps all of its
+         own box. */
+      className="tap-target tap-target-end xl:hidden"
     >
       {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
     </IconButton>
@@ -275,8 +278,6 @@ export function MobileMenu() {
               )
             })}
           </ul>
-
-          <LanguageSheetOptions className="mt-4" />
         </nav>
 
         <div className="flex flex-col gap-3 border-b border-line px-gutter py-6">
@@ -328,6 +329,8 @@ export function MobileMenu() {
             })}
           </ul>
         </div>
+
+        <LanguageSheetRow className="border-t border-line px-gutter py-4" />
       </div>
     </>
   )

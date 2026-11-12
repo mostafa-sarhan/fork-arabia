@@ -149,7 +149,14 @@ export function Navbar() {
                         other; only the component in its slot differs,
                         because it carries the sector panel behind it. */}
                     {item.path === PATHS.services ? (
-                      <ServicesMenuTrigger menu={servicesMenu} />
+                      <>
+                        <ServicesMenuTrigger menu={servicesMenu} />
+                        {/* Right after its own trigger, so Tab walks into
+                            the panel and out the far side into the next
+                            item. It is still positioned against the bar
+                            rather than against this list item. */}
+                        <ServicesMenuPanel menu={servicesMenu} />
+                      </>
                     ) : (
                       <NavbarLink
                         item={item}
@@ -185,7 +192,11 @@ export function Navbar() {
                 </Button>
               ))}
 
-              {/* Below 640px the label shortens, the pill tightens and the
+              {/* `tap-target` on the three controls of the narrow bar: they
+                are drawn to fit 320px, which is smaller than 44px, so each
+                one answers taps over a 44px square it does not occupy.
+
+                Below 640px the label shortens, the pill tightens and the
                   calendar carries the meaning the dropped words used to;
                   below 360px the icon carries all of it, in a square the
                   size of the menu toggle. The accessible name is the whole
@@ -197,7 +208,7 @@ export function Navbar() {
                 variant="secondary"
                 size="sm"
                 aria-label={t('nav.bookConsultation')}
-                className="xl:hidden max-sm:px-2.5 max-xs:size-9 max-xs:px-0"
+                className="tap-target xl:hidden max-sm:px-2.5 max-xs:size-9 max-xs:tap-target-start max-xs:px-0"
               >
                 <CalendarIcon aria-hidden="true" className="size-4 sm:hidden" />
                 <span className="max-xs:hidden sm:hidden">
@@ -216,8 +227,6 @@ export function Navbar() {
             </div>
           </Container>
         </div>
-
-        <ServicesMenuPanel menu={servicesMenu} />
 
         <MobileMenu />
       </header>

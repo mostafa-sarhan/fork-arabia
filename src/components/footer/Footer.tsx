@@ -170,7 +170,9 @@ function LanguageCodes() {
       {options.map((option, index) => (
         <Fragment key={option.language}>
           {index > 0 ? (
-            <span aria-hidden="true" className="text-white/30">
+            /* Decoration, and exempt as such — but drawn at 3.4:1 rather
+               than the 2.5:1 it had, so it reads as a divider. */
+            <span aria-hidden="true" className="text-white/40">
               |
             </span>
           ) : null}
@@ -181,9 +183,11 @@ function LanguageCodes() {
             aria-current={option.isCurrent ? 'true' : undefined}
             className={cn(
               footerLink,
-              /* The padding is the target: two letters are 15px wide, under
-                 the 24px a tap target owes a finger (WCAG 2.5.8). */
-              'inline-flex min-h-11 items-center px-2 font-medium md:min-h-0',
+              /* The box is the target: two letters are 15px wide, where a
+                 finger wants 44 in both directions. The row above is
+                 already taller than that from 768px up, so only the width
+                 is held there. */
+              'inline-flex min-h-11 min-w-11 items-center justify-center font-medium md:min-h-0',
               option.isCurrent && 'text-on-navy',
             )}
           >

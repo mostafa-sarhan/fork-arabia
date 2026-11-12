@@ -92,10 +92,10 @@ export function useServicesMenu(): ServicesMenuState {
   }, [clear, setOpenMenu])
 
   /*
-   * The panel is rendered after the whole bar, so Tab does not walk into it
-   * — and leaving the trigger would close it on the way. ArrowDown is the
-   * keyboard's way in, and it has to wait for the panel to stop being inert
-   * before the first link can take focus.
+   * Tab reaches the panel on its own — it is the trigger's next sibling —
+   * but ArrowDown is the menu-button pattern's way in and has to put focus
+   * on the first link itself. It waits for a render, because the panel is
+   * inert until the menu is open and an inert link cannot take focus.
    */
   const openWithFocus = useCallback(() => {
     enterOnOpen.current = true
@@ -334,7 +334,10 @@ export function ServicesMenuPanel({
         'border-line bg-surface transition-all duration-200 ease-standard',
         placement === 'anchored'
           ? [
-              'absolute inset-x-0 top-full z-dropdown hidden border-b shadow-header xl:block',
+              /* `top-full` is the bar's padding box, which stops one pixel
+                 short of its bottom hairline; the panel's own top border
+                 lands exactly on that row and draws it. */
+              'absolute inset-x-0 top-full z-dropdown hidden border-y shadow-header xl:block',
               menu.isOpen
                 ? 'pointer-events-auto opacity-100'
                 : 'pointer-events-none -translate-y-2 opacity-0',

@@ -236,7 +236,8 @@ export function LanguageMenuTrigger({
         }
       }}
       className={cn(
-        'inline-flex h-10 items-center rounded-md px-3 text-nav font-medium transition-colors duration-200 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+        /* 42x40 as drawn, 44x44 to a finger. */
+        'tap-target inline-flex h-10 items-center rounded-md px-3 text-nav font-medium transition-colors duration-200 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
         isOpen ? 'text-navy' : 'text-ink-muted',
         className,
       )}
@@ -316,7 +317,7 @@ export function LanguageMenuPanel({
              on, which the router treats as no change — so close here rather
              than wait for a route change that will not arrive. */
           onSelect={closeNow}
-          className="flex min-h-9 items-center justify-center"
+          className="flex min-h-11 items-center justify-center"
         />
       ))}
     </div>
@@ -342,35 +343,45 @@ export function LanguageMenu({ className }: { className?: string }) {
 }
 
 /**
- * The same two codes inside the navigation sheet, as one inline pair.
+ * The language row at the foot of the sheet: a muted label, then the two
+ * codes.
  *
  * No popover here: the sheet is already a panel, and a menu opening out of a
- * menu would have nowhere to go. Two codes take a single row of it, at the
- * sheet's 48px targets.
+ * menu would have nowhere to go. It comes last, after the contact block, so
+ * the sheet reads pages, then actions, then ways to reach the firm, then the
+ * one setting it carries — and the visible label is what names the group, so
+ * the pair is not two bare codes floating under the contact details.
  */
-export function LanguageSheetOptions({ className }: { className?: string }) {
+export function LanguageSheetRow({ className }: { className?: string }) {
   const { t } = useLanguage()
   const options = useLanguageOptions()
+  const labelId = useId()
 
   return (
     <div
       role="group"
-      aria-label={t('lang.label')}
-      className={cn(
-        'flex items-center gap-1 border-t border-line pt-4',
-        className,
-      )}
+      aria-labelledby={labelId}
+      className={cn('flex items-center gap-1', className)}
     >
+      <span
+        id={labelId}
+        className="pe-3 text-overline tracking-latin-wide text-subheading"
+      >
+        {t('lang.label')}
+      </span>
+
       {options.map((option, index) => (
         <Fragment key={option.language}>
           {index > 0 ? (
-            <span aria-hidden="true" className="text-line-strong">
+            /* Decoration, and exempt as such — but drawn at 3.2:1 rather
+               than the 1.5:1 it had, so it reads as a divider. */
+            <span aria-hidden="true" className="text-ink-muted/75">
               |
             </span>
           ) : null}
           <LanguageOptionLink
             option={option}
-            className="flex min-h-12 items-center px-3"
+            className="flex min-h-11 min-w-11 items-center justify-center"
           />
         </Fragment>
       ))}
