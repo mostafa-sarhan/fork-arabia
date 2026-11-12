@@ -177,9 +177,17 @@ const BY_SLUG = new Map<string, SectorEntry>(
   SECTOR_INDEX.map((sector) => [sector.slug, sector]),
 )
 
+const BY_ID = new Map<string, SectorEntry>(
+  SECTOR_INDEX.map((sector) => [sector.id, sector]),
+)
+
 /** The sector a `/services/:slug` URL names, or undefined for an unknown slug. */
 export function getSectorBySlug(slug: string | undefined) {
   return slug ? BY_SLUG.get(slug) : undefined
+}
+
+export function getSectorById(id: SectorId) {
+  return BY_ID.get(id)
 }
 
 /**

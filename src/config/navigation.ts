@@ -42,14 +42,15 @@ export const NAV_ACTIONS: readonly NavAction[] = [
 ]
 
 /**
- * The footer's links: the primary navigation without Home, which the logo
- * beside them already goes to. They sit on one inline row, so the list is
- * kept to the four pages rather than repeating the calls to action the
- * header already carries.
+ * The footer's quick links, in the storyboard's order: the two actions sit
+ * between Presence and Contact, and Home is left out because the logo above
+ * them already goes there.
  */
 export const FOOTER_NAV: readonly NavItem[] = [
   { path: PATHS.about, labelKey: 'nav.about' },
   { path: PATHS.services, labelKey: 'nav.services' },
   { path: PATHS.presence, labelKey: 'nav.presence' },
+  { path: PATHS.bookConsultation, labelKey: 'nav.bookConsultation' },
+  { path: PATHS.requestQuote, labelKey: 'nav.requestQuote' },
   { path: PATHS.contact, labelKey: 'nav.contact' },
 ]
