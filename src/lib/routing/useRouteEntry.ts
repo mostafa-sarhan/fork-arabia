@@ -5,12 +5,10 @@ import { useLocation } from 'react-router'
 const MAIN_ID = 'main'
 
 /**
- * The path this document has already entered.
- *
- * Module scope is deliberate: "is this the route the visitor arrived on?" is
- * a property of the document, not of a component, and every page mounts its
- * own instance. Comparing paths rather than counting mounts also keeps
- * StrictMode's double-invoked effects from being mistaken for a navigation.
+ * The path this document has already entered. Module scope is deliberate:
+ * "is this the route the visitor arrived on?" is a property of the document,
+ * not of a component. Comparing paths rather than counting mounts also keeps
+ * StrictMode's double-invoked effects from looking like a navigation.
  */
 let enteredPathname: string | null = null
 

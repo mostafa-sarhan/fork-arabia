@@ -2,15 +2,13 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /**
  * The first focusable element on the page, so a keyboard visitor can step
- * past the header in one Tab instead of walking the logo, the language
- * buttons and the whole section nav.
+ * past the navbar in one Tab instead of walking the logo, the language
+ * buttons and every link in the bar.
  *
  * It stays in the accessible tree and is moved out of sight with a translate
- * rather than with sr-only, so focus has one thing to change — no juggling of
- * position, clipping and size, and nothing that can lose to another utility.
- * The move is deliberately not animated: a focus indicator should be there
- * the instant focus arrives. It is only ever reached by keyboard, so :focus
- * is the right trigger.
+ * rather than with sr-only, so focus has one thing to change. The move is
+ * deliberately not animated: a focus indicator should be there the instant
+ * focus arrives. It is only ever reached by keyboard, so :focus is right.
  */
 export function SkipLink() {
   const { t } = useLanguage()

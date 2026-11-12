@@ -1,20 +1,19 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
-import { useExclusivePopover } from '@/lib/ui/exclusivePopover'
+import { useExclusivePopover } from '@/components/navbar/exclusivePopover'
 
 /**
  * The open/closed state of the language menu.
  *
- * Unlike the services panel this one has no hover behaviour. The language
- * control is not a navigation item a pointer passes over on its way
- * somewhere else, and a panel that opened on hover there would appear
- * whenever someone crossed the gap between the navigation and the two
- * buttons. It opens on click, on Enter or Space, and on ArrowDown.
+ * Unlike the services panel it has no hover behaviour: the language control
+ * is not an item a pointer crosses on its way somewhere else, so a panel
+ * that opened on hover would appear whenever someone crossed the gap between
+ * the navigation and the buttons. It opens on click, Enter or Space, and on
+ * ArrowDown.
  *
- * What is open is stored as the path it was opened on, so a navigation
- * closes it as a consequence of the data rather than through an effect
- * chasing the router — including the navigation that switches the language,
- * which is the one the menu exists to perform.
+ * What is open is stored as the path it was opened on, so a navigation closes
+ * it as a consequence of the data — including the one the menu exists to
+ * perform.
  */
 export function useLanguageMenu() {
   const { pathname } = useLocation()
@@ -23,12 +22,7 @@ export function useLanguageMenu() {
   const triggerRef = useRef<HTMLButtonElement | null>(null)
   const panelRef = useRef<HTMLDivElement | null>(null)
 
-  /*
-   * Callback refs rather than ref objects handed out through the return
-   * value: the trigger and the panel are two different components, and a
-   * function is the only shape that does not read a ref during someone
-   * else's render.
-   */
+  /* Callback refs: the trigger and the panel are two different components. */
   const registerTrigger = useCallback((node: HTMLButtonElement | null) => {
     triggerRef.current = node
   }, [])
@@ -50,21 +44,16 @@ export function useLanguageMenu() {
   const toggle = useCallback(() => {
     if (isOpen) {
       closeNow()
-    } else {
-      openNow()
+      return
     }
-  }, [closeNow, isOpen, openNow])
 
-  /** Closes and hands focus back, for Escape and for picking an option. */
-  const dismiss = useCallback(() => {
-    closeNow()
-    triggerRef.current?.focus()
-  }, [closeNow])
+    openNow()
+  }, [closeNow, isOpen, openNow])
 
   /*
    * Focus enters the menu when it opens, landing on the language already in
-   * use — the menu-button pattern, and the only arrangement in which the
-   * arrow keys have somewhere to start from.
+   * use — the menu-button pattern, and the only arrangement the arrow keys
+   * have somewhere to start from.
    */
   useEffect(() => {
     if (!isOpen) {
@@ -81,8 +70,8 @@ export function useLanguageMenu() {
 
   /*
    * Escape, a click outside and focus leaving all close it. Escape is the
-   * only one of the three that returns focus to the trigger: it is the only
-   * one where the visitor has not already said where they want to be.
+   * only one that returns focus to the trigger: it is the only one where the
+   * visitor has not already said where they want to be.
    */
   useEffect(() => {
     if (!isOpen) {
@@ -96,7 +85,8 @@ export function useLanguageMenu() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        dismiss()
+        closeNow()
+        triggerRef.current?.focus()
       }
     }
 
@@ -121,7 +111,7 @@ export function useLanguageMenu() {
       document.removeEventListener('pointerdown', onPointerDown)
       document.removeEventListener('focusin', onFocusIn)
     }
-  }, [closeNow, dismiss, isOpen])
+  }, [closeNow, isOpen])
 
   return {
     isOpen,
@@ -129,10 +119,9 @@ export function useLanguageMenu() {
     toggle,
     openNow,
     closeNow,
-    dismiss,
     registerTrigger,
     registerPanel,
   }
 }
 
-export type LanguageMenu = ReturnType<typeof useLanguageMenu>
+export type LanguageMenuState = ReturnType<typeof useLanguageMenu>

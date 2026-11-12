@@ -5,11 +5,10 @@ import type { PageRouteId } from '@/lib/routing/routes'
 /**
  * The site's navigation, in one place.
  *
- * The header, the footer and the 404 page all have to offer the same way
+ * The navbar, the footer and the 404 page all have to offer the same way
  * around the site; three hand-written lists would be three chances for them
  * to disagree. Items name a route by id and never a path, so the URL stays
- * owned by `src/lib/routing/routes.ts` — renaming `/presence` is a
- * one-line change there and nothing here moves.
+ * owned by `src/lib/routing/routes.ts`.
  */
 export type NavItem = {
   readonly routeId: PageRouteId
@@ -23,12 +22,7 @@ export type NavAction = NavItem & {
 export const PRIMARY_NAV = [
   { routeId: 'home', labelKey: 'nav.home' },
   { routeId: 'about', labelKey: 'nav.about' },
-  /*
-   * Services will grow a mega-menu of the nine sectors. It is listed here
-   * like any other item; the header renders each item through one
-   * component, so the menu attaches there without the navigation
-   * configuration or the header's props changing.
-   */
+  /* Services carries the sector menu; it is listed here like any other item. */
   { routeId: 'services', labelKey: 'nav.services' },
   { routeId: 'presence', labelKey: 'nav.presence' },
   { routeId: 'contact', labelKey: 'nav.contact' },

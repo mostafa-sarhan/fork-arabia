@@ -24,16 +24,14 @@ const OG_LOCALES: Record<Language, string> = {
 }
 
 /**
- * Rewrites one of the Open Graph tags index.html already carries.
+ * Rewrites one of the meta tags index.html already carries.
  *
- * These are updated in place rather than appended: a second `og:title` would
- * not replace the first one, it would compete with it, and a crawler reads
- * whichever it meets first.
+ * They are updated in place rather than appended: a second `description`
+ * would not replace the first one, it would compete with it, and a crawler
+ * reads whichever it meets first.
  */
-function setOpenGraph(property: string, content: string): void {
-  const tag = document.head.querySelector(`meta[property="${property}"]`)
-
-  tag?.setAttribute('content', content)
+function setMeta(selector: string, content: string): void {
+  document.head.querySelector(selector)?.setAttribute('content', content)
 }
 
 type ManagedTag =
@@ -41,14 +39,14 @@ type ManagedTag =
   | { tag: 'meta'; name: string; content: string }
 
 /**
- * The document head for one route: the title, the canonical URL and the
- * hreflang alternates.
+ * The document head for one route: the title, the description, the social
+ * tags, the canonical URL and the hreflang alternates.
  *
  * All of it is derived from the route and the current path, in one place,
- * because the three have to agree: a page whose title says English while its
+ * because it has to agree: a page whose title says English while its
  * canonical points at the Arabic URL is worse than having neither. The URLs
  * are built from `window.location.origin`, so the same build is correct on a
- * preview deployment and in production without a configured domain.
+ * preview deployment and in production.
  */
 export function useDocumentHead(route: RouteMeta): void {
   const { language, t } = useLanguage()
@@ -57,11 +55,13 @@ export function useDocumentHead(route: RouteMeta): void {
 
   useEffect(() => {
     const title = `${t(route.titleKey)} — ${t('brand.name')}`
+    const description = resolveCopy(SITE_DESCRIPTION, language)
 
     document.title = title
-    setOpenGraph('og:title', title)
-    setOpenGraph('og:description', resolveCopy(SITE_DESCRIPTION, language).text)
-    setOpenGraph('og:locale', OG_LOCALES[language])
+    setMeta('meta[name="description"]', description)
+    setMeta('meta[property="og:title"]', title)
+    setMeta('meta[property="og:description"]', description)
+    setMeta('meta[property="og:locale"]', OG_LOCALES[language])
   }, [language, route.titleKey, t])
 
   useEffect(() => {

@@ -1,8 +1,8 @@
 import { lazy, type ReactNode } from 'react'
 import { Route, Routes } from 'react-router'
+import { SiteLayout } from '@/layouts/SiteLayout'
 import { LANGUAGES } from '@/lib/i18n/languageConfig'
 import { PageRoute } from '@/lib/routing/PageRoute'
-import { RootLayout } from '@/lib/routing/RootLayout'
 import {
   localizedPath,
   localizedPattern,
@@ -22,6 +22,7 @@ const SectorPlaceholder = lazy(() =>
   })),
 )
 
+/** The element each route renders. Keyed by id, so a gap is a type error. */
 const ROUTE_ELEMENTS = {
   home: <ComingSoon />,
   about: <PagePlaceholder routeId="about" />,
@@ -35,20 +36,21 @@ const ROUTE_ELEMENTS = {
   notFound: <NotFound />,
 } satisfies Record<RouteId, ReactNode>
 
-
+/**
+ * Every route, in both languages, inside the site layout. Arabic lives at the
+ * root and English under `/en`; `src/lib/routing/routes.ts` owns that rule.
+ */
 function App() {
   return (
     <Routes>
-      <Route element={<RootLayout />}>
+      <Route element={<SiteLayout />}>
         {ROUTES.flatMap((route) =>
           LANGUAGES.map((language) => (
             <Route
               key={`${route.id}:${language}`}
               path={localizedPath(route.path, language)}
               element={
-                <PageRoute route={route}>
-                  {ROUTE_ELEMENTS[route.id]}
-                </PageRoute>
+                <PageRoute route={route}>{ROUTE_ELEMENTS[route.id]}</PageRoute>
               }
             />
           )),

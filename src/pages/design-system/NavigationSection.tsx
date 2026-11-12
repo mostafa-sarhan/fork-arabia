@@ -1,17 +1,17 @@
-import { Footer } from '@/components/layout/Footer'
-import { ServicesMenuPanel } from '@/components/layout/ServicesMenu'
-import type { ServicesMenu } from '@/components/layout/useServicesMenu'
+import { Footer } from '@/components/footer'
+import { ServicesMenuPanel } from '@/components/navbar/ServicesMenu'
+import type { ServicesMenuState } from '@/components/navbar/useServicesMenu'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { useLanguage } from '@/lib/i18n/useLanguage'
 import type { TranslationKey } from '@/lib/i18n/translations'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 import { DocSection } from './DocSection'
 
 /**
- * A permanently open menu, for the specimen only. The panel is the real
- * component — the stub supplies the state it would normally hold, so the
- * documentation cannot show a menu the site does not have.
+ * A permanently open menu, for the specimen only: the real panel with the
+ * state it would normally hold, so the documentation cannot show a menu the
+ * site does not have.
  */
-const OPEN_MENU: ServicesMenu = {
+const OPEN_MENU: ServicesMenuState = {
   isOpen: true,
   openNow: () => {},
   closeNow: () => {},
@@ -73,11 +73,9 @@ export function NavigationSection() {
           <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.nav.menuDesc')}
           </p>
-          {/*
-            Inert and hidden from assistive technology: a second copy of the
-            services navigation would otherwise sit in the tab order of a
-            page that already has one in its header.
-          */}
+          {/* Inert and hidden: a second copy of the services navigation
+              would otherwise sit in the tab order of a page that already has
+              one in its navbar. */}
           <div inert aria-hidden="true" className="mt-4">
             <ServicesMenuPanel menu={OPEN_MENU} placement="inline" />
           </div>

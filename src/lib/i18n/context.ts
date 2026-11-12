@@ -6,7 +6,6 @@ export type LanguageContextValue = {
   language: Language
   direction: Direction
   setLanguage: (language: Language) => void
-  toggleLanguage: () => void
   t: (key: TranslationKey) => string
 }
 

@@ -10,9 +10,9 @@ import { ColorSection } from './design-system/ColorSection'
 import { ComponentSection } from './design-system/ComponentSection'
 import { DirectionSection } from './design-system/DirectionSection'
 import { FormSection } from './design-system/FormSection'
-import { HeaderSection } from './design-system/HeaderSection'
 import { IconSection } from './design-system/IconSection'
 import { LayoutSection } from './design-system/LayoutSection'
+import { NavbarSection } from './design-system/NavbarSection'
 import { NavigationSection } from './design-system/NavigationSection'
 import { TypographySection } from './design-system/TypographySection'
 
@@ -25,7 +25,7 @@ const SECTIONS = [
   { id: 'layout', labelKey: 'ds.section.layout' },
   { id: 'icons', labelKey: 'ds.section.icons' },
   { id: 'direction', labelKey: 'ds.section.direction' },
-  { id: 'header', labelKey: 'ds.section.header' },
+  { id: 'navbar', labelKey: 'ds.section.navbar' },
   { id: 'navigation', labelKey: 'ds.section.navigation' },
 ] as const satisfies ReadonlyArray<{
   id: string
@@ -72,9 +72,8 @@ export default function DesignSystem() {
 
   return (
     <div className="min-h-main bg-page">
-      <main id="main" tabIndex={-1} className="focus:outline-none">
-        <div className="border-b border-line bg-surface">
-          <Container className="py-12 sm:py-16">
+      <div className="border-b border-line bg-surface">
+        <Container className="py-12 sm:py-16">
           <div className="flex flex-wrap items-center gap-3">
             <Badge variant="accent">{t('ds.version')}</Badge>
             <Badge variant="outline">{direction.toUpperCase()}</Badge>
@@ -129,12 +128,11 @@ export default function DesignSystem() {
             <LayoutSection />
             <IconSection />
             <DirectionSection />
-            <HeaderSection />
+            <NavbarSection />
             <NavigationSection />
           </div>
         </div>
-        </Container>
-      </main>
+      </Container>
 
       <footer className="border-t border-line bg-surface">
         <Container className="flex flex-col items-start justify-between gap-3 py-6 text-caption text-ink-muted sm:flex-row sm:items-center">

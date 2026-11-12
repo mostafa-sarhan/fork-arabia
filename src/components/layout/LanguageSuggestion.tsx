@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router'
+import { useNavbar } from '@/components/navbar/NavbarContext'
 import { CloseIcon, GlobeIcon } from '@/components/ui/icons'
 import { cn } from '@/lib/cn'
 import { isLanguage, type Language } from '@/lib/i18n/languageConfig'
@@ -45,8 +46,8 @@ function remember(): void {
   try {
     window.localStorage.setItem(STORAGE_KEY, 'seen')
   } catch {
-    /* Storage is unavailable in restricted contexts; the card simply
-       returns on the next visit, which is a smaller problem than failing. */
+    /* Storage is unavailable in restricted contexts. The card then returns
+       on the next visit, which is smaller than failing. */
   }
 }
 
@@ -54,15 +55,13 @@ function remember(): void {
  * Offers the other language to the visitor whose browser asked for it.
  *
  * It appears for one kind of person only: someone whose browser says they
- * prefer the language this page is not in. Everyone else — including every
- * visitor who already reads Arabic on the Arabic site — never sees it. It
- * is shown once ever, after a pause long enough that it arrives as an
- * offer rather than as an interruption, and it never takes focus: it is a
- * region, not a dialog, so reading continues undisturbed and the control
- * is there when it is wanted.
+ * prefer the language this page is not in. It is shown once ever, after a
+ * pause long enough that it arrives as an offer rather than an interruption,
+ * and it never takes focus — it is a region, not a dialog.
  */
-export function LanguageSuggestion({ isMenuOpen }: { isMenuOpen: boolean }) {
+export function LanguageSuggestion() {
   const { language } = useLanguage()
+  const { isMenuOpen } = useNavbar()
   const location = useLocation()
   const [isOpen, setOpen] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -91,8 +90,8 @@ export function LanguageSuggestion({ isMenuOpen }: { isMenuOpen: boolean }) {
     return () => window.clearTimeout(timer)
   }, [isDesignSystem, language])
 
-  /* Escape closes it, but only while the card itself holds focus — it has
-     not taken over the page, so it must not take over the key either. */
+  /* Escape closes it, but only while the card holds focus: it has not taken
+     over the page, so it must not take over the key either. */
   useEffect(() => {
     if (!isOpen) {
       return
@@ -130,8 +129,8 @@ export function LanguageSuggestion({ isMenuOpen }: { isMenuOpen: boolean }) {
 }
 
 /**
- * The card itself, with no opinion about where it sits — so the design
- * system can show the real thing in place rather than a drawing of it.
+ * The card itself, with no opinion about where it sits, so the design system
+ * can show the real thing in place rather than a drawing of it.
  */
 export function LanguageSuggestionCard({
   ref,

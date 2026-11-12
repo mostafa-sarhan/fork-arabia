@@ -11,11 +11,7 @@ export default function ComingSoon() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-grid"
       />
-      <main
-        id="main"
-        tabIndex={-1}
-        className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section focus:outline-none"
-      >
+      <div className="relative z-raised flex flex-1 items-center py-section-sm sm:py-section">
         <Container>
           <div className="mx-auto max-w-panel animate-fade-up rounded-lg border border-line bg-surface p-8 text-center shadow-card sm:p-12 lg:p-16">
             <Badge variant="accent" className="tracking-latin-wide">
@@ -56,8 +52,7 @@ export default function ComingSoon() {
             </div>
           </div>
         </Container>
-      </main>
-
+      </div>
     </div>
   )
 }

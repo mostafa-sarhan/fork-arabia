@@ -13,5 +13,5 @@ export type CopyProps = {
 export function Copy({ value, as: Tag = 'span', className }: CopyProps) {
   const { language } = useLanguage()
 
-  return <Tag className={className}>{resolveCopy(value, language).text}</Tag>
+  return <Tag className={className}>{resolveCopy(value, language)}</Tag>
 }

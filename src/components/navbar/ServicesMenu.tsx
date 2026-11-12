@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router'
 import { Container } from '@/components/layout/Container'
+import type { ServicesMenuState } from '@/components/navbar/useServicesMenu'
 import { ICONS } from '@/components/ui/iconRegistry'
 import { ArrowRightIcon, ChevronDownIcon } from '@/components/ui/icons'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
@@ -8,18 +9,16 @@ import { Copy } from '@/lib/i18n/Copy'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { LocalizedLink } from '@/lib/routing/LocalizedLink'
 import { isRouteActive, ROUTE_PATHS, sectorPath } from '@/lib/routing/routes'
-import type { ServicesMenu } from './useServicesMenu'
 
 /**
  * The navigation item: a link and a disclosure, side by side.
  *
- * They are two controls because they do two things. Making the whole item
- * a button would put the services page out of reach of a keyboard, and
- * making it only a link would leave the panel pointer-only. The link keeps
- * the active treatment of every other item; the chevron carries
- * aria-expanded and aria-controls.
+ * They are two controls because they do two things. Making the whole item a
+ * button would put the services page out of reach of a keyboard; making it
+ * only a link would leave the panel pointer-only. The link keeps the active
+ * treatment of every other item; the chevron carries the ARIA state.
  */
-export function ServicesMenuTrigger({ menu }: { menu: ServicesMenu }) {
+export function ServicesMenuTrigger({ menu }: { menu: ServicesMenuState }) {
   const { t } = useLanguage()
   const location = useLocation()
   const isActive = isRouteActive(location.pathname, 'services')
@@ -71,16 +70,33 @@ export function ServicesMenuTrigger({ menu }: { menu: ServicesMenu }) {
   )
 }
 
+/** Where Home, End and an arrow step land; the ends do not wrap. */
+function targetIndex(
+  key: string,
+  current: number,
+  step: number,
+  count: number,
+): number {
+  if (key === 'Home') {
+    return 0
+  }
+
+  if (key === 'End') {
+    return count - 1
+  }
+
+  return Math.min(Math.max(current + step, 0), count - 1)
+}
+
 /**
- * The panel: the nine sectors as they are defined in the data, three by
- * three, anchored to the bottom edge of the header so it stays put while
- * the bar condenses.
+ * The panel: the nine sectors as the data defines them, three by three,
+ * anchored to the bottom edge of the navbar.
  */
 export function ServicesMenuPanel({
   menu,
   placement = 'anchored',
 }: {
-  menu: ServicesMenu
+  menu: ServicesMenuState
   /** `inline` drops the positioning so the design system can show it. */
   placement?: 'anchored' | 'inline'
 }) {
@@ -89,8 +105,8 @@ export function ServicesMenuPanel({
 
   /*
    * Arrow keys walk the grid. Which physical arrow moves forward depends on
-   * the writing direction, so the inline pair is mapped rather than
-   * hard-coded; the vertical pair always moves by a row.
+   * the writing direction, so the inline pair is mapped; the vertical pair
+   * always moves by a row.
    */
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const forward = direction === 'rtl' ? 'ArrowLeft' : 'ArrowRight'
@@ -102,8 +118,10 @@ export function ServicesMenuPanel({
       ArrowUp: -3,
     }
     const step = steps[event.key]
+    const isNavigationKey =
+      step !== undefined || event.key === 'Home' || event.key === 'End'
 
-    if (step === undefined && event.key !== 'Home' && event.key !== 'End') {
+    if (!isNavigationKey) {
       return
     }
 
@@ -117,15 +135,7 @@ export function ServicesMenuPanel({
     }
 
     event.preventDefault()
-
-    const next =
-      event.key === 'Home'
-        ? 0
-        : event.key === 'End'
-          ? items.length - 1
-          : Math.min(Math.max(current + (step ?? 0), 0), items.length - 1)
-
-    items[next]?.focus()
+    items[targetIndex(event.key, current, step ?? 0, items.length)]?.focus()
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
-import { useExclusivePopover } from '@/lib/ui/exclusivePopover'
+import { useExclusivePopover } from '@/components/navbar/exclusivePopover'
 
 const OPEN_DELAY = 120
 const CLOSE_DELAY = 180
@@ -8,16 +8,14 @@ const CLOSE_DELAY = 180
 /**
  * The open/closed state of the services panel.
  *
- * Pointer and keyboard want opposite things from a menu like this. A
- * pointer wants it to open on hover — but instantly is wrong, because
- * crossing the item on the way to the next one would flash the panel open,
- * and closing instantly is wrong too, because the gap between the item and
- * the panel would snatch it away mid-reach. Hence a short delay on each
- * side, cancellable, with click and keyboard bypassing both.
+ * Pointer and keyboard want opposite things here. A pointer wants hover, but
+ * opening instantly would flash the panel open when crossing the item on the
+ * way elsewhere, and closing instantly would snatch it away mid-reach across
+ * the gap below it. Hence a short, cancellable delay on each side, which
+ * click and keyboard bypass.
  *
- * What is open is stored as the path it was opened on, so a navigation
- * closes it as a consequence of the data rather than through an effect
- * chasing the router.
+ * What is open is stored as the path it was opened on, so a navigation closes
+ * it as a consequence of the data rather than through an effect.
  */
 export function useServicesMenu() {
   const { pathname } = useLocation()
@@ -27,10 +25,9 @@ export function useServicesMenu() {
   const panelRef = useRef<HTMLElement | null>(null)
 
   /*
-   * Callback refs rather than ref objects handed out through the return
-   * value: the elements belong to two different components, and a function
-   * is the only shape that does not read a ref during someone else's
-   * render.
+   * Callback refs rather than ref objects in the return value: the elements
+   * belong to two different components, and a function is the only shape
+   * that does not read a ref during someone else's render.
    */
   const registerTrigger = useCallback((node: HTMLElement | null) => {
     triggerRef.current = node
@@ -54,11 +51,7 @@ export function useServicesMenu() {
     setOpenedOn(null)
   }, [clear])
 
-  /*
-   * Opening this panel closes the language menu, which is anchored to the
-   * same bar: the two of them overlapping would leave two popovers
-   * claiming one corner of the screen.
-   */
+  /* Opening this panel closes the language menu, anchored to the same bar. */
   const claim = useExclusivePopover(closeNow)
 
   const openNow = useCallback(() => {
@@ -134,4 +127,4 @@ export function useServicesMenu() {
   }
 }
 
-export type ServicesMenu = ReturnType<typeof useServicesMenu>
+export type ServicesMenuState = ReturnType<typeof useServicesMenu>

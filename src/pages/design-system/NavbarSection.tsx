@@ -1,45 +1,59 @@
 import type { ReactNode } from 'react'
 import { Logo } from '@/components/brand/Logo'
-import { HeaderNavLink } from '@/components/layout/HeaderNavLink'
+import { LanguageSuggestionCard } from '@/components/layout/LanguageSuggestion'
 import {
   LanguageMenuPanel,
   LanguageMenuTrigger,
-} from '@/components/layout/LanguageMenu'
+} from '@/components/navbar/LanguageMenu'
+import { NavbarLink } from '@/components/navbar/NavbarLink'
+import type { LanguageMenuState } from '@/components/navbar/useLanguageMenu'
 import { Button } from '@/components/ui/Button'
-import { LanguageSuggestionCard } from '@/components/layout/LanguageSuggestion'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { cn } from '@/lib/cn'
-import { useLanguage } from '@/lib/i18n/useLanguage'
-import type { LanguageMenu } from '@/components/layout/useLanguageMenu'
 import type { TranslationKey } from '@/lib/i18n/translations'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 import { NAV_ACTIONS, PRIMARY_NAV } from '@/lib/navigation'
 import { ROUTE_PATHS } from '@/lib/routing/routes'
 import { DocSection } from './DocSection'
 
 const LANGUAGE_NOTES: TranslationKey[] = [
-  'ds.header.language.trigger',
-  'ds.header.language.options',
-  'ds.header.language.keyboard',
-  'ds.header.language.exclusive',
-  'ds.header.language.mobile',
-  'ds.header.language.suggestion',
-  'ds.header.language.once',
+  'ds.navbar.language.trigger',
+  'ds.navbar.language.options',
+  'ds.navbar.language.keyboard',
+  'ds.navbar.language.exclusive',
+  'ds.navbar.language.mobile',
+  'ds.navbar.language.suggestion',
+  'ds.navbar.language.once',
+]
+
+const MOBILE_NOTES: TranslationKey[] = [
+  'ds.navbar.mobile.bar',
+  'ds.navbar.mobile.panel',
+  'ds.navbar.mobile.contents',
+  'ds.navbar.mobile.contact',
+]
+
+const A11Y_NOTES: TranslationKey[] = [
+  'ds.navbar.a11y.toggle',
+  'ds.navbar.a11y.focus',
+  'ds.navbar.a11y.dismiss',
+  'ds.navbar.a11y.inert',
+  'ds.navbar.a11y.route',
+  'ds.navbar.a11y.motion',
 ]
 
 /**
- * The two states of the menu, for the specimen only. The trigger and the
- * panel are the real components — these stubs supply the state they would
- * normally hold, so the documentation cannot show a control the site does
- * not have.
+ * The two states of the language menu, for the specimen only: the real
+ * trigger and panel with the state they would normally hold, so the
+ * documentation cannot show a control the site does not have.
  */
-const MENU_STATES: Record<'closed' | 'open', LanguageMenu> = {
+const MENU_STATES: Record<'closed' | 'open', LanguageMenuState> = {
   closed: {
     isOpen: false,
     panelId: 'language-menu-specimen-closed',
     toggle: () => {},
     openNow: () => {},
     closeNow: () => {},
-    dismiss: () => {},
     registerTrigger: () => {},
     registerPanel: () => {},
   },
@@ -49,48 +63,27 @@ const MENU_STATES: Record<'closed' | 'open', LanguageMenu> = {
     toggle: () => {},
     openNow: () => {},
     closeNow: () => {},
-    dismiss: () => {},
     registerTrigger: () => {},
     registerPanel: () => {},
   },
 }
 
-const MOBILE_NOTES: TranslationKey[] = [
-  'ds.header.mobile.bar',
-  'ds.header.mobile.panel',
-  'ds.header.mobile.contents',
-  'ds.header.mobile.contact',
-]
-
-const A11Y_NOTES: TranslationKey[] = [
-  'ds.header.a11y.toggle',
-  'ds.header.a11y.focus',
-  'ds.header.a11y.dismiss',
-  'ds.header.a11y.inert',
-  'ds.header.a11y.route',
-  'ds.header.a11y.motion',
-]
-
 /**
- * A specimen of the real bar, not a drawing of one: the same components
- * under the same classes, so it cannot show a header the site does not
- * have. It is `inert` and `aria-hidden`, which keeps a second copy of the
- * navigation out of the tab order and out of the accessibility tree while
- * leaving it pixel-accurate.
+ * A specimen of the real bar, not a drawing of one: the same components under
+ * the same classes. It is `inert` and `aria-hidden`, which keeps a second
+ * copy of the navigation out of the tab order and out of the accessibility
+ * tree while leaving it pixel-accurate.
  */
-function HeaderPreview({ isScrolled }: { isScrolled: boolean }) {
+function NavbarPreview({ isScrolled }: { isScrolled: boolean }) {
   const { t } = useLanguage()
 
   return (
     <div
       inert
       aria-hidden="true"
-      /*
-       * The bar is shown at its real desktop width and scrolls inside this
-       * frame rather than being squeezed into the documentation column: a
-       * specimen that reflows is a specimen of something the site never
-       * renders.
-       */
+      /* Shown at its real desktop width and scrolling inside this frame: a
+         specimen that reflows is a specimen of something the site never
+         renders. */
       className="overflow-x-auto rounded-lg border border-line bg-page"
     >
       <div
@@ -106,7 +99,7 @@ function HeaderPreview({ isScrolled }: { isScrolled: boolean }) {
           <ul className="flex items-center gap-1">
             {PRIMARY_NAV.map((item, index) => (
               <li key={item.routeId}>
-                <HeaderNavLink item={item} isActive={index === 0} />
+                <NavbarLink item={item} isActive={index === 0} />
               </li>
             ))}
           </ul>
@@ -170,63 +163,59 @@ function NoteList({ items }: { items: TranslationKey[] }) {
   )
 }
 
-export function HeaderSection() {
+export function NavbarSection() {
   const { t } = useLanguage()
 
   return (
     <DocSection
-      id="header"
-      title={t('ds.header.title')}
-      description={t('ds.header.desc')}
+      id="navbar"
+      title={t('ds.navbar.title')}
+      description={t('ds.navbar.desc')}
     >
       <div className="space-y-10">
         <div className="space-y-6">
           <div>
-            <SectionHeading level={3} title={t('ds.header.default')} />
+            <SectionHeading level={3} title={t('ds.navbar.default')} />
             <div className="mt-4">
-              <HeaderPreview isScrolled={false} />
+              <NavbarPreview isScrolled={false} />
             </div>
           </div>
 
           <div>
-            <SectionHeading level={3} title={t('ds.header.scrolled')} />
+            <SectionHeading level={3} title={t('ds.navbar.scrolled')} />
             <div className="mt-4">
-              <HeaderPreview isScrolled />
+              <NavbarPreview isScrolled />
             </div>
           </div>
 
           <p className="max-w-narrow text-caption text-ink-muted">
-            {t('ds.header.previewNote')}
+            {t('ds.navbar.previewNote')}
           </p>
 
           <p className="max-w-narrow text-body-sm text-ink-muted">
-            {t('ds.header.active')}
+            {t('ds.navbar.active')}
           </p>
         </div>
 
         <div>
-          <SectionHeading level={3} title={t('ds.header.language')} />
-          {/*
-            The real trigger and the real panel, in both states, shown in
-            place. Inert and hidden from assistive technology so the
-            documentation page does not offer a second language switch of
-            its own.
-          */}
+          <SectionHeading level={3} title={t('ds.navbar.language')} />
+          {/* The real trigger and panel in both states, inert and hidden so
+              this page does not offer a second language switch. */}
           <div
             inert
             aria-hidden="true"
             className="mt-4 flex flex-wrap items-start gap-10 rounded-lg border border-line bg-page p-6"
           >
-            <StateSpecimen label={t('ds.header.language.closed')}>
+            <StateSpecimen label={t('ds.navbar.language.closed')}>
               <LanguageMenuTrigger menu={MENU_STATES.closed} />
             </StateSpecimen>
 
-            <StateSpecimen label={t('ds.header.language.open')}>
+            <StateSpecimen label={t('ds.navbar.language.open')}>
               <LanguageMenuTrigger menu={MENU_STATES.open} />
               <LanguageMenuPanel menu={MENU_STATES.open} placement="inline" />
             </StateSpecimen>
 
-            <StateSpecimen label={t('ds.header.language.suggestionLabel')}>
+            <StateSpecimen label={t('ds.navbar.language.suggestionLabel')}>
               <LanguageSuggestionCard />
             </StateSpecimen>
           </div>
@@ -234,12 +223,12 @@ export function HeaderSection() {
         </div>
 
         <div>
-          <SectionHeading level={3} title={t('ds.header.mobile')} />
+          <SectionHeading level={3} title={t('ds.navbar.mobile')} />
           <NoteList items={MOBILE_NOTES} />
         </div>
 
         <div>
-          <SectionHeading level={3} title={t('ds.header.a11y')} />
+          <SectionHeading level={3} title={t('ds.navbar.a11y')} />
           <NoteList items={A11Y_NOTES} />
         </div>
       </div>

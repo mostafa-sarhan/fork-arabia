@@ -20,10 +20,10 @@ import NotFound from './NotFound'
  * The page a declared route shows until its real content ships.
  *
  * Declaring the routes now and answering them with one branded page is what
- * lets the navigation be complete and correct from the first commit: every
- * link resolves, every URL is fixed, and nothing in the header has to be
- * disabled or hidden. All of these routes are `indexable: false` in the
- * route table, so none of them can be found in search while it says this.
+ * lets the navigation be complete from the first commit: every link resolves,
+ * every URL is fixed, and nothing in the navbar has to be disabled or hidden.
+ * All of these routes are `indexable: false`, so none of them can be found in
+ * search while it says this.
  */
 function PlaceholderShell({
   crumbs,
@@ -53,11 +53,7 @@ function PlaceholderShell({
   ).filter((action) => action.routeId !== currentRouteId)
 
   return (
-    <main
-      id="main"
-      tabIndex={-1}
-      className="min-h-main bg-page focus:outline-none"
-    >
+    <div className="min-h-main bg-page">
       <div className="border-b border-line bg-surface">
         <Container className="py-section-sm sm:py-section">
           <Breadcrumb items={crumbs} />
@@ -91,7 +87,7 @@ function PlaceholderShell({
           </div>
         </Container>
       </div>
-    </main>
+    </div>
   )
 }
 
@@ -130,9 +126,9 @@ export function SectorPlaceholder() {
 
   const Icon = ICONS[sector.icon]
   /*
-   * The sector's own question, from the content module — which is also
-   * what keeps that module in this lazily loaded chunk rather than in the
-   * bundle the header pulls in.
+   * The sector's own question, from the content module — which is also what
+   * keeps that module in this lazily loaded chunk rather than in the bundle
+   * the navbar pulls in.
    */
   const { cta } = getSectorContent(sector.id)
 
@@ -142,7 +138,7 @@ export function SectorPlaceholder() {
       crumbs={[
         { label: t('nav.home'), to: ROUTE_PATHS.home },
         { label: t('nav.services'), to: ROUTE_PATHS.services },
-        { label: resolveCopy(sector.title, language).text },
+        { label: resolveCopy(sector.title, language) },
       ]}
       eyebrow={
         <p className="mt-5 flex items-center gap-3">

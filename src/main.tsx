@@ -13,7 +13,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-
     <BrowserRouter>
       <LanguageProvider>
         <App />

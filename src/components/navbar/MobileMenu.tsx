@@ -1,25 +1,22 @@
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type ComponentType,
-} from 'react'
+import { useEffect, useId, useRef, useState, type ComponentType } from 'react'
 import { useLocation } from 'react-router'
+import { LanguageSheetOptions } from '@/components/navbar/LanguageMenu'
+import { useNavbar } from '@/components/navbar/NavbarContext'
 import { Button } from '@/components/ui/Button'
-import { LanguageSheetOptions } from '@/components/layout/LanguageMenu'
+import { IconButton } from '@/components/ui/IconButton'
+import { ICONS } from '@/components/ui/iconRegistry'
 import {
   ChatIcon,
   ChevronDownIcon,
+  CloseIcon,
   MailIcon,
+  MenuIcon,
   PhoneIcon,
+  type IconProps,
 } from '@/components/ui/icons'
-import { ICONS } from '@/components/ui/iconRegistry'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
-import { Copy } from '@/lib/i18n/Copy'
-import type { IconProps } from '@/components/ui/icons'
 import { cn } from '@/lib/cn'
+import { Copy } from '@/lib/i18n/Copy'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { NAV_ACTIONS, PRIMARY_NAV } from '@/lib/navigation'
 import { LocalizedLink } from '@/lib/routing/LocalizedLink'
@@ -36,44 +33,57 @@ const CHANNEL_ICONS: Record<ContactChannel['id'], ComponentType<IconProps>> = {
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-export type MobileMenuProps = {
-  isOpen: boolean
-  /** Closes the sheet and hands focus back to the toggle that opened it. */
-  onClose: () => void
-  /** Ties the sheet to the toggle's aria-controls. */
-  id: string
+/** The control that opens and closes the sheet, below the desktop bar. */
+export function MobileMenuToggle() {
+  const { t } = useLanguage()
+  const { isMenuOpen, menuId, toggleMenu, registerToggle } = useNavbar()
+
+  return (
+    <IconButton
+      ref={registerToggle}
+      label={isMenuOpen ? t('a11y.closeMenu') : t('a11y.openMenu')}
+      variant="outline"
+      size="sm"
+      aria-expanded={isMenuOpen}
+      aria-controls={menuId}
+      onClick={toggleMenu}
+      className="xl:hidden"
+    >
+      {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+    </IconButton>
+  )
 }
 
 /**
  * The navigation sheet for everything below the desktop breakpoint.
  *
- * It stops short of the full width so the overlay is always visible behind
- * it: a sheet that covers the screen edge to edge leaves nothing to tap to
- * dismiss it, and hides that there is a page underneath at all.
+ * It stops short of the full width so the overlay stays visible behind it: a
+ * sheet that covers the screen edge to edge leaves nothing to tap to dismiss
+ * it, and hides that there is a page underneath at all.
  *
  * It is always mounted so the slide is a plain CSS transition rather than a
- * mount animation, and `inert` — not merely `hidden` — keeps it out of the
- * focus order and the accessibility tree while it is closed. Under
- * prefers-reduced-motion the project's global rule flattens the transition
- * to nothing, so it simply appears.
+ * mount animation, and `inert` keeps it out of the focus order and the
+ * accessibility tree while it is closed. Under prefers-reduced-motion the
+ * project's global rule flattens the transition, so it simply appears.
  */
-export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
+export function MobileMenu() {
   const { t } = useLanguage()
   const location = useLocation()
+  const { isMenuOpen, menuId, closeMenu } = useNavbar()
   const panelRef = useRef<HTMLDivElement>(null)
   const sectorsId = useId()
   const [areSectorsOpen, setSectorsOpen] = useState(false)
 
-  /**
+  /*
    * The focus contract: focus enters the sheet when it opens, Tab cycles
-   * inside it, and Escape leaves. The page behind it is made inert by the
-   * layout, so a trap is belt and braces — but Tab would otherwise still
-   * reach the browser chrome and come back in the wrong place.
+   * inside it, and Escape leaves. The page behind it is inert already, but
+   * Tab would otherwise reach the browser chrome and come back in the wrong
+   * place.
    */
   useEffect(() => {
     const panel = panelRef.current
 
-    if (!isOpen || !panel) {
+    if (!isMenuOpen || !panel) {
       return
     }
 
@@ -84,7 +94,7 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose()
+        closeMenu()
         return
       }
 
@@ -112,11 +122,11 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
     document.addEventListener('keydown', onKeyDown)
 
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [isOpen, onClose])
+  }, [closeMenu, isMenuOpen])
 
   /** The page must not scroll underneath the sheet. */
   useEffect(() => {
-    if (!isOpen) {
+    if (!isMenuOpen) {
       return
     }
 
@@ -127,31 +137,29 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
     return () => {
       document.body.style.overflow = previous
     }
-  }, [isOpen])
-
-  const handleOverlayClick = useCallback(() => onClose(), [onClose])
+  }, [isMenuOpen])
 
   return (
     <>
       <div
         aria-hidden="true"
-        onClick={handleOverlayClick}
+        onClick={closeMenu}
         className={cn(
           'fixed inset-0 z-overlay bg-navy/40 transition-opacity duration-300 xl:hidden',
-          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+          isMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
         )}
       />
 
       <div
-        id={id}
+        id={menuId}
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={t('nav.primary')}
-        inert={!isOpen}
+        inert={!isMenuOpen}
         className={cn(
           'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-transform duration-300 ease-emphasized xl:hidden',
-          isOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
         )}
       >
         <nav
@@ -161,6 +169,7 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
           <ul className="flex flex-col">
             {PRIMARY_NAV.map((item) => {
               const isActive = isRouteActive(location.pathname, item.routeId)
+              const isServices = item.routeId === 'services'
 
               return (
                 <li key={item.routeId}>
@@ -186,12 +195,12 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
                     </LocalizedLink>
 
                     {/*
-                      Services carries the same panel the desktop bar does,
-                      as a group that expands in place. The link beside it
-                      still goes to the services page, so the parent page is
-                      never trapped behind its own menu.
+                      Services carries the same sectors the desktop panel
+                      does, as a group that expands in place. The link beside
+                      it still goes to the services page, so the parent page
+                      is never trapped behind its own menu.
                     */}
-                    {item.routeId === 'services' ? (
+                    {isServices ? (
                       <button
                         type="button"
                         aria-expanded={areSectorsOpen}
@@ -210,8 +219,11 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
                     ) : null}
                   </div>
 
-                  {item.routeId === 'services' && areSectorsOpen ? (
-                    <ul id={sectorsId} className="mb-2 ms-3 border-s border-line ps-3">
+                  {isServices && areSectorsOpen ? (
+                    <ul
+                      id={sectorsId}
+                      className="mb-2 ms-3 border-s border-line ps-3"
+                    >
                       {SECTOR_INDEX.map((sector) => {
                         const Icon = ICONS[sector.icon]
 
@@ -272,9 +284,9 @@ export function MobileMenu({ isOpen, onClose, id }: MobileMenuProps) {
                         {t(channel.labelKey)}
                       </span>
                       {/*
-                        The isolate is inline, inside a box that keeps the
-                        sheet's direction: the digits read left to right
-                        without the line jumping to the other edge.
+                        An inline isolate inside a box that keeps the sheet's
+                        direction: the digits read left to right without the
+                        line jumping to the other edge.
                       */}
                       <span className="truncate font-medium">
                         <bdi dir="ltr">{channel.display}</bdi>

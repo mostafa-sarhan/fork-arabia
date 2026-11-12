@@ -18,16 +18,14 @@ import type { TranslationKey } from '@/lib/i18n/translations'
  *   /               ->  Arabic home          /en               ->  English home
  *   /design-system  ->  Arabic design system /en/design-system ->  English …
  *
- * A route is therefore declared once, by its *canonical* (unprefixed) path,
- * and both language variants are generated from it. Nothing else in the app
- * may assemble a URL by hand: `localizedPath` and `languagePathname` below
- * are the only two places that know about the prefix.
+ * A route is therefore declared once, by its canonical (unprefixed) path, and
+ * both language variants are generated from it. Nothing else may assemble a
+ * URL by hand: `localizedPath` and `languagePathname` are the only places
+ * that know about the prefix.
  *
- * To add a route — `/services`, `/services/:slug`, `/about`, `/presence`,
- * `/book-consultation`, `/request-quote`, `/contact` — add one entry to
- * `ROUTES` and one element to `ROUTE_ELEMENTS` in `src/App.tsx`. The element
- * map is keyed by `RouteId`, so a missing element is a type error rather
- * than a blank page.
+ * To add a route, add one entry to `ROUTES` and one element to
+ * `ROUTE_ELEMENTS` in `src/App.tsx`. That map is keyed by `RouteId`, so a
+ * missing element is a type error rather than a blank page.
  */
 
 /** What every route, including the catch-all, has to declare. */
@@ -80,9 +78,9 @@ export const ROUTES = [
 export type SectorPath = `/services/${SectorSlug}`
 
 /**
- * Every path a `LocalizedLink` may point at — the declared routes plus the
- * nine sector pages, which are one pattern but nine real URLs. The template
- * literal keeps them link-checkable: a typo in a slug fails to compile.
+ * Every path a `LocalizedLink` may point at: the declared routes plus the
+ * nine sector pages, which are one pattern but nine real URLs. A typo in a
+ * slug fails to compile.
  */
 export type CanonicalPath = (typeof ROUTES)[number]['path'] | SectorPath
 
@@ -94,12 +92,7 @@ export type RouteId =
   | typeof SECTOR_ROUTE.id
   | typeof NOT_FOUND_ROUTE.id
 
-/**
- * The path of each route, by id.
- *
- * Navigation and link configuration reference a route by id and look the
- * path up here, so a path is written exactly once in the project.
- */
+/** The path of each route, by id, so a path is written exactly once. */
 export const ROUTE_PATHS = Object.fromEntries(
   ROUTES.map((route) => [route.id, route.path]),
 ) as Record<PageRouteId, CanonicalPath>
@@ -152,9 +145,9 @@ function withLanguagePrefix(canonical: string, language: Language): string {
 /**
  * The language a URL belongs to.
  *
- * The boot script in `index.html` repeats this rule in plain ES5 so the
- * document is in the right language and direction before first paint — keep
- * the two in step.
+ * `src/boot/languageBoot.ts` repeats this rule in the pre-paint script, so
+ * the document is in the right language and direction before first paint —
+ * keep the two in step.
  */
 export function languageFromPathname(pathname: string): Language {
   const normalized = normalizePathname(pathname)
@@ -217,11 +210,9 @@ export function languagePathname(
 }
 
 /**
- * Whether a URL is "on" a route, for marking navigation.
- *
- * A section owns its children: `/services/legal` keeps Services marked, so
- * the rule holds once the sector pages exist. Home is the exception — it
- * is a prefix of everything, so it matches exactly.
+ * Whether a URL is "on" a route, for marking navigation. A section owns its
+ * children: `/services/legal` keeps Services marked. Home is the exception —
+ * it is a prefix of everything, so it matches exactly.
  */
 export function isRouteActive(
   pathname: string,
