@@ -27,6 +27,9 @@ const en = {
   'footer.quickLinks': 'Quick links',
   'footer.featured': 'Featured services',
   'footer.social': 'Follow us',
+  /* The short labels of the mobile footer's three contact buttons. */
+  'footer.call': 'Call',
+  'footer.email': 'Email',
   'contact.riyadh': 'Riyadh (head office)',
   'contact.tanta': 'Tanta',
   'contact.whatsapp': 'WhatsApp',
@@ -410,6 +413,8 @@ const ar: Record<keyof typeof en, string> = {
   'footer.quickLinks': 'روابط سريعة',
   'footer.featured': 'أبرز الخدمات',
   'footer.social': 'تابعنا',
+  'footer.call': 'اتصل',
+  'footer.email': 'إيميل',
   'contact.riyadh': 'الرياض (المقر الرئيسي)',
   'contact.tanta': 'طنطا',
   'contact.whatsapp': 'واتساب',
