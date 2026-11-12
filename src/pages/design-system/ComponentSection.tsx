@@ -1,16 +1,16 @@
-import { Badge, type BadgeVariant } from '../../components/ui/Badge'
-import { Breadcrumb } from '../../components/ui/Breadcrumb'
+import { Badge, type BadgeVariant } from '@/components/ui/Badge'
+import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../components/ui/Card'
-import { SectionHeading } from '../../components/ui/SectionHeading'
-import { ArrowRightIcon, BriefcaseIcon } from '../../components/ui/icons'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import type { TranslationKey } from '../../lib/i18n/translations'
+} from '@/components/ui/Card'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { ArrowRightIcon, BriefcaseIcon } from '@/components/ui/icons'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import type { TranslationKey } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
 const badgeLabels: Record<BadgeVariant, TranslationKey> = {

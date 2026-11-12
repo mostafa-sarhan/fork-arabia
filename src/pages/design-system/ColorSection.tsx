@@ -1,5 +1,5 @@
-import { SectionHeading } from '../../components/ui/SectionHeading'
-import { cn } from '../../lib/cn'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { cn } from '@/lib/cn'
 import {
   AA_LARGE,
   AA_NORMAL,
@@ -8,9 +8,9 @@ import {
   resolveTokenColor,
   toHex,
   type Rgb,
-} from '../../lib/color'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import type { TranslationKey } from '../../lib/i18n/translations'
+} from '@/lib/color'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import type { TranslationKey } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
 /* -------------------------------------------------------------------------- */
@@ -43,6 +43,9 @@ const TOKENS = [
   '--color-subheading',
   '--color-link',
   '--color-link-hover',
+  '--color-disabled-bg',
+  '--color-disabled-fg',
+  '--color-disabled-border',
 ] as const
 
 type Token = (typeof TOKENS)[number]
@@ -257,6 +260,24 @@ const ROLES: Array<{
     resolvesTo: '--color-navy',
     usageKey: 'role.usage.onAccent',
   },
+  {
+    nameKey: 'role.disabledBg',
+    token: '--color-disabled-bg',
+    resolvesTo: '--color-navy-soft',
+    usageKey: 'role.usage.disabledBg',
+  },
+  {
+    nameKey: 'role.disabledFg',
+    token: '--color-disabled-fg',
+    resolvesTo: '--color-ink-muted',
+    usageKey: 'role.usage.disabledFg',
+  },
+  {
+    nameKey: 'role.disabledBorder',
+    token: '--color-disabled-border',
+    resolvesTo: '--color-line',
+    usageKey: 'role.usage.disabledBorder',
+  },
 ]
 
 /* -------------------------------------------------------------------------- */
@@ -331,6 +352,11 @@ const APPROVED: Pair[] = [
     labelKey: 'pair.destructiveButton',
     foreground: '--color-surface',
     background: '--color-danger',
+  },
+  {
+    labelKey: 'pair.disabledControl',
+    foreground: '--color-disabled-fg',
+    background: '--color-disabled-bg',
   },
 ]
 

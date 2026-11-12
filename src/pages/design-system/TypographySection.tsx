@@ -1,7 +1,7 @@
-import { SectionHeading } from '../../components/ui/SectionHeading'
-import { cn } from '../../lib/cn'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import { translations } from '../../lib/i18n/translations'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { cn } from '@/lib/cn'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import { translations } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
 export function TypographySection() {

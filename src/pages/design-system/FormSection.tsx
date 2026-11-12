@@ -1,14 +1,14 @@
-import { Button } from '../../components/ui/Button'
-import { Checkbox, Radio } from '../../components/ui/Choice'
+import { Button } from '@/components/ui/Button'
+import { Checkbox, Radio } from '@/components/ui/Choice'
 import {
   ErrorMessage,
   FormLabel,
   HelperText,
-} from '../../components/ui/FormField'
-import { Input } from '../../components/ui/Input'
-import { Select } from '../../components/ui/Select'
-import { Textarea } from '../../components/ui/Textarea'
-import { useLanguage } from '../../lib/i18n/useLanguage'
+} from '@/components/ui/FormField'
+import { Input } from '@/components/ui/Input'
+import { Select } from '@/components/ui/Select'
+import { Textarea } from '@/components/ui/Textarea'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 import { DocSection } from './DocSection'
 
 export function FormSection() {
@@ -63,6 +63,20 @@ export function FormSection() {
               <option value="sa">{t('form.country.sa')}</option>
               <option value="ae">{t('form.country.ae')}</option>
               <option value="other">{t('form.country.other')}</option>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <FormLabel htmlFor="ds-country-disabled">
+              {t('form.country')} — {t('btn.disabled')}
+            </FormLabel>
+            <Select
+              id="ds-country-disabled"
+              name="country-disabled"
+              defaultValue="sa"
+              disabled
+            >
+              <option value="sa">{t('form.country.sa')}</option>
             </Select>
           </div>
 

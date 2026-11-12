@@ -1,39 +1,16 @@
-import { useEffect } from 'react'
-import { Logo } from '../components/brand/Logo'
-import { Container } from '../components/layout/Container'
-import { Badge } from '../components/ui/Badge'
-import { LanguageSwitcher } from '../components/ui/LanguageSwitcher'
-import { SkipLink } from '../components/ui/SkipLink'
-import { useLanguage } from '../lib/i18n/useLanguage'
-
-const YEAR = new Date().getFullYear()
+import { Container } from '@/components/layout/Container'
+import { Badge } from '@/components/ui/Badge'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 
 export default function ComingSoon() {
   const { t } = useLanguage()
 
-  useEffect(() => {
-    document.title = `${t('brand.name')} — ${t('soon.eyebrow')}`
-  }, [t])
-
   return (
-    <div className="relative flex min-h-svh flex-col overflow-hidden bg-page">
-      <SkipLink />
+    <div className="relative flex min-h-main flex-col overflow-hidden bg-page">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-grid"
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-turquoise"
-      />
-
-      <header className="relative z-nav">
-        <Container className="flex items-center justify-between gap-4 py-5">
-          <Logo />
-          <LanguageSwitcher />
-        </Container>
-      </header>
-
       <main
         id="main"
         tabIndex={-1}
@@ -81,14 +58,6 @@ export default function ComingSoon() {
         </Container>
       </main>
 
-      <footer className="relative z-raised border-t border-line bg-surface">
-        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-caption text-ink-muted sm:flex-row">
-          <span>
-            © {YEAR} {t('brand.legal')}. {t('soon.rights')}
-          </span>
-          <span>{t('soon.established')}</span>
-        </Container>
-      </footer>
     </div>
   )
 }

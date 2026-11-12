@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react'
-import { Logo } from '../components/brand/Logo'
-import { Container } from '../components/layout/Container'
-import { Badge } from '../components/ui/Badge'
-import { LanguageSwitcher } from '../components/ui/LanguageSwitcher'
-import { SectionHeading } from '../components/ui/SectionHeading'
-import { SkipLink } from '../components/ui/SkipLink'
-import { ArrowRightIcon } from '../components/ui/icons'
-import { cn } from '../lib/cn'
-import { useLanguage } from '../lib/i18n/useLanguage'
-import type { TranslationKey } from '../lib/i18n/translations'
+import { Container } from '@/components/layout/Container'
+import { Badge } from '@/components/ui/Badge'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { cn } from '@/lib/cn'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import type { TranslationKey } from '@/lib/i18n/translations'
 import { ButtonSection } from './design-system/ButtonSection'
 import { ColorSection } from './design-system/ColorSection'
 import { ComponentSection } from './design-system/ComponentSection'
 import { DirectionSection } from './design-system/DirectionSection'
 import { FormSection } from './design-system/FormSection'
+import { HeaderSection } from './design-system/HeaderSection'
 import { IconSection } from './design-system/IconSection'
 import { LayoutSection } from './design-system/LayoutSection'
+import { NavigationSection } from './design-system/NavigationSection'
 import { TypographySection } from './design-system/TypographySection'
 
 const SECTIONS = [
@@ -27,6 +25,8 @@ const SECTIONS = [
   { id: 'layout', labelKey: 'ds.section.layout' },
   { id: 'icons', labelKey: 'ds.section.icons' },
   { id: 'direction', labelKey: 'ds.section.direction' },
+  { id: 'header', labelKey: 'ds.section.header' },
+  { id: 'navigation', labelKey: 'ds.section.navigation' },
 ] as const satisfies ReadonlyArray<{
   id: string
   labelKey: TranslationKey
@@ -70,39 +70,8 @@ export default function DesignSystem() {
   const { t, direction } = useLanguage()
   const active = useActiveSection()
 
-  useEffect(() => {
-    document.title = `${t('ds.title')} — ${t('brand.name')}`
-  }, [t])
-
   return (
-    <div className="min-h-svh bg-page">
-      <SkipLink />
-      <header className="sticky top-0 z-sticky border-b border-line bg-surface">
-        <Container className="flex h-16 items-center justify-between gap-4">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <Logo showSuffix={false} />
-            <span
-              aria-hidden="true"
-              className="hidden h-6 w-px bg-line sm:block"
-            />
-            <span className="hidden text-body-sm font-medium text-ink-muted sm:block">
-              {t('ds.title')}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
-            <a
-              href="/"
-              className="hidden items-center gap-1.5 rounded-sm text-body-sm font-medium text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 sm:inline-flex"
-            >
-              {t('nav.backToSite')}
-              <ArrowRightIcon className="size-4 rtl:-scale-x-100" />
-            </a>
-          </div>
-        </Container>
-      </header>
-
+    <div className="min-h-main bg-page">
       <main id="main" tabIndex={-1} className="focus:outline-none">
         <div className="border-b border-line bg-surface">
           <Container className="py-12 sm:py-16">
@@ -121,7 +90,7 @@ export default function DesignSystem() {
 
       <Container className="py-10 lg:py-14">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+          <aside className="lg:sticky lg:top-below-header lg:self-start">
             <nav aria-label={t('ds.onThisPage')}>
               <p className="text-overline tracking-latin-wide text-ink-muted">
                 {t('ds.onThisPage')}
@@ -160,6 +129,8 @@ export default function DesignSystem() {
             <LayoutSection />
             <IconSection />
             <DirectionSection />
+            <HeaderSection />
+            <NavigationSection />
           </div>
         </div>
         </Container>

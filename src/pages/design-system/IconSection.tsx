@@ -1,36 +1,39 @@
-import type { ComponentType } from 'react'
-import {
-  ArrowRightIcon,
-  BriefcaseIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  ForkIcon,
-  GlobeIcon,
-  InfoIcon,
-  MailIcon,
-  PhoneIcon,
-  ShieldIcon,
-  type IconProps,
-} from '../../components/ui/icons'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import type { TranslationKey } from '../../lib/i18n/translations'
+import { ICONS, type IconName } from '@/components/ui/iconRegistry'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import type { TranslationKey } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
-const icons: Array<{ labelKey: TranslationKey; Icon: ComponentType<IconProps> }> =
-  [
-    { labelKey: 'icon.fork', Icon: ForkIcon },
-    { labelKey: 'icon.globe', Icon: GlobeIcon },
-    { labelKey: 'icon.arrow', Icon: ArrowRightIcon },
-    { labelKey: 'icon.chevronDown', Icon: ChevronDownIcon },
-    { labelKey: 'icon.chevronRight', Icon: ChevronRightIcon },
-    { labelKey: 'icon.check', Icon: CheckIcon },
-    { labelKey: 'icon.info', Icon: InfoIcon },
-    { labelKey: 'icon.mail', Icon: MailIcon },
-    { labelKey: 'icon.phone', Icon: PhoneIcon },
-    { labelKey: 'icon.shield', Icon: ShieldIcon },
-    { labelKey: 'icon.briefcase', Icon: BriefcaseIcon },
-  ]
+/**
+ * A name for every icon in the registry. Typed against it, so adding an
+ * icon without naming it — or naming one that no longer exists — fails to
+ * compile, and the gallery can never fall behind the set.
+ */
+const LABELS: Record<IconName, TranslationKey> = {
+  fork: 'icon.fork',
+  globe: 'icon.globe',
+  arrowRight: 'icon.arrow',
+  chevronDown: 'icon.chevronDown',
+  chevronRight: 'icon.chevronRight',
+  check: 'icon.check',
+  info: 'icon.info',
+  mail: 'icon.mail',
+  phone: 'icon.phone',
+  shield: 'icon.shield',
+  briefcase: 'icon.briefcase',
+  menu: 'icon.menu',
+  close: 'icon.close',
+  chat: 'icon.chat',
+  calendar: 'icon.calendar',
+  scale: 'icon.scale',
+  foundation: 'icon.foundation',
+  ledger: 'icon.ledger',
+  orgChart: 'icon.orgChart',
+  medal: 'icon.medal',
+  academic: 'icon.academic',
+  chip: 'icon.chip',
+  supply: 'icon.supply',
+  passport: 'icon.passport',
+}
 
 export function IconSection() {
   const { t } = useLanguage()
@@ -42,19 +45,29 @@ export function IconSection() {
       description={t('ds.icons.desc')}
     >
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {icons.map(({ labelKey, Icon }) => (
+        {(Object.keys(ICONS) as IconName[]).map((name) => {
+          const Icon = ICONS[name]
+
+          return (
           <div
-            key={labelKey}
+            key={name}
             className="flex items-center gap-3 rounded-md border border-line bg-surface p-4"
           >
             <span className="grid size-10 shrink-0 place-items-center rounded-md bg-navy-soft text-petrol">
               <Icon className="size-5" />
             </span>
             <span className="text-body-sm font-medium text-ink">
-              {t(labelKey)}
+              {t(LABELS[name])}
             </span>
+            <code
+              dir="ltr"
+              className="ms-auto text-caption text-ink-muted/70"
+            >
+              {name}
+            </code>
           </div>
-        ))}
+          )
+        })}
       </div>
     </DocSection>
   )

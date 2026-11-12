@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { SectionHeading } from '../../components/ui/SectionHeading'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 
 export type DocSectionProps = {
   id: string

@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
-import { Divider } from '../../components/layout/Divider'
-import { Grid } from '../../components/layout/Grid'
-import { Section } from '../../components/layout/Section'
-import { Stack } from '../../components/layout/Stack'
-import { SectionHeading } from '../../components/ui/SectionHeading'
-import { cn } from '../../lib/cn'
-import { useLanguage } from '../../lib/i18n/useLanguage'
+import { Divider } from '@/components/layout/Divider'
+import { Grid } from '@/components/layout/Grid'
+import { Section } from '@/components/layout/Section'
+import { Stack } from '@/components/layout/Stack'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { cn } from '@/lib/cn'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 import { DocSection } from './DocSection'
 
 const spacingScale = [

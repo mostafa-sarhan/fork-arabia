@@ -3,12 +3,18 @@ import {
   Button,
   type ButtonSize,
   type ButtonVariant,
-} from '../../components/ui/Button'
-import { IconButton } from '../../components/ui/IconButton'
-import { CheckIcon, GlobeIcon, MailIcon } from '../../components/ui/icons'
-import { SectionHeading } from '../../components/ui/SectionHeading'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import type { TranslationKey } from '../../lib/i18n/translations'
+} from '@/components/ui/Button'
+import { IconButton } from '@/components/ui/IconButton'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  GlobeIcon,
+  MailIcon,
+} from '@/components/ui/icons'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import { ROUTE_PATHS } from '@/lib/routing/routes'
+import type { TranslationKey } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
 const variantLabels: Record<ButtonVariant, TranslationKey> = {
@@ -78,6 +84,33 @@ export function ButtonSection() {
           </Button>
         </Group>
 
+        <div>
+          <SectionHeading
+            level={3}
+            title={t('ds.buttons.links')}
+            description={t('ds.buttons.linksDesc')}
+          />
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Button to={ROUTE_PATHS.contact} variant="primary">
+              {t('btn.internalLink')}
+            </Button>
+            <Button
+              href="https://wa.me/966500941484"
+              target="_blank"
+              variant="outline"
+            >
+              {t('btn.externalLink')}
+            </Button>
+            <IconButton
+              to={ROUTE_PATHS.contact}
+              label={t('btn.internalLink')}
+              variant="outline"
+            >
+              <ArrowRightIcon className="rtl:-scale-x-100" />
+            </IconButton>
+          </div>
+        </div>
+
         <Group title={t('ds.buttons.icon')}>
           <IconButton label={t('icon.mail')} variant="solid">
             <MailIcon />
@@ -90,6 +123,9 @@ export function ButtonSection() {
           </IconButton>
           <IconButton label={t('icon.mail')} variant="outline" size="sm">
             <MailIcon className="size-4" />
+          </IconButton>
+          <IconButton label={t('btn.disabled')} variant="solid" disabled>
+            <CheckIcon />
           </IconButton>
         </Group>
       </div>

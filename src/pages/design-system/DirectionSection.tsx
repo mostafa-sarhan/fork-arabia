@@ -1,10 +1,10 @@
-import { Badge } from '../../components/ui/Badge'
-import { Breadcrumb } from '../../components/ui/Breadcrumb'
-import { Button } from '../../components/ui/Button'
-import { Input } from '../../components/ui/Input'
-import { GlobeIcon } from '../../components/ui/icons'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import { translations } from '../../lib/i18n/translations'
+import { Badge } from '@/components/ui/Badge'
+import { Breadcrumb } from '@/components/ui/Breadcrumb'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
+import { GlobeIcon } from '@/components/ui/icons'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import { translations } from '@/lib/i18n/translations'
 import { DocSection } from './DocSection'
 
 type DirectionPreviewProps = {
