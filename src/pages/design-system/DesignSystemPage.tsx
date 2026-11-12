@@ -97,7 +97,7 @@ export default function DesignSystemPage() {
               <p className="text-overline tracking-latin-wide text-ink-muted">
                 {t('ds.onThisPage')}
               </p>
-              <ul className="mt-3 flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
+              <ul className="mt-3 flex gap-1 overflow-x-auto pb-2 scrollbar-slim lg:flex-col lg:overflow-visible lg:pb-0">
                 {SECTIONS.map((section) => {
                   const isActive = active === section.id
 

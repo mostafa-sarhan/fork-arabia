@@ -271,6 +271,16 @@
   --logo-height-mobile: 44px;
   --logo-height-footer: 60px;
 
+  /*
+   * The scrollbar's thumb, in both places it is drawn. Petrol eased back
+   * against what it sits on, so the bar reads as part of the page rather
+   * than a control: 3.9:1 on the page tone and 3.2:1 on a white surface,
+   * both above the 3:1 a non-text element owes the eye. Hover and drag
+   * take it to full strength in the rules below.
+   */
+  --scrollbar-thumb: color-mix(in srgb, var(--color-petrol) 70%, var(--color-page));
+  --scrollbar-thumb-inner: color-mix(in srgb, var(--color-petrol) 60%, transparent);
+
   --z-base: 0;
   --z-raised: 10;
   --z-sticky: 30;
@@ -423,6 +433,42 @@
     right: auto;
     inset-inline-end: 0;
     translate: 0 -50%;
+  }
+}
+
+/*
+ * The scrollbar of a box that scrolls inside the page — the mobile menu
+ * sheet, a table too wide for its column. Thinner than the page's own and
+ * with no track of its own, so it lies over the surface it belongs to.
+ *
+ * Not named `scrollbar-thin`: Tailwind ships a utility of that name which
+ * sets `scrollbar-width: thin`, and a Chromium element with that property
+ * set stops applying ::-webkit-scrollbar rules — the bar below would be
+ * dropped for a plain one.
+ */
+@utility scrollbar-slim {
+  /* Firefox only, for the reason given on the page scrollbar above. */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-inner) transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background-color: var(--scrollbar-thumb-inner);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-petrol);
   }
 }
 
@@ -580,6 +626,66 @@
      * every target.
      */
     scroll-padding-top: var(--header-height);
+
+    /*
+     * The gutter is reserved whether or not the page scrolls, so moving
+     * from a long page to a short one never shifts the layout sideways.
+     */
+    scrollbar-gutter: stable;
+  }
+
+  /*
+   * Firefox, which draws the bar from these two properties alone — the
+   * thumb's colour first, then the track's.
+   *
+   * The query keeps them away from Chrome and Safari on purpose. Those
+   * two understand the properties as well, but a Chromium element that
+   * sets either one stops applying its ::-webkit-scrollbar rules
+   * altogether, so stating them unconditionally would trade the bar
+   * below for a plain one. ::-webkit-scrollbar is unknown only to
+   * Firefox, which makes it the test for "this is the browser that needs
+   * the standard properties".
+   */
+  @supports not selector(::-webkit-scrollbar) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--color-page);
+    }
+  }
+
+  /*
+   * Chrome, Edge and Safari. These rules reach a scrollbar that takes
+   * space of its own; a touch device keeps its native overlay bars, which
+   * they cannot style and should not. Nothing here transitions: a
+   * scrollbar has to answer the pointer at once.
+   */
+  html::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background-color: var(--color-page);
+  }
+
+  html::-webkit-scrollbar-thumb {
+    /*
+     * The border is the track showing through the thumb's own box, which
+     * is what makes it read as a slim floating pill instead of a bar the
+     * full width of the gutter.
+     */
+    border: 2px solid var(--color-page);
+    border-radius: 999px;
+    background-color: var(--scrollbar-thumb);
+    background-clip: padding-box;
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-navy);
+  }
+
+  html::-webkit-scrollbar-thumb:active {
+    background-color: var(--color-turquoise);
   }
 
   body {

@@ -422,7 +422,7 @@ function ContrastTable({
   const { t } = useLanguage()
 
   return (
-    <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface">
+    <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface scrollbar-slim">
       <table className="w-full min-w-narrow border-collapse text-body-sm">
         <thead>
           <tr className="border-b border-line text-caption font-semibold text-ink-muted">
@@ -573,7 +573,7 @@ export function ColorSection() {
           <p className="mt-2 max-w-narrow text-body-sm text-ink-muted">
             {t('ds.colors.rolesDesc')}
           </p>
-          <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface">
+          <div className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface scrollbar-slim">
             <table className="w-full min-w-panel border-collapse text-body-sm">
               <thead>
                 <tr className="border-b border-line text-caption font-semibold text-ink-muted">

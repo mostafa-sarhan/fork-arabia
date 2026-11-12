@@ -191,7 +191,7 @@ export function MobileMenu() {
         aria-label={t('nav.primary')}
         inert={!isMobileMenuOpen}
         className={cn(
-          'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-transform duration-300 ease-emphasized xl:hidden',
+          'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-transform duration-300 ease-emphasized scrollbar-slim xl:hidden',
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
         )}
       >

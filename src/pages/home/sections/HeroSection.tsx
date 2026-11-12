@@ -76,7 +76,7 @@ export function HeroSection() {
     <section className="relative overflow-hidden bg-navy">
       <HeroBackdrop />
 
-      <Container className="relative z-raised pt-12 pb-12 md:pb-38 lg:pt-24">
+      <Container className="relative z-raised pt-12 pb-10 md:pb-38 lg:pt-24">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-18">
           <div>
             <span
@@ -166,12 +166,18 @@ export function HeroSection() {
               />
             </picture>
 
-            <div className="absolute -bottom-6 start-4 end-4 flex items-center gap-3 rounded-2xl bg-surface p-4 shadow-raised lg:-bottom-7 lg:end-auto lg:start-6 lg:max-w-[19rem]">
+            {/*
+              The card is as wide as its two lines need and no wider, so on
+              a phone it overlaps the photograph's bottom corner instead of
+              lying across the picture. It is the same card at every width,
+              a size smaller below 1024.
+            */}
+            <div className="absolute -bottom-4 start-3 flex w-fit max-w-[85%] items-center gap-3 rounded-2xl bg-surface px-3.5 py-2.5 shadow-raised lg:-bottom-7 lg:start-6 lg:max-w-[19rem] lg:px-4 lg:py-4">
               <span
                 aria-hidden="true"
-                className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-turquoise-soft text-petrol"
+                className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-turquoise-soft text-petrol lg:size-11"
               >
-                <ShieldIcon size={22} />
+                <ShieldIcon className="size-[18px] lg:size-[22px]" />
               </span>
 
               <span>

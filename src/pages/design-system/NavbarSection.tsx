@@ -83,7 +83,7 @@ function NavbarPreview({ isScrolled }: { isScrolled: boolean }) {
       /* Shown at its real desktop width and scrolling inside this frame: a
          specimen that reflows is a specimen of something the site never
          renders. */
-      className="overflow-x-auto rounded-lg border border-line bg-page"
+      className="overflow-x-auto rounded-lg border border-line bg-page scrollbar-slim"
     >
       <div
         data-scrolled={isScrolled || undefined}
