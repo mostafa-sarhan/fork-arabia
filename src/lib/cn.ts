@@ -61,6 +61,11 @@ const color = [
   'subheading',
   'link',
   'link-hover',
+  'on-navy',
+  'on-navy-muted',
+  'disabled-bg',
+  'disabled-fg',
+  'disabled-border',
 ]
 
 /** --spacing-* : named gutters and section rhythm, on top of the numeric scale. */
@@ -87,7 +92,7 @@ const container = [
 const radius = ['xs', 'sm', 'md', 'lg', 'xl']
 
 /** --shadow-* */
-const shadows = ['xs', 'card', 'raised']
+const shadows = ['xs', 'card', 'raised', 'header']
 
 /** --font-* : both families resolve through the same stack. */
 const font = ['sans', 'display']

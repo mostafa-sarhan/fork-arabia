@@ -1,5 +1,5 @@
 import type { HTMLAttributes, LabelHTMLAttributes } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 
 export type FormLabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
   required?: boolean

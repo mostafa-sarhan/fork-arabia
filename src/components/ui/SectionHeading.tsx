@@ -1,5 +1,5 @@
 import type { ElementType, ReactNode } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 
 type HeadingLevel = 1 | 2 | 3
 

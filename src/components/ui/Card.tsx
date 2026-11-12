@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, HTMLAttributes } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 
 const surface = 'rounded-lg border border-line bg-surface shadow-xs'
 

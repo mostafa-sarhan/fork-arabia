@@ -1,5 +1,5 @@
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
-import { cn } from '../../lib/cn'
+import { cn } from '@/lib/cn'
 
 type ChoiceProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   label: ReactNode
@@ -28,7 +28,7 @@ function ChoiceControl({
         id={inputId}
         type={type}
         aria-describedby={descriptionId}
-        className="mt-0.5 size-4 shrink-0 cursor-pointer accent-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-0.5 size-4 shrink-0 cursor-pointer accent-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:accent-disabled-fg"
         {...props}
       />
       <div className="min-w-0">

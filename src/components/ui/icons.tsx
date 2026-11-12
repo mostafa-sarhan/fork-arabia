@@ -118,12 +118,162 @@ export function ShieldIcon(props: IconProps) {
   )
 }
 
+export function MenuIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 6h16" />
+      <path d="M4 12h16" />
+      <path d="M4 18h16" />
+    </IconBase>
+  )
+}
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m6 6 12 12" />
+      <path d="m18 6-12 12" />
+    </IconBase>
+  )
+}
+
+export function ChatIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5a8.2 8.2 0 0 1-.9-3.8 8.4 8.4 0 0 1 8.4-9 8.4 8.4 0 0 1 8.6 8.3Z" />
+    </IconBase>
+  )
+}
+
 export function BriefcaseIcon(props: IconProps) {
   return (
     <IconBase {...props}>
       <rect x="3" y="7" width="18" height="13" rx="2" />
       <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
       <path d="M3 12h18" />
+    </IconBase>
+  )
+}
+
+/** The booking action's icon. */
+export function CalendarIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="3" y="5" width="18" height="16" rx="2.5" />
+      <path d="M3 10h18" />
+      <path d="M8 3v4M16 3v4" />
+      <path d="M8 14h3" />
+    </IconBase>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sector icons — one per service sector, drawn on the same 24px grid         */
+/* -------------------------------------------------------------------------- */
+
+/** 01 — Legal and corporate services. */
+export function ScaleIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 3v18" />
+      <path d="M7 21h10" />
+      <path d="M5 7h14" />
+      <path d="M5 7 2 14h6L5 7Z" />
+      <path d="M19 7l-3 7h6l-3-7Z" />
+    </IconBase>
+  )
+}
+
+/** 02 — Company formation. */
+export function FoundationIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 21h18" />
+      <path d="M5 21V9l7-5 7 5v12" />
+      <path d="M10 21v-6h4v6" />
+      <path d="M9 11h2M13 11h2" />
+    </IconBase>
+  )
+}
+
+/** 03 — Financial and accounting solutions. */
+export function LedgerIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V3Z" />
+      <path d="M5 17h14" />
+      <path d="M9 7h6" />
+      <path d="M9 11h6" />
+    </IconBase>
+  )
+}
+
+/** 04 — Governance and organisation. */
+export function OrgChartIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="9" y="3" width="6" height="5" rx="1.5" />
+      <rect x="2" y="16" width="6" height="5" rx="1.5" />
+      <rect x="16" y="16" width="6" height="5" rx="1.5" />
+      <path d="M12 8v4" />
+      <path d="M5 16v-2h14v2" />
+    </IconBase>
+  )
+}
+
+/** 05 — Quality and excellence. */
+export function MedalIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="9" r="6" />
+      <path d="m9 14-2 7 5-3 5 3-2-7" />
+      <path d="m12 6 1.3 2.6 2.7.4-2 1.9.5 2.8-2.5-1.4-2.5 1.4.5-2.8-2-1.9 2.7-.4L12 6Z" />
+    </IconBase>
+  )
+}
+
+/** 06 — Training and education. */
+export function AcademicIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m12 4 10 5-10 5L2 9l10-5Z" />
+      <path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" />
+      <path d="M22 9v6" />
+    </IconBase>
+  )
+}
+
+/** 07 — Technology and artificial intelligence. */
+export function ChipIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="7" y="7" width="10" height="10" rx="2" />
+      <path d="M10 10h4v4h-4z" />
+      <path d="M10 3v4M14 3v4M10 17v4M14 17v4" />
+      <path d="M3 10h4M3 14h4M17 10h4M17 14h4" />
+    </IconBase>
+  )
+}
+
+/** 08 — Operational support. */
+export function SupplyIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 8.5 12 4l9 4.5-9 4.5-9-4.5Z" />
+      <path d="M3 15.5 12 20l9-4.5" />
+      <path d="M3 12l9 4.5 9-4.5" />
+    </IconBase>
+  )
+}
+
+/** 09 — Saudi premium residency. */
+export function PassportIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="4" y="2.5" width="16" height="19" rx="2.5" />
+      <circle cx="12" cy="10" r="3.2" />
+      <path d="M8.5 17.5h7" />
+      <path d="M12 6.8v6.4M8.8 10h6.4" />
     </IconBase>
   )
 }

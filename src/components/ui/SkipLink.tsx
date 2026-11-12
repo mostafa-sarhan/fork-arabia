@@ -1,4 +1,4 @@
-import { useLanguage } from '../../lib/i18n/useLanguage'
+import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /**
  * The first focusable element on the page, so a keyboard visitor can step
