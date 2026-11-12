@@ -1,9 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#182F59" />
-  <g fill="none" stroke="#19AFB0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M14 12v12a5 5 0 0 0 5 5h4a5 5 0 0 0 5-5V12" />
-    <path d="M21 12v40" />
-    <path d="M48 36V12a9 9 0 0 0-9 9v11a4 4 0 0 0 4 4h5Z" />
-    <path d="M48 36v16" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FORK ARABIA">
+  <!--
+    The brand mark alone, in the official palette. Proportions measured from
+    the supplied logo: bar height and dot diameter are 31.6% of the bar's
+    width, the second bar is 64.1% of the first, and the gaps are 5.3%.
+    No wordmark — at 16px it would be a smudge.
+  -->
+  <rect x="6.40" y="5.02" width="51.20" height="16.18" rx="8.09" fill="#182F59" />
+  <rect x="6.40" y="23.91" width="32.82" height="16.18" rx="8.09" fill="#124E69" />
+  <circle cx="14.49" cy="50.89" r="8.09" fill="#19AFB0" />
 </svg>

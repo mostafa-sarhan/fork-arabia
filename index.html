@@ -4,41 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--
-      Resolves the language before first paint, so an English visitor never
-      sees a flash of RTL while the bundle loads. The lang and dir attributes
-      on <html> above are only the no-JS fallback.
-
-      The config object below is a placeholder that vite.config.ts fills in
-      from src/lib/i18n/languageConfig.ts, so the storage key, the allowed
-      values, the default and the direction map are defined once for both
-      this script and LanguageProvider. Only the precedence
-      (?lang= -> stored -> default) is written twice; keep it in step with
-      resolveInitialLanguage().
-
-      Keep this script ahead of every stylesheet and bundle.
-    -->
     <script>
       (function () {
         var config = %LANGUAGE_BOOT_CONFIG%
         var resolved = null
 
         try {
-          var query = new URLSearchParams(window.location.search).get(
-            config.queryParam
-          )
+          var segment = '/' + window.location.pathname.split('/')[1]
 
-          if (config.languages.indexOf(query) !== -1) {
-            resolved = query
-          } else {
-            var stored = window.localStorage.getItem(config.storageKey)
+          for (var i = 0; i < config.languages.length; i++) {
+            var candidate = config.languages[i]
+            var prefix = config.pathPrefixes[candidate]
 
-            if (config.languages.indexOf(stored) !== -1) {
-              resolved = stored
+            if (prefix && prefix === segment) {
+              resolved = candidate
+              break
             }
           }
         } catch {
-          // Storage and URL parsing can both throw in restricted contexts.
+          // URL parsing can throw in restricted contexts.
         }
 
         var language = resolved || config.defaultLanguage
@@ -50,6 +34,8 @@
     </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#182F59" />
     <meta
       name="description"

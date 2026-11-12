@@ -1,37 +1,39 @@
-import { cn } from '../../lib/cn'
-import { useLanguage } from '../../lib/i18n/useLanguage'
-import { ForkIcon } from '../ui/icons'
+import {
+  BrandLockup,
+  type BrandLockupSize,
+  type BrandLockupTone,
+} from '@/components/brand/BrandLockup'
+import { cn } from '@/lib/cn'
+import { LocalizedLink } from '@/lib/routing/LocalizedLink'
+import { ROUTE_PATHS } from '@/lib/routing/routes'
 
 export type LogoProps = {
   className?: string
-  showSuffix?: boolean
+  /** `white` for dark surfaces such as the footer. */
+  tone?: BrandLockupTone
+  /** Where this logo stands; see `BrandLockupSize`. */
+  size?: BrandLockupSize
 }
 
-export function Logo({ className, showSuffix = true }: LogoProps) {
-  const { t } = useLanguage()
-
+/**
+ * The logo, wrapped in the link home.
+ *
+ * The lockup names itself, so the link takes its accessible name from its
+ * content rather than from an aria-label — which also keeps the name and
+ * the artwork from drifting apart.
+ */
+export function Logo({ className, tone = 'brand', size = 'header' }: LogoProps) {
   return (
-    <a
-      href="/"
-      aria-label={t('brand.homeLabel')}
+    <LocalizedLink
+      to={ROUTE_PATHS.home}
       className={cn(
-        'inline-flex items-center gap-3 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2',
+        'inline-flex rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2',
+        tone === 'white' &&
+          'focus-visible:ring-turquoise focus-visible:ring-offset-navy',
         className,
       )}
     >
-      <span className="grid size-10 place-items-center rounded-md bg-navy text-turquoise">
-        <ForkIcon className="size-5" />
-      </span>
-      <span className="flex min-w-0 flex-col">
-        <span className="font-display text-body-sm font-bold tracking-latin text-heading">
-          {t('brand.name')}
-        </span>
-        {showSuffix ? (
-          <span className="mt-0.5 text-overline font-medium tracking-latin-wide text-ink-muted">
-            {t('brand.suffix')}
-          </span>
-        ) : null}
-      </span>
-    </a>
+      <BrandLockup tone={tone} size={size} />
+    </LocalizedLink>
   )
 }
