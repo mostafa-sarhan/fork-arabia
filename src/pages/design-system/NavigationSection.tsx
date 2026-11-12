@@ -16,6 +16,7 @@ import { DocSection } from './DocSection'
 const OPEN_MENU: ServicesMenuState = {
   isOpen: true,
   openNow: () => {},
+  openWithFocus: () => {},
   closeNow: () => {},
   openSoon: () => {},
   closeSoon: () => {},

@@ -22,6 +22,8 @@ export type ServicesMenuState = {
   isOpen: boolean
   panelId: string
   openNow: () => void
+  /** Opens the panel and steps into it; the keyboard's way in. */
+  openWithFocus: () => void
   closeNow: () => void
   openSoon: () => void
   closeSoon: () => void
@@ -47,6 +49,7 @@ export function useServicesMenu(): ServicesMenuState {
   const timer = useRef<number | undefined>(undefined)
   const triggerRef = useRef<HTMLElement | null>(null)
   const panelRef = useRef<HTMLElement | null>(null)
+  const enterOnOpen = useRef(false)
 
   /*
    * Callback refs rather than ref objects in the return value: the elements
@@ -88,6 +91,26 @@ export function useServicesMenu(): ServicesMenuState {
     timer.current = window.setTimeout(() => setOpenMenu(null), CLOSE_DELAY)
   }, [clear, setOpenMenu])
 
+  /*
+   * The panel is rendered after the whole bar, so Tab does not walk into it
+   * — and leaving the trigger would close it on the way. ArrowDown is the
+   * keyboard's way in, and it has to wait for the panel to stop being inert
+   * before the first link can take focus.
+   */
+  const openWithFocus = useCallback(() => {
+    enterOnOpen.current = true
+    openNow()
+  }, [openNow])
+
+  useEffect(() => {
+    if (!isOpen || !enterOnOpen.current) {
+      return
+    }
+
+    enterOnOpen.current = false
+    panelRef.current?.querySelector<HTMLElement>('[data-menu-item]')?.focus()
+  }, [isOpen])
+
   useEffect(() => clear, [clear])
 
   /* Escape, a click outside, and focus leaving all mean the same thing. */
@@ -101,9 +124,22 @@ export function useServicesMenu(): ServicesMenuState {
       (triggerRef.current?.contains(target) === true ||
         panelRef.current?.contains(target) === true)
 
+    /*
+     * Escape hands focus back to the chevron, but only when it was inside
+     * the menu: the panel can also be open under the pointer while the
+     * visitor is typing somewhere else, and that focus is not ours to move.
+     */
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeNow()
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      const wasInside = isInside(document.activeElement)
+
+      closeNow()
+
+      if (wasInside) {
+        triggerRef.current?.querySelector('button')?.focus()
       }
     }
 
@@ -134,6 +170,7 @@ export function useServicesMenu(): ServicesMenuState {
     isOpen,
     panelId: PANEL_ID,
     openNow,
+    openWithFocus,
     closeNow,
     openSoon,
     closeSoon,
@@ -154,7 +191,16 @@ export function ServicesMenuTrigger({ menu }: { menu: ServicesMenuState }) {
   const { t } = useLanguage()
   const { pathname } = useLocation()
   const isActive = isPathActive(pathname, PATHS.services)
-  const { registerTrigger, openSoon, closeSoon, openNow, closeNow } = menu
+  const {
+    isOpen,
+    panelId,
+    registerTrigger,
+    openSoon,
+    closeSoon,
+    openNow,
+    openWithFocus,
+    closeNow,
+  } = menu
 
   return (
     <div
@@ -185,16 +231,22 @@ export function ServicesMenuTrigger({ menu }: { menu: ServicesMenuState }) {
 
       <button
         type="button"
-        aria-expanded={menu.isOpen}
-        aria-controls={menu.panelId}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         aria-label={t('nav.servicesMenu')}
-        onClick={() => (menu.isOpen ? closeNow() : openNow())}
+        onClick={() => (isOpen ? closeNow() : openNow())}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault()
+            openWithFocus()
+          }
+        }}
         className="inline-flex size-8 items-center justify-center rounded-md text-ink-muted transition-colors duration-200 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         <ChevronDownIcon
           className={cn(
             'size-4 transition-transform duration-200',
-            menu.isOpen && '-scale-y-100',
+            isOpen && '-scale-y-100',
           )}
         />
       </button>

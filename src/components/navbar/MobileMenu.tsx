@@ -130,6 +130,30 @@ export function MobileMenu() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [closeMobileMenu, isMobileMenuOpen])
 
+  /*
+   * The sheet and its toggle both disappear above the desktop breakpoint. A
+   * window that grows past it while the sheet is open would leave the page
+   * inert, unscrollable and with no control left to close it, so the sheet
+   * closes itself as soon as the browser stops displaying it.
+   */
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return
+    }
+
+    const closeIfHidden = () => {
+      const panel = panelRef.current
+
+      if (panel && getComputedStyle(panel).display === 'none') {
+        closeMobileMenu()
+      }
+    }
+
+    window.addEventListener('resize', closeIfHidden)
+
+    return () => window.removeEventListener('resize', closeIfHidden)
+  }, [closeMobileMenu, isMobileMenuOpen])
+
   /** The page must not scroll underneath the sheet. */
   useEffect(() => {
     if (!isMobileMenuOpen) {

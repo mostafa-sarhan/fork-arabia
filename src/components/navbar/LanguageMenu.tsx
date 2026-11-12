@@ -8,6 +8,19 @@ import { useNavbar } from './useNavbar'
 /** ArrowDown and ArrowUp, as the step they take through the options. */
 const STEPS: Record<string, number> = { ArrowDown: 1, ArrowUp: -1 }
 
+/**
+ * Whether this copy of the menu is the one the browser is showing.
+ *
+ * The bar renders the menu twice — once for the wide bar, once for the
+ * narrow one — and CSS displays whichever fits. Both copies read the same
+ * open state, so the hidden one has to stay passive: left listening, it
+ * would see focus landing in the *other* copy's panel, call that "outside"
+ * and close the menu before the visible copy could even react.
+ */
+function isDisplayed(node: HTMLElement | null): boolean {
+  return node !== null && node.offsetParent !== null
+}
+
 export type LanguageMenuState = {
   isOpen: boolean
   panelId: string
@@ -62,7 +75,7 @@ function useLanguageMenu(): LanguageMenuState {
    * have somewhere to start from.
    */
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !isDisplayed(triggerRef.current)) {
       return
     }
 
@@ -80,7 +93,7 @@ function useLanguageMenu(): LanguageMenuState {
    * visitor has not already said where they want to be.
    */
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !isDisplayed(triggerRef.current)) {
       return
     }
 

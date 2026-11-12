@@ -214,6 +214,9 @@
   --container-content: 80rem;
   --container-wide: 90rem;
 
+  /* The narrowest phones. Used through `max-xs:` only, where the navbar
+     has to give up its gaps and its booking label to fit. */
+  --breakpoint-xs: 22.5rem;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
@@ -251,7 +254,7 @@
    */
   --logo-height: 56px;
   --logo-height-mobile: 44px;
-  --logo-height-footer: 60px;
+  --logo-height-footer: 44px;
 
   --z-base: 0;
   --z-raised: 10;

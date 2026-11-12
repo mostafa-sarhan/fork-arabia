@@ -12,7 +12,11 @@ import { isPathActive } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { LanguageMenu } from './LanguageMenu'
 import { MobileMenu, MobileMenuToggle } from './MobileMenu'
-import { ServicesMenuPanel, ServicesMenuTrigger, useServicesMenu } from './ServicesMenu'
+import {
+  ServicesMenuPanel,
+  ServicesMenuTrigger,
+  useServicesMenu,
+} from './ServicesMenu'
 
 /**
  * Whether the page has scrolled away from the top, with the sentinel to put
@@ -125,14 +129,19 @@ export function Navbar() {
           data-scrolled={isScrolled || undefined}
           className="relative z-toast border-b border-line bg-surface transition-shadow duration-300 ease-standard data-scrolled:shadow-header"
         >
-          {/* The gaps tighten on the narrowest bar: at 375px the brand, the
-              booking action, the language trigger and the toggle come to
-              311px against 335px of content box. The gap is the only thing
-              that gives — not the logo, not the labels. */}
-          <Container className="flex h-header-mobile items-center justify-between gap-3 sm:gap-4 xl:h-header">
+          {/* The narrow bar runs on tight gaps: at 360px the English brand,
+              booking action, language trigger and toggle come to 318px
+              against 320px of content box, and English is the binding case.
+              Below 360px (`max-xs`) even that overflows, so the booking
+              action drops to its calendar alone — 279px against 280px. The
+              logo never gives. */}
+          <Container className="flex h-header-mobile items-center justify-between gap-1 sm:gap-4 xl:h-header">
             <Logo className="shrink-0" />
 
-            <nav aria-label={t('nav.primary')} className="hidden min-w-0 xl:block">
+            <nav
+              aria-label={t('nav.primary')}
+              className="hidden min-w-0 xl:block"
+            >
               <ul className="flex items-center gap-1">
                 {PRIMARY_NAV.map((item) => (
                   <li key={item.path}>
@@ -154,7 +163,7 @@ export function Navbar() {
 
             {/* Full height, so the language panel hangs from the bar's own
                 edge rather than from the middle of it. */}
-            <div className="flex shrink-0 items-center gap-1 self-stretch sm:gap-2">
+            <div className="flex shrink-0 items-center gap-0.5 self-stretch sm:gap-2">
               <LanguageMenu className="hidden xl:flex" />
 
               {/* The language link belongs to the navigation, the buttons to
@@ -176,20 +185,22 @@ export function Navbar() {
                 </Button>
               ))}
 
-              {/* Below 640px the label shortens and the calendar carries the
-                  meaning the dropped words used to. The accessible name
-                  stays the whole action, and the visible word is the first
-                  word of it, so voice control still matches what is on
-                  screen (WCAG 2.5.3). */}
+              {/* Below 640px the label shortens, the pill tightens and the
+                  calendar carries the meaning the dropped words used to;
+                  below 360px the icon carries all of it, in a square the
+                  size of the menu toggle. The accessible name is the whole
+                  action either way, and while a word is visible it is the
+                  first word of that name, so voice control still matches
+                  what is on screen (WCAG 2.5.3). */}
               <Button
                 to={PATHS.bookConsultation}
                 variant="secondary"
                 size="sm"
                 aria-label={t('nav.bookConsultation')}
-                className="xl:hidden"
+                className="xl:hidden max-sm:px-2.5 max-xs:size-9 max-xs:px-0"
               >
                 <CalendarIcon aria-hidden="true" className="size-4 sm:hidden" />
-                <span className="sm:hidden">
+                <span className="max-xs:hidden sm:hidden">
                   {t('nav.bookConsultationShort')}
                 </span>
                 <span className="hidden sm:inline">
@@ -197,6 +208,9 @@ export function Navbar() {
                 </span>
               </Button>
 
+              {/* The narrow bar carries the same control after the booking
+                  action. Two copies rather than one re-ordered with CSS, so
+                  the tab order follows what the eye sees at both widths. */}
               <LanguageMenu className="flex xl:hidden" />
               <MobileMenuToggle />
             </div>
