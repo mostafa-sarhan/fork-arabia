@@ -65,6 +65,13 @@ const TITLE_SEPARATOR = ' · '
  */
 const ENTER = 'animate-enter motion-reduce:animate-none'
 
+/*
+ * The two hero buttons below 1024: equal grid columns, 50px tall, 15px
+ * text. From 1024 up they keep the size="lg" defaults at their own width.
+ */
+const HERO_BUTTON =
+  'h-[50px] w-full px-4 text-[0.9375rem] lg:h-12 lg:w-auto lg:px-6 lg:text-body'
+
 function enterDelay(step: number) {
   return { animationDelay: `${step * 60}ms` }
 }
@@ -76,9 +83,10 @@ export function HeroSection() {
     <section className="relative overflow-hidden bg-navy">
       <HeroBackdrop />
 
-      <Container className="relative z-raised pt-12 pb-10 md:pb-38 lg:pt-24">
+      <Container className="relative z-raised pt-9 pb-14 md:pb-32 lg:pt-24 lg:pb-38">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-18">
-          <div>
+          {/* A size container, so the English heading can fit its width. */}
+          <div className="@container">
             <span
               className={cn(
                 'inline-flex items-center gap-2 rounded-full border border-turquoise/35 bg-turquoise/14 px-3.5 py-1.5 text-body-sm font-medium text-turquoise-soft',
@@ -93,7 +101,10 @@ export function HeroSection() {
               {resolveCopy(COPY.badge, language)}
             </span>
 
-            <HeroTitle text={resolveCopy(COPY.title, language)} />
+            <HeroTitle
+              text={resolveCopy(COPY.title, language)}
+              alwaysTwoLines={language === 'en'}
+            />
 
             <p
               className={cn(
@@ -107,7 +118,7 @@ export function HeroSection() {
 
             <div
               className={cn(
-                'mt-9 flex flex-col gap-3 sm:flex-row sm:items-center',
+                'mt-9 grid gap-2.5 min-[360px]:grid-cols-2 lg:flex lg:items-center lg:gap-3',
                 ENTER,
               )}
               style={enterDelay(3)}
@@ -116,26 +127,28 @@ export function HeroSection() {
                 to={PATHS.bookConsultation}
                 variant="secondary"
                 size="lg"
-                className="h-13 w-full focus-visible:ring-offset-navy sm:h-12 sm:w-auto"
+                className={cn(HERO_BUTTON, 'focus-visible:ring-offset-navy')}
               >
                 {t('nav.bookConsultation')}
-                <ArrowRightIcon className="size-4 rtl:-scale-x-100" />
+                <ArrowRightIcon className="size-4 rtl:-scale-x-100 max-lg:hidden" />
               </Button>
 
               <Button
                 to={PATHS.requestQuote}
                 variant="outline"
                 size="lg"
-                className="h-13 w-full border-white/45 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white active:bg-white/15 focus-visible:ring-white focus-visible:ring-offset-navy sm:h-12 sm:w-auto"
+                className={cn(
+                  HERO_BUTTON,
+                  'border-white/45 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white active:bg-white/15 focus-visible:ring-white focus-visible:ring-offset-navy',
+                )}
               >
                 {t('nav.requestQuote')}
               </Button>
             </div>
 
-            <p className="mt-7 flex items-center gap-2 text-body-sm text-on-navy-muted">
-              <PinIcon size={16} className="shrink-0" />
+            <TrustLine className="mt-7 max-lg:hidden">
               {resolveCopy(COPY.trust, language)}
-            </p>
+            </TrustLine>
           </div>
 
           {/* The image and the card that overlaps it, one box together. */}
@@ -172,7 +185,7 @@ export function HeroSection() {
               lying across the picture. It is the same card at every width,
               a size smaller below 1024.
             */}
-            <div className="absolute -bottom-4 start-3 flex w-fit max-w-[85%] items-center gap-3 rounded-2xl bg-surface px-3.5 py-2.5 shadow-raised lg:-bottom-7 lg:start-6 lg:max-w-[19rem] lg:px-4 lg:py-4">
+            <div className="absolute -bottom-4 start-3 flex w-fit max-w-[calc(100%-24px)] items-center gap-3 rounded-2xl bg-surface px-3.5 py-2.5 shadow-raised lg:-bottom-7 lg:start-6 lg:max-w-[19rem] lg:px-4 lg:py-4">
               <span
                 aria-hidden="true"
                 className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-turquoise-soft text-petrol lg:size-11"
@@ -184,15 +197,55 @@ export function HeroSection() {
                 <span className="block text-body-sm font-semibold text-heading">
                   {resolveCopy(COPY.cardTitle, language)}
                 </span>
-                <span className="mt-0.5 block text-caption text-ink-muted">
+                {/* Hidden where it would wrap, so the card stays two lines:
+                    the English needs about 400px of screen, the Arabic 360. */}
+                <span
+                  className={cn(
+                    'mt-0.5 block text-caption text-ink-muted',
+                    language === 'en'
+                      ? 'max-[413px]:hidden'
+                      : 'max-[359px]:hidden',
+                  )}
+                >
                   {resolveCopy(COPY.cardSubtitle, language)}
                 </span>
               </span>
             </div>
           </div>
         </div>
+
+        {/* Below 1024 the trust line comes after the photograph and its
+            card; 46px is the card's 16px overhang plus 30px of air. */}
+        <TrustLine className="mt-[46px] lg:hidden">
+          {resolveCopy(COPY.trust, language)}
+        </TrustLine>
       </Container>
     </section>
+  )
+}
+
+/*
+ * The trust line. It sits under the buttons from 1024 up and under the
+ * photograph below that, so it is rendered in both places and each copy
+ * is hidden (display: none) at the widths where it does not belong.
+ */
+function TrustLine({
+  className,
+  children,
+}: {
+  className?: string
+  children: string
+}) {
+  return (
+    <p
+      className={cn(
+        'flex items-center gap-2 text-body-sm text-on-navy-muted',
+        className,
+      )}
+    >
+      <PinIcon size={16} className="shrink-0" />
+      {children}
+    </p>
   )
 }
 
@@ -214,7 +267,7 @@ function HeroBackdrop() {
       <svg
         viewBox="0 0 474 501"
         focusable="false"
-        className="absolute -bottom-20 -end-24 h-[34rem] w-auto opacity-7"
+        className="absolute -bottom-20 -end-24 h-[34rem] w-auto opacity-7 max-lg:hidden"
         fill="var(--color-turquoise)"
       >
         <rect x="0" y="0" width="474" height="150" rx="75" />
@@ -225,26 +278,74 @@ function HeroBackdrop() {
   )
 }
 
-/** The H1, with each "·" of the copy drawn turquoise. */
-function HeroTitle({ text }: { text: string }) {
+/** One turquoise "·". The no-break space keeps it on the word it follows. */
+function TitleSeparator({ className }: { className?: string }) {
+  return <span className={cn('text-turquoise', className)}>{'\u00a0·'}</span>
+}
+
+/*
+ * The H1, with each "·" of the copy drawn turquoise. The four words are
+ * set as two pairs, each pair on its own line, and the dot between the
+ * pairs is dropped so no line ends on a separator.
+ *
+ * The English is always two lines. "Administrative · Technology" is about
+ * 11.6em wide, wider than the column at the hero size, so its size is
+ * capped at 1/12 of the column (100cqi; the column is a size container).
+ *
+ * The Arabic is two lines below 1024 only. From 1024 up its pairs run on
+ * as one sentence, at the hero size, and wrap where they fall.
+ */
+function HeroTitle({
+  text,
+  alwaysTwoLines,
+}: {
+  text: string
+  alwaysTwoLines: boolean
+}) {
+  const words = text.split(TITLE_SEPARATOR)
+  const lines = [words.slice(0, 2), words.slice(2)]
+
   return (
     <h1
       className={cn(
         'mt-6 font-display text-hero tracking-latin-tight text-white text-balance',
         ENTER,
       )}
-      style={enterDelay(1)}
+      style={{
+        ...enterDelay(1),
+        // Set inline so the text-hero class keeps its weight and leading.
+        fontSize: alwaysTwoLines
+          ? 'min(var(--text-hero), 100cqi / 12)'
+          : undefined,
+      }}
     >
-      {text.split(TITLE_SEPARATOR).map((word, index) => (
-        <Fragment key={word}>
-          {/* A no-break space keeps the dot on the word it follows; the
-              ordinary space after it is where the line may break. */}
-          {index > 0 ? (
+      {lines.map((line, lineIndex) => (
+        <Fragment key={line.join()}>
+          {lineIndex > 0 ? (
             <>
-              <span className="text-turquoise">{' ·'}</span>{' '}
+              <TitleSeparator
+                className={alwaysTwoLines ? 'hidden' : 'max-lg:hidden'}
+              />{' '}
             </>
           ) : null}
-          {word}
+          <span
+            className={
+              alwaysTwoLines
+                ? 'block whitespace-nowrap'
+                : 'max-lg:block max-lg:whitespace-nowrap'
+            }
+          >
+            {line.map((word, index) => (
+              <Fragment key={word}>
+                {index > 0 ? (
+                  <>
+                    <TitleSeparator />{' '}
+                  </>
+                ) : null}
+                {word}
+              </Fragment>
+            ))}
+          </span>
         </Fragment>
       ))}
     </h1>

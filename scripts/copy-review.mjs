@@ -16,6 +16,7 @@ const FILES = [
   'src/data/siteCopy.ts',
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
+  'src/pages/home/sections/AboutSection.tsx',
 ]
 
 /**

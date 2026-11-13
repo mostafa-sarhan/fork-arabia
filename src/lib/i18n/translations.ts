@@ -277,6 +277,8 @@ const en = {
   'icon.chip': 'Chip — technology',
   'icon.supply': 'Layers — operations',
   'icon.passport': 'Passport — residency',
+  'icon.eye': 'Eye — vision',
+  'icon.target': 'Target — mission',
 
   'ds.direction.title': 'Direction & Language',
   'ds.direction.desc':
@@ -657,6 +659,8 @@ const ar: Record<keyof typeof en, string> = {
   'icon.chip': 'شريحة — التقنية',
   'icon.supply': 'طبقات — التشغيل',
   'icon.passport': 'جواز — الإقامة',
+  'icon.eye': 'عين — الرؤية',
+  'icon.target': 'هدف — الرسالة',
 
   'ds.direction.title': 'الاتجاه واللغة',
   'ds.direction.desc':

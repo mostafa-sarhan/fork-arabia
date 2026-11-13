@@ -35,6 +35,8 @@ const LABELS: Record<IconName, TranslationKey> = {
   chip: 'icon.chip',
   supply: 'icon.supply',
   passport: 'icon.passport',
+  eye: 'icon.eye',
+  target: 'icon.target',
 }
 
 export function IconSection() {

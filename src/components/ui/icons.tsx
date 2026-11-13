@@ -298,3 +298,22 @@ export function PassportIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function EyeIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </IconBase>
+  )
+}
+
+export function TargetIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" />
+    </IconBase>
+  )
+}

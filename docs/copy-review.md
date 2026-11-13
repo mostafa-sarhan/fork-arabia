@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-33 strings await approval.
+36 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -47,3 +47,6 @@ afterwards to regenerate this list.
 | `—` | عميل | Clients | `StatsSection.tsx` |
 | `—` | مشروع | Projects | `StatsSection.tsx` |
 | `—` | دول | Countries | `StatsSection.tsx` |
+| `—` | شريك مهني واحد لكل مراحل أعمالك منذ 2016 | One professional partner for every stage of your business since 2016 | `AboutSection.tsx` |
+| `—` | حلول مترابطة تتحول من توصيات إلى إجراءات واضحة ومخرجات عملية تدعم القرار. | Interconnected solutions that turn recommendations into clear actions and practical outputs that support decision-making. | `AboutSection.tsx` |
+| `—` | اعرف أكثر عن فورك | Learn more about FORK | `AboutSection.tsx` |

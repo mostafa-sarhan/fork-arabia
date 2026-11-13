@@ -9,6 +9,7 @@ import {
   ChevronRightIcon,
   ChipIcon,
   CloseIcon,
+  EyeIcon,
   ForkIcon,
   FoundationIcon,
   GlobeIcon,
@@ -25,6 +26,7 @@ import {
   ScaleIcon,
   ShieldIcon,
   SupplyIcon,
+  TargetIcon,
 } from './icons'
 
 /**
@@ -63,6 +65,8 @@ export const ICONS = {
   chip: ChipIcon,
   supply: SupplyIcon,
   passport: PassportIcon,
+  eye: EyeIcon,
+  target: TargetIcon,
 } as const
 
 export type IconName = keyof typeof ICONS
