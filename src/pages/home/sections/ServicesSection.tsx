@@ -49,38 +49,38 @@ const BUTTON =
 
 /*
  * The card, which is the link. Hover, keyboard focus and a tap (active)
- * all turn it navy; every part inside follows through `group-*` with the
- * same three states. 270px minimum height from 768 (67.5 on the spacing
- * scale); below that it is as tall as its text.
+ * all turn it navy (`card-on:`, defined in index.css); every part inside
+ * follows through `group-card-on:`. 270px minimum height from 768 (67.5
+ * on the spacing scale); below that it is as tall as its text.
  */
 const CARD =
   'group flex h-full flex-col gap-4 rounded-2xl border p-6 lg:p-8 md:min-h-67.5 border-line bg-surface transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-page'
 const CARD_ON =
-  'hover:bg-navy hover:border-navy hover:shadow-raised focus-visible:bg-navy focus-visible:border-navy focus-visible:shadow-raised active:bg-navy active:border-navy active:shadow-raised'
+  'card-on:bg-navy card-on:border-navy card-on:shadow-raised'
 
 const ICON_BOX =
   'flex size-13 shrink-0 items-center justify-center rounded-xl bg-turquoise-soft text-petrol transition-colors duration-200'
 const ICON_BOX_ON =
-  'group-hover:bg-turquoise/16 group-hover:text-turquoise group-focus-visible:bg-turquoise/16 group-focus-visible:text-turquoise group-active:bg-turquoise/16 group-active:text-turquoise'
+  'group-card-on:bg-turquoise/16 group-card-on:text-turquoise'
 
 /* 40px, a size used only here. Decorative, so a very light tone. */
 const NUMBER =
-  'text-[2.5rem] leading-none font-extrabold tabular-nums text-line transition-colors duration-200 group-hover:text-white/18 group-focus-visible:text-white/18 group-active:text-white/18'
+  'text-[2.5rem] leading-none font-extrabold tabular-nums text-line transition-colors duration-200 group-card-on:text-white/18'
 
 const TITLE =
-  'text-h4 font-extrabold text-heading transition-colors duration-200 group-hover:text-white group-focus-visible:text-white group-active:text-white'
+  'text-h4 font-extrabold text-heading transition-colors duration-200 group-card-on:text-white'
 
 /* 15px with a 1.85 line height, used only here. */
 const SUMMARY =
-  'flex-1 text-[0.9375rem] leading-[1.85] text-ink-muted transition-colors duration-200 group-hover:text-white/78 group-focus-visible:text-white/78 group-active:text-white/78'
+  'flex-1 text-[0.9375rem] leading-[1.85] text-ink-muted transition-colors duration-200 group-card-on:text-white/78'
 
 const FOOTER =
-  'flex items-center gap-2 border-t pt-4 text-button font-bold border-line text-link transition-colors duration-200 group-hover:border-white/14 group-hover:text-turquoise group-focus-visible:border-white/14 group-focus-visible:text-turquoise group-active:border-white/14 group-active:text-turquoise'
+  'flex items-center gap-2 border-t pt-4 text-button font-bold border-line text-link transition-colors duration-200 group-card-on:border-white/14 group-card-on:text-turquoise'
 
 /* The arrow points along the reading direction and, unless motion is
    reduced, nudges 4px further that way when the card is on. */
 const ARROW =
-  'size-4 rtl:-scale-x-100 transition-transform duration-200 motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1 motion-safe:rtl:group-hover:-translate-x-1 motion-safe:rtl:group-focus-visible:-translate-x-1'
+  'size-4 rtl:-scale-x-100 transition-transform duration-200 motion-safe:group-card-on:translate-x-1 motion-safe:rtl:group-card-on:-translate-x-1'
 
 export function ServicesSection() {
   const { language } = useLanguage()

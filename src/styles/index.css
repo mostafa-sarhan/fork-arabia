@@ -309,6 +309,40 @@
   --z-toast: 80;
 }
 
+/*
+ * A link card's "on" state: hover, keyboard focus or a tap. `card-on:`
+ * styles the card itself and `group-card-on:` anything inside a `.group`
+ * card. Hover keeps Tailwind's own (hover: hover) guard, so a touch
+ * screen does not leave a tapped card stuck on.
+ */
+@custom-variant card-on {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  &:focus-visible {
+    @slot;
+  }
+  &:active {
+    @slot;
+  }
+}
+
+@custom-variant group-card-on {
+  @media (hover: hover) {
+    &:is(:where(.group):hover *) {
+      @slot;
+    }
+  }
+  &:is(:where(.group):focus-visible *) {
+    @slot;
+  }
+  &:is(:where(.group):active *) {
+    @slot;
+  }
+}
+
 @utility z-base {
   z-index: var(--z-base);
 }

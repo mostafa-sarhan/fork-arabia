@@ -317,3 +317,54 @@ export function TargetIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+/* -------------------------------------------------------------------------- */
+/* Why FORK icons — one per point                                             */
+/* -------------------------------------------------------------------------- */
+
+/** Two people side by side: one partner. */
+export function UsersIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
+      <path d="M16 4.6a3.5 3.5 0 0 1 0 6.8" />
+      <path d="M18.5 14.2a6.5 6.5 0 0 1 3 5.8" />
+    </IconBase>
+  )
+}
+
+/**
+ * A puzzle piece: a solution that fits. A rounded square with a knob on
+ * its top and on its inline end, each wider than its neck.
+ */
+export function PuzzleIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M6 9h2a2.6 2.6 0 1 1 3 0h2a2 2 0 0 1 2 2v2a2.6 2.6 0 1 1 0 3v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" />
+    </IconBase>
+  )
+}
+
+/** A route: two stops joined by a winding path. */
+export function RouteIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="6" cy="18.5" r="2.5" />
+      <path d="M8.5 18.5H17a3.25 3.25 0 0 0 0-6.5H7a3.25 3.25 0 0 1 0-6.5h8.5" />
+      <circle cx="18" cy="5.5" r="2.5" />
+    </IconBase>
+  )
+}
+
+/** A bar chart on its axes. */
+export function BarChartIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 3v18h18" />
+      <path d="M8 17v-4" />
+      <path d="M12.5 17V8" />
+      <path d="M17 17v-6" />
+    </IconBase>
+  )
+}

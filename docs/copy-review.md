@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-38 strings await approval.
+45 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -52,3 +52,10 @@ afterwards to regenerate this list.
 | `—` | اعرف أكثر عن فورك | Learn more about FORK | `AboutSection.tsx` |
 | `—` | كل الخدمات | All Services | `ServicesSection.tsx` |
 | `—` | التفاصيل | Details | `ServicesSection.tsx` |
+| `—` | من الاستشارة للتنفيذ للمتابعة، مع فريق واحد | From consultation to implementation and follow-up, with one team | `WhyForkSection.tsx` |
+| `—` | مستشار من فورك العربية في اجتماع مع عميل بمكتب الرياض | A FORK ARABIA consultant meeting a client at the Riyadh office | `WhyForkSection.tsx` |
+| `—` | شريك واحد | One Partner | `WhyForkSection.tsx` |
+| `—` | فهم الأسواق | Market Understanding | `WhyForkSection.tsx` |
+| `—` | حلول مصممة لك | Solutions Built for You | `WhyForkSection.tsx` |
+| `—` | من الاستشارة للتنفيذ | From Consultation to Implementation | `WhyForkSection.tsx` |
+| `—` | تقنية وتحليل | Technology and Analytics | `WhyForkSection.tsx` |
