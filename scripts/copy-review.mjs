@@ -17,13 +17,10 @@ const FILES = [
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
   'src/pages/home/sections/AboutSection.tsx',
+  'src/pages/home/sections/ServicesSection.tsx',
 ]
 
-/**
- * Matches draft('<arabic>', '<english>') across line breaks. `draft` is the
- * helper in `src/lib/i18n/localized.ts` that marks its English `proposed`;
- * `copy` is the same pair with both halves approved, and is not listed here.
- */
+
 const DRAFT = /draft\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
 
 /**
