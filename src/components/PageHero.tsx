@@ -16,8 +16,10 @@ export type PageHeroFact = {
 }
 
 type PageHeroProps = {
-  /** The page's H1; also the breadcrumb's current page. */
+  /** The page's H1; also the breadcrumb's current page, unless `crumb` is set. */
   title: string
+  /** The breadcrumb's current page, where it differs from the H1. */
+  crumb?: string
   lead: string
   /** Crumbs between Home and this page, such as "Our services". */
   trail?: BreadcrumbItem[]
@@ -93,6 +95,7 @@ const COMPACT_LABEL = 'text-body-sm md:text-body text-white/75'
  */
 export function PageHero({
   title,
+  crumb,
   lead,
   trail = [],
   icon,
@@ -113,7 +116,7 @@ export function PageHero({
       <Container className={cn(CONTENT, !closesWithFigures && CONTENT_FOOT)}>
         <Breadcrumb
           tone="navy"
-          items={[{ label: t('nav.home'), to: PATHS.home }, ...trail, { label: title }]}
+          items={[{ label: t('nav.home'), to: PATHS.home }, ...trail, { label: crumb ?? title }]}
         />
 
         {/* The text is positioned so it paints over the watermark. */}

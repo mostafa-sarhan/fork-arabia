@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-106 strings await approval.
+111 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -25,6 +25,7 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | سنة التأسيس | Year founded | `AboutPage.tsx` |
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
+| خدمة | services | `ServicesPage.tsx` |
 | خدمة واحدة | 1 service | `sectorCounts.ts` |
 | خدمات | services | `sectorCounts.ts` |
 | دول | countries | `sectorCounts.ts` |
@@ -129,5 +130,9 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | فورك شركة خدمات مهنية رائدة، تقدم منظومة حلول متكاملة من الحلول القانونية والمالية والمحاسبية والإدارية والتقنية لقطاع الأعمال في مصر والسعودية والإمارات وعُمان. تأسست الشركة عام 2016. | FORK is a leading professional services company offering an integrated suite of legal, financial, accounting, administrative and technology solutions for the business sector in Egypt, Saudi Arabia, the UAE and Oman. The company was founded in 2016. | `IntroSection.tsx` |
 | `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `IntroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا | Head office in Riyadh, and a branch in Tanta | `IntroSection.tsx` |
+| `—` | احتياجات متعددة تُدار من خلال شريك واحد ورؤية واحدة، عبر 9 قطاعات. | Multiple needs, managed through one partner and one vision, across 9 sectors. | `ServicesPage.tsx` |
+| `—` | قطاعات | sectors | `ServicesPage.tsx` |
+| `—` | تفاصيل القطاع | Sector details | `ServicesPage.tsx` |
+| `—` | مش متأكد أنهي خدمة تناسبك؟ | Not sure which service fits you? | `ServicesPage.tsx` |
 | `—` | قطاعات أخرى | Other sectors | `SectorOthers.tsx` |
 | `—` | خدمات القطاع | Sector services | `SectorServices.tsx` |

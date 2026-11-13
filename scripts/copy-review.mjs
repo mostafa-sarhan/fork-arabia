@@ -48,6 +48,7 @@ const FILES = [
   'src/pages/about/sections/ValuesSection.tsx',
   'src/pages/about/sections/PhilosophySection.tsx',
   'src/components/sections/MethodologySection.tsx',
+  'src/pages/services/ServicesPage.tsx',
   'src/pages/sector/sectorCounts.ts',
   ...SECTOR_PAGE_FILES,
 ]

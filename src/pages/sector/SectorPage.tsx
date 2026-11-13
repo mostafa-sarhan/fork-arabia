@@ -1,5 +1,7 @@
 import { useParams } from 'react-router'
+import { ConsultationCta } from '@/components/sections/ConsultationCta'
 import { MethodologySection } from '@/components/sections/MethodologySection'
+import { CONSULTATION_INVITE } from '@/config/consultation'
 import { getSectorBySlug } from '@/data/sectorIndex'
 import { getSectorDetail } from '@/data/sectors'
 import type { SectorDetail } from '@/data/sectors/types'
@@ -10,7 +12,6 @@ import NotFoundPage from '@/pages/not-found/NotFoundPage'
 import { ResidencyBenefits } from './sections/ResidencyBenefits'
 import { ResidencyRole } from './sections/ResidencyRole'
 import { ResidencyTracks } from './sections/ResidencyTracks'
-import { SectorConsultation } from './sections/SectorConsultation'
 import { SectorHero } from './sections/SectorHero'
 import { SectorOthersSection } from './sections/SectorOthers'
 import { SectorServices } from './sections/SectorServices'
@@ -66,7 +67,7 @@ function SectorSections({ sector }: { sector: SectorDetail }) {
 
       <MethodologySection tone="light" />
       <WhyForkStrip />
-      <SectorConsultation title={ctaTitle} />
+      <ConsultationCta title={ctaTitle} text={resolveCopy(CONSULTATION_INVITE, language)} />
       <SectorOthersSection slug={sector.slug} othersInAside={hasServices} />
     </>
   )

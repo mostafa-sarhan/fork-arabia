@@ -8,13 +8,14 @@ import HomePage from '@/pages/home/HomePage'
 import NotFoundPage from '@/pages/not-found/NotFoundPage'
 import PresencePage from '@/pages/presence/PresencePage'
 import RequestQuotePage from '@/pages/request-quote/RequestQuotePage'
-import ServicesPage from '@/pages/services/ServicesPage'
 
-/* The two heaviest pages are loaded on demand; the layout's Suspense
+/* The heaviest pages are loaded on demand — the services page and the
+   sector page carry every sector's body copy — and the layout's Suspense
    fallback covers the wait. */
 const DesignSystemPage = lazy(
   () => import('@/pages/design-system/DesignSystemPage'),
 )
+const ServicesPage = lazy(() => import('@/pages/services/ServicesPage'))
 const SectorPage = lazy(() => import('@/pages/sector/SectorPage'))
 
 

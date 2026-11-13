@@ -2,9 +2,9 @@ import { BrandMarkWatermark } from '@/components/BrandMarkWatermark'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
-import { CONSULTATION_DETAILS, CONSULTATION_INVITE } from '@/config/consultation'
+import { CONSULTATION_DETAILS } from '@/config/consultation'
 import { PATHS } from '@/config/paths'
-import { localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -28,10 +28,11 @@ const TILE = 'flex flex-col-reverse justify-end rounded-xl bg-surface px-4 py-3.
 const BUTTON = 'h-13 w-full sm:w-auto'
 
 /**
- * The sector's closing call to action: its question, the services page's
- * invitation, the two buttons, and the consultation's six details.
+ * The closing consultation card: a question, one line of invitation, the
+ * two buttons and the consultation's six details. Used by the services
+ * page and every sector page, each with its own question.
  */
-export function SectorConsultation({ title }: { title: string }) {
+export function ConsultationCta({ title, text }: { title: string; text: string }) {
   const { language, t } = useLanguage()
   const details = localizeAll(CONSULTATION_DETAILS, language)
 
@@ -48,7 +49,7 @@ export function SectorConsultation({ title }: { title: string }) {
                 {title}
               </h2>
               <p className="max-w-140 mt-4 text-body lg:text-body-lg leading-paragraph text-pretty text-ink-muted">
-                {resolveCopy(CONSULTATION_INVITE, language)}
+                {text}
               </p>
 
               <div className="mt-7 flex flex-col sm:flex-row gap-2.5 lg:gap-3">
