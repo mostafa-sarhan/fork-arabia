@@ -1,3 +1,4 @@
+import { BrandMarkWatermark } from '@/components/BrandMarkWatermark'
 import { Reveal } from '@/components/Reveal'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Container } from '@/components/layout/Container'
@@ -142,7 +143,11 @@ export function AboutSection() {
           {/* Cards column, at the inline end. */}
           <div className="flex flex-col lg:block gap-3.5">
             <Reveal delay={120} className={cn(VISION_CARD, VISION_CARD_DESKTOP)}>
-              <BrandMarkWatermark />
+              {/* Run off the card's bottom inline-end corner. */}
+              <BrandMarkWatermark
+                tone="white"
+                className="-end-10 lg:-end-14 -bottom-12 lg:-bottom-16 h-45 lg:h-65"
+              />
 
               <div className="relative flex items-center gap-4">
                 <span
@@ -187,24 +192,5 @@ export function AboutSection() {
         </div>
       </Container>
     </section>
-  )
-}
-
-/*
- * The F of the logo, white at 7%, run off the vision card's bottom
- * inline-end corner. The card's overflow-hidden clips it.
- */
-function BrandMarkWatermark() {
-  return (
-    <svg
-      viewBox="0 0 474 501"
-      aria-hidden="true"
-      focusable="false"
-      className="absolute -end-10 lg:-end-14 -bottom-12 lg:-bottom-16 h-45 lg:h-65 w-auto fill-white opacity-7"
-    >
-      <rect x="0" y="0" width="474" height="150" rx="75" />
-      <rect x="0" y="175" width="304" height="150" rx="75" />
-      <circle cx="75" cy="426" r="75" />
-    </svg>
   )
 }

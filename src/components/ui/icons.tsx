@@ -368,3 +368,29 @@ export function BarChartIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+/* -------------------------------------------------------------------------- */
+/* Booking facts — the consultation's length and price                        */
+/* -------------------------------------------------------------------------- */
+
+/** A clock face: how long something takes. */
+export function ClockIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </IconBase>
+  )
+}
+
+/** A wrapped gift: something offered free. */
+export function GiftIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="3.5" y="8" width="17" height="4" rx="1" />
+      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+      <path d="M12 8v13" />
+      <path d="M12 8C10.5 4.5 7 4.5 7 6.5S10 8 12 8Zm0 0c1.5-3.5 5-3.5 5-1.5S14 8 12 8Z" />
+    </IconBase>
+  )
+}

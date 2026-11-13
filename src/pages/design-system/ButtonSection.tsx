@@ -21,6 +21,7 @@ const variantLabels: Record<ButtonVariant, TranslationKey> = {
   primary: 'btn.primary',
   secondary: 'btn.secondary',
   outline: 'btn.outline',
+  'outline-navy': 'btn.outlineNavy',
   ghost: 'btn.ghost',
   destructive: 'btn.destructive',
 }
@@ -35,6 +36,7 @@ const variants: ButtonVariant[] = [
   'primary',
   'secondary',
   'outline',
+  'outline-navy',
   'ghost',
   'destructive',
 ]

@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-63 strings await approval.
+68 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -77,3 +77,8 @@ afterwards to regenerate this list.
 | `—` | شركاؤنا وعملاؤنا | Our Partners & Clients | `PartnersSection.tsx` |
 | `—` | آفاق | Afaq | `PartnersSection.tsx` |
 | `—` | الخبراء المحترفون للاستشارات المالية | Professional Experts Financial Consulting | `PartnersSection.tsx` |
+| `—` | جاهز تبدأ؟ | Ready to get started? | `CtaSection.tsx` |
+| `—` | احجز استشارة مجانية مدتها 50 دقيقة، حضوريًا أو أونلاين أو بالتليفون، وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Book a free 50-minute consultation — in person, online or by phone — and our team will contact you within one business day to confirm the time. | `CtaSection.tsx` |
+| `—` | 50 دقيقة | 50 minutes | `CtaSection.tsx` |
+| `—` | مجانية | Free | `CtaSection.tsx` |
+| `—` | حضوري · أونلاين · تليفون | In person · Online · Phone | `CtaSection.tsx` |

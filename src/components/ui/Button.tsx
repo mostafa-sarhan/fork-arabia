@@ -13,6 +13,7 @@ export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'outline'
+  | 'outline-navy'
   | 'ghost'
   | 'destructive'
 
@@ -34,6 +35,11 @@ const variants: Record<ButtonVariant, string> = {
     'bg-turquoise text-on-accent hover:bg-turquoise-lift active:bg-turquoise-lift',
   outline:
     'border border-line-strong bg-surface text-ink hover:border-petrol hover:text-petrol active:bg-navy-soft',
+  /* A navy outline with no fill of its own, for tinted surfaces where the
+     white outline button would read as a patch. 1.5px: no border-width
+     token between 1 and 2. */
+  'outline-navy':
+    'border-[1.5px] border-navy bg-transparent text-navy hover:bg-navy/8 active:bg-navy/12',
   ghost: 'text-ink hover:bg-navy-soft active:bg-navy-soft',
   destructive:
     'bg-danger text-white hover:bg-danger-strong active:bg-danger-strong',
