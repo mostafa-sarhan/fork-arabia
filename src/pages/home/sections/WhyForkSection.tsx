@@ -3,7 +3,7 @@ import meetingPhotoWide from '@/assets/images/home/client-meeting-1400.webp'
 import meetingPhotoNarrow from '@/assets/images/home/client-meeting-800.webp'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
-import { Eyebrow } from '@/components/ui/Eyebrow'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import {
   BarChartIcon,
   GlobeIcon,
@@ -105,16 +105,10 @@ export function WhyForkSection() {
     <section className="pt-16 pb-18 lg:py-28 bg-surface">
       <Container>
         <div className="grid lg:grid-cols-2 lg:items-stretch gap-8 lg:gap-16">
-          {/* Eyebrow, heading and photograph, at the inline start. They
+          {/* Heading and photograph, at the inline start. They
               enter first, then the cards. */}
           <Reveal className={START_COLUMN}>
-            <div className="flex flex-col gap-4 lg:gap-5">
-              <Eyebrow>{text.eyebrow}</Eyebrow>
-
-              <h2 className="font-display text-section-title text-balance text-heading">
-                {text.heading}
-              </h2>
-            </div>
+            <SectionTitle label={text.eyebrow}>{text.heading}</SectionTitle>
 
             {/* Below the fold, so it loads lazily; a 4:3 box below 1024. */}
             {/* From 1024 it fills the height left under the heading, so its foot lines up with the last card. */}

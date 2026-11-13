@@ -1,6 +1,6 @@
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
-import { Eyebrow } from '@/components/ui/Eyebrow'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import {
   EyeIcon,
   LeafIcon,
@@ -9,7 +9,6 @@ import {
   ShieldIcon,
   UsersIcon,
 } from '@/components/ui/icons'
-import { cn } from '@/lib/cn'
 import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
@@ -52,53 +51,45 @@ const COPY = {
 const VALUE_ICONS = [ShieldIcon, EyeIcon, LinkIcon, UsersIcon, LightbulbIcon, LeafIcon]
 
 /*
- * The grid is ruled, not boxed: a hairline above it, one under every
- * value, and vertical hairlines between columns (added per index below).
- * One column on phones, two from 768, three from 1024.
+ * Six tiles, 20px apart: one column on phones, two from 768, three from
+ * 1024. 32px under the heading, 56px from 1024.
  */
-const GRID = 'grid md:grid-cols-2 lg:grid-cols-3 mt-10 lg:mt-14 border-t border-line'
-const ITEM = 'group border-b py-8 md:px-8 lg:py-10 border-line'
+const GRID = 'grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8 lg:mt-14'
 
 /*
- * 52px tinted square. Under a pointer the value's square turns navy with a
- * turquoise icon.
+ * One value: a page-tone tile with 20px corners. Under a pointer it turns
+ * white with a turquoise hairline and a soft navy-tinted shadow (the
+ * hairline is there, transparent, at rest, so nothing shifts). Only
+ * colours change, so reduced motion needs no exception.
  */
+const TILE =
+  'group h-full rounded-2xl border border-transparent p-7 md:p-8 bg-page transition-[background-color,border-color,box-shadow] duration-(--duration-hover) ease-out-soft hover:bg-surface hover:border-turquoise hover:shadow-card'
+
+/* 52px white square; navy with a turquoise icon while its tile is hovered. */
 const ICON_SQUARE =
-  'flex size-13 items-center justify-center rounded-xl bg-turquoise-soft text-petrol transition-colors duration-(--duration-hover) ease-out-soft group-hover:bg-navy group-hover:text-turquoise'
+  'flex size-13 items-center justify-center rounded-xl bg-surface text-petrol transition-colors duration-(--duration-hover) ease-out-soft group-hover:bg-navy group-hover:text-turquoise'
 
 /* 22px, a size used only on the About page. */
-const TITLE = 'mt-6 text-[1.375rem] leading-[1.4] font-extrabold text-heading'
+const TITLE = 'mt-6 text-[1.375rem] leading-[1.4] font-extrabold text-balance text-heading'
 
 export function ValuesSection() {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="py-16 lg:py-30 bg-surface">
+    <section className="pt-16 pb-18 lg:py-28 bg-surface">
       <Container>
-        <Reveal className="flex flex-col gap-4 lg:gap-5">
-          <Eyebrow />
-          <h2 className="font-display text-section-title text-balance text-heading">
-            {text.heading}
-          </h2>
+        <Reveal>
+          <SectionTitle>{text.heading}</SectionTitle>
         </Reveal>
 
         <ul className={GRID}>
           {text.values.map((value, index) => {
             const Icon = VALUE_ICONS[index]
             return (
-              <li
-                key={value.title}
-                className={cn(
-                  ITEM,
-                  // Hairlines between columns: the second of each pair from
-                  // 768, the second and third of each trio from 1024.
-                  index % 2 === 1 && 'md:max-lg:border-s',
-                  index % 3 !== 0 && 'lg:border-s',
-                )}
-              >
+              <li key={value.title}>
                 {/* 60ms apart, row by row. */}
-                <Reveal delay={index * 60}>
+                <Reveal delay={index * 60} className={TILE}>
                   <div className="flex items-center justify-between">
                     <span aria-hidden="true" className={ICON_SQUARE}>
                       <Icon size={24} />

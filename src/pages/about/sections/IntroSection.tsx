@@ -3,6 +3,7 @@ import photoWide from '@/assets/images/home/riyadh-meeting-1400.webp'
 import photoNarrow from '@/assets/images/home/riyadh-meeting-800.webp'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { PinIcon } from '@/components/ui/icons'
 import { copy, draft, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -55,7 +56,8 @@ const CHIP =
   'rounded-full border px-4 py-1.5 text-body-sm font-bold border-line text-heading'
 
 /*
- * The card over the photograph's bottom inline-start corner. Inside the
+ * The card over the photograph's bottom inline-start corner, well below
+ * the faces in the frame. Inside the
  * frame below 1024; from 1024 it hangs 32px past the photograph's edge,
  * into the gap between the columns. Below 1024 it is at most the
  * photograph's width less 12px a side (a calc: no width token says that).
@@ -68,20 +70,18 @@ export function IntroSection() {
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="py-16 lg:py-30 bg-surface">
+    <section className="pt-16 pb-18 lg:py-28 bg-surface">
       <Container>
         {/* Text first, photograph after: below it on phones, at the inline
-            end from 1024. */}
-        <div className="grid lg:grid-cols-2 lg:items-center gap-10 lg:gap-22">
-          <Reveal className="flex flex-col gap-5 lg:gap-6">
+            end from 1024, where the text is centred against it. */}
+        <div className="grid lg:grid-cols-2 lg:items-center gap-8 lg:gap-22">
+          <Reveal className="flex flex-col gap-6 lg:gap-7">
             <span className={BADGE}>
               <span aria-hidden="true" className="size-1.5 rounded-full bg-turquoise" />
               {text.badge}
             </span>
 
-            <h2 className="font-display text-section-title text-balance text-heading">
-              {text.heading}
-            </h2>
+            <SectionTitle>{text.heading}</SectionTitle>
 
             <p className="max-w-measure text-body leading-paragraph lg:text-body-lg lg:leading-loose text-pretty text-ink-muted">
               {text.paragraph}

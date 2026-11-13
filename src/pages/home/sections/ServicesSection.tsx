@@ -3,7 +3,7 @@ import { LocalizedLink } from '@/components/LocalizedLink'
 import { Container } from '@/components/layout/Container'
 import { ICONS } from '@/components/ui/iconRegistry'
 import { BUTTON_MOTION } from '@/components/ui/Button'
-import { Eyebrow } from '@/components/ui/Eyebrow'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS, sectorPath } from '@/config/paths'
 import { SECTOR_INDEX, type SectorEntry } from '@/data/sectorIndex'
@@ -89,11 +89,7 @@ export function ServicesSection() {
         <div className={LAYOUT}>
           {/* Header, at the inline start. It enters first. */}
           <Reveal className="flex flex-col gap-4 lg:gap-5">
-            <Eyebrow>{text.eyebrow}</Eyebrow>
-
-            <h2 className="font-display text-section-title text-balance text-heading">
-              {text.heading}
-            </h2>
+            <SectionTitle label={text.eyebrow}>{text.heading}</SectionTitle>
 
             <p className="max-w-measure text-body md:text-body-lg text-ink-muted">
               {text.subheading}

@@ -26,8 +26,12 @@ const COPY = {
   ),
 }
 
-/* Both cards: 28px padding on phones, 52px from 1024. */
-const CARD = 'relative overflow-hidden rounded-3xl p-7 lg:p-13'
+/*
+ * Both cards: 28px padding on phones, 52px from 1024. Side by side from
+ * 1024, the grid stretches them to one height; their label rows are built
+ * the same, so they sit level.
+ */
+const CARD = 'relative h-full overflow-hidden rounded-3xl p-7 lg:p-13'
 const VISION_CARD = 'bg-navy'
 const MISSION_CARD = 'border border-line bg-surface'
 
@@ -36,20 +40,24 @@ const STATEMENT = 'relative mt-6 text-[1.125rem] lg:text-[1.5rem] leading-[1.8] 
 
 const ICON_SQUARE = 'flex size-13 shrink-0 items-center justify-center rounded-xl'
 
+/*
+ * The whole F, inside the vision card's top inline-end corner, level with
+ * the label row and in the empty space beside it, so no text runs over
+ * it: 64px tall, 80px from 1024, as far from the edges as the padding.
+ * Small, so a little stronger than the default tone.
+ */
+const WATERMARK = 'top-7 end-7 h-16 lg:top-12 lg:end-13 lg:h-20 opacity-10'
+
 export function VisionMissionSection() {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="py-16 lg:py-28 bg-page">
+    <section className="pt-16 pb-18 lg:py-28 bg-page">
       <Container>
         <div className="grid lg:grid-cols-2 gap-6">
           <Reveal className={cn(CARD, VISION_CARD)}>
-            {/* Run off the card's top inline-end corner. */}
-            <BrandMarkWatermark
-              tone="white"
-              className="-end-10 -top-12 h-45 lg:-end-14 lg:-top-16 lg:h-60"
-            />
+            <BrandMarkWatermark tone="white" className={WATERMARK} />
 
             <div className="relative flex items-center gap-4">
               <span aria-hidden="true" className={cn(ICON_SQUARE, 'bg-turquoise/16 text-turquoise')}>

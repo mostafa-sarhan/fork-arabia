@@ -3,6 +3,7 @@ import cascoLogo from '@/assets/partners/casco.png'
 import professionalExpertsLogo from '@/assets/partners/professional-experts.png'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import type { CSSProperties } from 'react'
 import { copy, draft, localizeAll, resolveCopy, type Localized } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -55,11 +56,12 @@ const DURATION_SECONDS = (COPIES * PARTNERS.length * TILE_STEP) / 40
 const ECHOES = Array.from({ length: COPIES * 2 - 1 }, () => PARTNERS).flat()
 
 /*
- * The strip clips the track and fades it out over 80px at both edges
- * (no mask utility says that). With reduced motion there is no fade.
+ * The strip, 32px under the heading (56px from 1024), clips the track
+ * and fades it out over 80px at both edges (no mask utility says that).
+ * With reduced motion there is no fade.
  */
 const STRIP =
-  'mt-12 overflow-hidden motion-safe:[mask-image:linear-gradient(to_right,transparent,black_80px,black_calc(100%-80px),transparent)]'
+  'mt-8 lg:mt-14 overflow-hidden motion-safe:[mask-image:linear-gradient(to_right,transparent,black_80px,black_calc(100%-80px),transparent)]'
 
 /*
  * The track: as wide as its tiles, moving (see `marquee` in index.css).
@@ -96,12 +98,10 @@ export function PartnersSection({ heading }: { heading?: string }) {
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="py-16 lg:py-24 bg-surface">
+    <section className="pt-16 pb-18 lg:py-28 bg-surface">
       <Container>
         <Reveal>
-          <h2 className="font-display text-section-title text-balance text-center text-heading">
-            {heading ?? text.heading}
-          </h2>
+          <SectionTitle align="center">{heading ?? text.heading}</SectionTitle>
         </Reveal>
 
         <div className={STRIP}>

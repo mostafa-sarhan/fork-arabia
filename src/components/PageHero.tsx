@@ -28,11 +28,12 @@ const CONTENT = 'relative pt-12 lg:pt-18'
 const CONTENT_FOOT = 'pb-12 lg:pb-18'
 
 /*
- * The F run off the bottom inline-end corner, partly clipped by the hero.
- * Hidden below 1024, where it would sit behind the facts row (as in the
- * home hero).
+ * The whole F, 320px tall and white at 6%, at the inline end of the
+ * content and centred on the title and lead. The hero's padding leaves
+ * room above and below it, so it is never clipped. Hidden below 1024,
+ * where it would sit behind the text.
  */
-const WATERMARK = '-end-20 -bottom-28 h-115 max-lg:hidden'
+const WATERMARK = 'end-0 top-1/2 -translate-y-1/2 h-80 opacity-6 max-lg:hidden'
 
 /*
  * The lead: 18px, 20px from 1024 (a size used only in the heroes), white
@@ -63,25 +64,28 @@ export function PageHero({ title, lead, facts }: PageHeroProps) {
 
   return (
     <section className={SECTION}>
-      <BrandMarkWatermark tone="white" className={WATERMARK} />
-
       <Container className={cn(CONTENT, !facts && CONTENT_FOOT)}>
         <Breadcrumb
           tone="navy"
           items={[{ label: t('nav.home'), to: PATHS.home }, { label: title }]}
         />
 
-        {/* Title, lead and figures enter 60ms apart. */}
-        <Reveal
-          as="h1"
-          className="mt-6 font-display text-page-title tracking-latin-tight text-balance text-white"
-        >
-          {title}
-        </Reveal>
+        {/* Title, lead and figures enter 60ms apart. The text is
+            positioned so it paints over the watermark. */}
+        <div className="relative mt-6">
+          <BrandMarkWatermark tone="white" className={WATERMARK} />
 
-        <Reveal as="p" delay={60} className={LEAD}>
-          {lead}
-        </Reveal>
+          <Reveal
+            as="h1"
+            className="relative font-display text-page-title tracking-latin-tight text-balance text-white"
+          >
+            {title}
+          </Reveal>
+
+          <Reveal as="p" delay={60} className={cn(LEAD, 'relative')}>
+            {lead}
+          </Reveal>
+        </div>
 
         {facts ? (
           <Reveal delay={120}>

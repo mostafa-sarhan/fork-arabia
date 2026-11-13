@@ -18,11 +18,23 @@ const COPY = {
 
 /*
  * The card: soft turquoise, 28px corners (between the 24px and 32px
- * radius tokens), 32px 24px on phones and 72px 96px from 1024. From 1024
- * the title column is 260px and the paragraph takes the rest.
+ * radius tokens), 32px 24px on phones, 72px 64px from 1024 and 72px 96px
+ * from 1280. From 1024 the title column is 320px and the paragraph takes
+ * the rest.
  */
 const CARD =
-  'grid lg:grid-cols-[16.25rem_1fr] gap-6 lg:gap-16 rounded-[1.75rem] px-6 py-8 lg:px-24 lg:py-18 bg-turquoise-soft'
+  'grid lg:grid-cols-[20rem_1fr] gap-6 lg:gap-12 rounded-[1.75rem] px-6 py-8 lg:px-16 xl:px-24 lg:py-18 bg-turquoise-soft'
+
+/*
+ * The quote mark and the title share a row. From 1024 both are drawn on
+ * the paragraph's 48px line box (24px at a line height of 2), so the mark,
+ * the title's first line and the paragraph's first line sit level.
+ */
+const TITLE_ROW = 'flex items-start gap-4'
+
+/* 28px, a size used only here; a 48px line from 1024. */
+const TITLE =
+  'font-display text-[1.75rem] leading-[1.4] lg:leading-12 font-extrabold text-balance text-heading'
 
 /* 18px, 24px from 1024, on a line height of 2: sizes used only here. */
 const PARAGRAPH =
@@ -33,15 +45,13 @@ export function PhilosophySection() {
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="pb-16 lg:pb-30 bg-surface">
+    /* No top padding: the values above already end on a section's foot. */
+    <section className="pb-18 lg:pb-28 bg-surface">
       <Container>
         <Reveal className={CARD}>
-          <div className="flex flex-col gap-4 lg:gap-6">
+          <div className={TITLE_ROW}>
             <QuoteMark />
-            {/* 28px, a size used only here. */}
-            <h2 className="font-display text-[1.75rem] leading-[1.4] font-extrabold text-heading">
-              {text.heading}
-            </h2>
+            <h2 className={TITLE}>{text.heading}</h2>
           </div>
 
           <p className={PARAGRAPH}>{text.paragraph}</p>
@@ -58,7 +68,7 @@ function QuoteMark() {
       viewBox="0 0 50 40"
       aria-hidden="true"
       focusable="false"
-      className="h-10 lg:h-14 w-auto fill-turquoise rtl:-scale-x-100"
+      className="h-10 lg:h-12 w-auto shrink-0 fill-turquoise rtl:-scale-x-100"
     >
       <path d="M0 40V24C0 10.7 6.4 2.7 19.2 0l2 5.2C14.2 7.3 10.6 11.6 10.4 18H20v22H0Zm28 0V24c0-13.3 6.4-21.3 19.2-24l2 5.2C42.2 7.3 38.6 11.6 38.4 18H48v22H28Z" />
     </svg>

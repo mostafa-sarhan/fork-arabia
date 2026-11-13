@@ -1,6 +1,6 @@
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
-import { Eyebrow } from '@/components/ui/Eyebrow'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { cn } from '@/lib/cn'
 import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -107,16 +107,13 @@ export function MethodologySection() {
   const text = localizeAll(COPY, language)
 
   return (
-    <section className="py-16 lg:py-28 bg-navy bg-grid-on-navy">
+    <section className="pt-16 pb-18 lg:py-28 bg-navy bg-grid-on-navy">
       <Container>
-        <Reveal className="flex flex-col gap-4 lg:gap-5">
-          <Eyebrow />
-          <h2 className="font-display text-section-title text-balance text-white">
-            {text.heading}
-          </h2>
+        <Reveal>
+          <SectionTitle tone="navy">{text.heading}</SectionTitle>
         </Reveal>
 
-        <Reveal delay={120} className="relative mt-10 lg:mt-16">
+        <Reveal delay={120} className="relative mt-8 lg:mt-14">
           <span aria-hidden="true" className={cn(RAIL, 'bg-white/14')} />
           <span
             aria-hidden="true"

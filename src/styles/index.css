@@ -118,7 +118,7 @@
   --text-section-title--line-height: 1.45;
   --text-section-title--font-weight: 800;
 
-  /* The short label above a section title, after a turquoise rule. */
+  /* The short label above a section title (<SectionTitle>). */
   --text-eyebrow: 0.9375rem;
   --text-eyebrow--line-height: 1.65;
   --text-eyebrow--font-weight: 700;
@@ -754,19 +754,24 @@
 
 @layer components {
   @media (prefers-reduced-motion: no-preference) {
-    /* An eyebrow's rule grows from the inline start, a beat after its
-       section has come in (<Eyebrow>). */
-    [data-reveal] .eyebrow-line {
+    /* A section title's bar grows from the inline start, or from the
+       middle when centred, a beat after its section has come in
+       (<SectionTitle>). Outside a <Reveal> it is simply there. */
+    [data-reveal] .section-title-bar {
       scale: 0 1;
       transform-origin: left;
       transition: scale var(--duration-reveal) var(--ease-out-soft) 400ms;
     }
 
-    [data-reveal] .eyebrow-line:dir(rtl) {
+    [data-reveal] .section-title-bar:dir(rtl) {
       transform-origin: right;
     }
 
-    [data-reveal='in'] .eyebrow-line {
+    [data-reveal] .section-title-bar[data-align='center'] {
+      transform-origin: center;
+    }
+
+    [data-reveal='in'] .section-title-bar {
       scale: 1;
     }
 

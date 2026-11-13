@@ -19,7 +19,7 @@ type RevealProps = {
  * animation.
  *
  * It marks itself `data-reveal="pending" | "in"` and exposes its delay as
- * `--reveal-delay`, so pieces inside (an eyebrow's rule, a photograph) can
+ * `--reveal-delay`, so pieces inside (a section title's bar, a photograph) can
  * time their own motion from it in CSS (see "Shared motion" in index.css).
  */
 export function Reveal({

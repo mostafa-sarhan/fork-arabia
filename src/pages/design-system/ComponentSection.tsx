@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/Card'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { ArrowRightIcon, BriefcaseIcon } from '@/components/ui/icons'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import type { TranslationKey } from '@/lib/i18n/translations'
@@ -85,13 +86,26 @@ export function ComponentSection() {
             />
           </div>
 
-          <div className="rounded-lg border border-dashed border-line-strong bg-page p-6">
+          <div>
             <SectionHeading
               level={3}
-              eyebrow={t('heading.eyebrow')}
-              title={t('heading.title')}
+              title={t('ds.components.sectionTitle')}
               description={t('heading.desc')}
             />
+            {/* The one heading pattern: label, title, turquoise bar. The
+                label is optional; the bar never appears without a title. */}
+            <div className="mt-4 space-y-4">
+              <div className="rounded-lg border border-dashed border-line-strong bg-surface p-6">
+                <SectionTitle as="h4" label={t('heading.eyebrow')}>
+                  {t('heading.title')}
+                </SectionTitle>
+              </div>
+              <div className="rounded-lg bg-navy p-6">
+                <SectionTitle as="h4" align="center" tone="navy">
+                  {t('heading.title')}
+                </SectionTitle>
+              </div>
+            </div>
           </div>
         </div>
       </div>

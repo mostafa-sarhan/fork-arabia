@@ -17,6 +17,7 @@ import {
   ServicesMenuTrigger,
   useServicesMenu,
 } from './ServicesMenu'
+import { useNavbar } from './useNavbar'
 
 /**
  * Whether the page has scrolled away from the top, with the sentinel to put
@@ -49,6 +50,70 @@ function useScrolled(): [boolean, (node: HTMLDivElement | null) => void] {
 
   return [isScrolled, setSentinel]
 }
+
+/* Within this many px of the top the bar always shows. */
+const ALWAYS_SHOWN_ABOVE = 120
+/* How far a downward scroll must run, past that, before the bar hides. */
+const HIDE_AFTER_DOWN = 8
+
+/**
+ * Whether the reader is scrolling down the page, away from the top: the
+ * bar slides out of view then, and back in on any scroll up.
+ *
+ * One passive listener, read at most once a frame. `downFrom` is where the
+ * current downward run began, so a slow scroll still hides the bar once it
+ * has travelled 8px.
+ */
+function useScrollingDown(): boolean {
+  const [isScrollingDown, setScrollingDown] = useState(false)
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    let downFrom = lastY
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      const y = window.scrollY
+
+      if (y <= ALWAYS_SHOWN_ABOVE || y < lastY) {
+        setScrollingDown(false)
+        downFrom = y
+      } else if (y - Math.max(downFrom, ALWAYS_SHOWN_ABOVE) > HIDE_AFTER_DOWN) {
+        setScrollingDown(true)
+      }
+
+      lastY = y
+    }
+
+    const onScroll = () => {
+      if (!frame) {
+        frame = requestAnimationFrame(update)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return isScrollingDown
+}
+
+/*
+ * The header slides by its own height in 250ms (the hover speed and a
+ * quarter: no token says 250ms), on the site's curve; with reduced motion it
+ * simply appears and disappears.
+ *
+ * Shown, it carries `translate: none` rather than a zero translate: any
+ * transform makes the header the containing block of the mobile sheet and
+ * its backdrop, which are `position: fixed` inside it.
+ */
+const HEADER_MOTION =
+  'transition-[translate] duration-[calc(var(--duration-hover)*1.25)] ease-out-soft motion-reduce:transition-none'
 
 /**
  * One link in the bar.
@@ -110,7 +175,17 @@ export function Navbar() {
   const { t } = useLanguage()
   const { pathname } = useLocation()
   const [isScrolled, sentinelRef] = useScrolled()
+  const isScrollingDown = useScrollingDown()
+  const { openMenu, isMobileMenuOpen } = useNavbar()
   const servicesMenu = useServicesMenu()
+
+  /* Keyboard focus anywhere in the bar keeps it on screen; a mouse click,
+     which leaves focus on what was clicked, does not. */
+  const [hasKeyboardFocus, setKeyboardFocus] = useState(false)
+
+  /* The bar never hides while one of its menus is open or it has focus. */
+  const isHidden =
+    isScrollingDown && !openMenu && !isMobileMenuOpen && !hasKeyboardFocus
 
   return (
     <>
@@ -123,7 +198,21 @@ export function Navbar() {
         className="pointer-events-none absolute inset-x-0 top-0 h-gutter"
       />
 
-      <header className="sticky top-0 z-nav">
+      <header
+        className={cn(
+          'sticky top-0 z-nav',
+          HEADER_MOTION,
+          isHidden ? '-translate-y-full' : 'translate-none',
+        )}
+        onFocus={(event) =>
+          setKeyboardFocus(event.target.matches(':focus-visible'))
+        }
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setKeyboardFocus(false)
+          }
+        }}
+      >
         {/* Scrolling changes the shadow and nothing else. */}
         <div
           data-scrolled={isScrolled || undefined}

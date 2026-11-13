@@ -2,6 +2,7 @@ import { LocalizedLink } from '@/components/LocalizedLink'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { BUTTON_MOTION } from '@/components/ui/Button'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
@@ -134,9 +135,7 @@ export function PresenceSection() {
         {/* Header. It enters first. */}
         <Reveal className={HEADER}>
           <div className={HEADER_START}>
-            <h2 className="font-display text-section-title text-white">
-              {text.heading}
-            </h2>
+            <SectionTitle tone="navy">{text.heading}</SectionTitle>
 
             <span aria-hidden="true" className="max-lg:hidden h-14 w-px bg-white/15" />
 

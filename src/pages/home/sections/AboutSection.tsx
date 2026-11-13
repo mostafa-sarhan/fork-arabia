@@ -3,7 +3,7 @@ import { Reveal } from '@/components/Reveal'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Container } from '@/components/layout/Container'
 import { BUTTON_MOTION } from '@/components/ui/Button'
-import { Eyebrow } from '@/components/ui/Eyebrow'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { EyeIcon, TargetIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
@@ -95,14 +95,12 @@ export function AboutSection() {
           {/* Text column, at the inline start. It enters first, then the
               two cards, 120ms apart. */}
           <Reveal className="flex flex-col gap-5.5 lg:gap-7">
-            <Eyebrow>{text.eyebrow}</Eyebrow>
-
-            <h2 className="font-display text-section-title text-balance text-heading">
+            <SectionTitle label={text.eyebrow}>
               {/* One string with its space: Arabic shapes the last word
                   slightly differently when the space is a separate node. */}
               {`${text.headingLead} `}
               <span className="text-petrol">{text.headingYear}</span>
-            </h2>
+            </SectionTitle>
 
             <p className="max-w-measure text-body leading-paragraph lg:text-body-lg lg:leading-loose text-ink-muted">
               {text.paragraph}
