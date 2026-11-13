@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-45 strings await approval.
+60 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -59,3 +59,18 @@ afterwards to regenerate this list.
 | `—` | حلول مصممة لك | Solutions Built for You | `WhyForkSection.tsx` |
 | `—` | من الاستشارة للتنفيذ | From Consultation to Implementation | `WhyForkSection.tsx` |
 | `—` | تقنية وتحليل | Technology and Analytics | `WhyForkSection.tsx` |
+| `—` | تواجدنا | Our Presence | `PresenceSection.tsx` |
+| `—` | نقدم خدماتنا في 8 دول | We serve clients in 8 countries | `PresenceSection.tsx` |
+| `—` | عناوين المكاتب | Office Addresses | `PresenceSection.tsx` |
+| `—` | المقر الرئيسي | Head Office | `PresenceSection.tsx` |
+| `—` | الرياض، السعودية | Riyadh, Saudi Arabia | `PresenceSection.tsx` |
+| `—` | المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110 | Al Murabba, Al Wisham District, Al Washm Tower, Al Rajhi Awqaf Building, Office 110 | `PresenceSection.tsx` |
+| `—` | فرع | Branch | `PresenceSection.tsx` |
+| `—` | طنطا، مصر | Tanta, Egypt | `PresenceSection.tsx` |
+| `—` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر | Station Square, Abdel Moneim Riad Towers, Tower A, 11th Floor | `PresenceSection.tsx` |
+| `tags` | مقر رئيسي | Head office | `PresenceSection.tsx` |
+| `tags` | فرع | Branch | `PresenceSection.tsx` |
+| `tags` | خدمات | Services | `PresenceSection.tsx` |
+| `tags` | الأردن | Jordan | `PresenceSection.tsx` |
+| `tags` | الولايات المتحدة | United States | `PresenceSection.tsx` |
+| `tags` | جنوب أفريقيا | South Africa | `PresenceSection.tsx` |

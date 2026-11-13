@@ -636,6 +636,14 @@
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 76%);
 }
 
+/* The faint white grid behind navy sections (the hero, Presence): 56px cells. */
+@utility bg-grid-on-navy {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

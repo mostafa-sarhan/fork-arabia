@@ -19,6 +19,7 @@ const FILES = [
   'src/pages/home/sections/AboutSection.tsx',
   'src/pages/home/sections/ServicesSection.tsx',
   'src/pages/home/sections/WhyForkSection.tsx',
+  'src/pages/home/sections/PresenceSection.tsx',
 ]
 
 

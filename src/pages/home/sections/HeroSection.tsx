@@ -248,15 +248,8 @@ function TrustLine({
 function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-      {/* A faint white grid, 56px cells. */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px), linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px)',
-          backgroundSize: '56px 56px',
-        }}
-      />
+      {/* A faint white grid, 56px cells (shared with Presence). */}
+      <div className="absolute inset-0 bg-grid-on-navy" />
 
       {/* The F mark, run off the inline-end corner: left in Arabic. Hidden
           below 1024, where it read as dark blobs behind the buttons. */}
