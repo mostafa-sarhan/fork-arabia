@@ -266,6 +266,8 @@
   --animate-enter: fade-up 500ms var(--ease-emphasized) both;
   --animate-shimmer: shimmer 2.6s ease-in-out infinite;
   --animate-dot: dot 1.4s ease-in-out infinite;
+  /* The partners strip. A strip may set its own animation-duration. */
+  --animate-marquee: marquee 40s linear infinite;
 }
 
 :root {
@@ -661,6 +663,41 @@
   }
   100% {
     transform: translateX(460%);
+  }
+}
+
+/*
+ * The partners strip: a track of two identical halves slides by exactly
+ * one half, so the loop is seamless. It travels toward the inline end —
+ * leftward in Arabic, rightward in English — so the track starts half its
+ * width toward the inline start: to the right in Arabic, the left in English.
+ * It pauses while hovered or while anything in it has keyboard focus,
+ * and never moves with reduced motion.
+ */
+@keyframes marquee {
+  from {
+    translate: var(--marquee-from, -50%) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@layer utilities {
+  .animate-marquee:dir(rtl) {
+    --marquee-from: 50%;
+  }
+
+  .animate-marquee:hover,
+  .animate-marquee:focus-within {
+    animation-play-state: paused;
+  }
+
+  /* No movement at all with reduced motion: the strip stands still. */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
   }
 }
 

@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-60 strings await approval.
+63 strings await approval.
 
 | Sector | Arabic (approved) | Proposed English | File |
 | --- | --- | --- | --- |
@@ -74,3 +74,6 @@ afterwards to regenerate this list.
 | `tags` | الأردن | Jordan | `PresenceSection.tsx` |
 | `tags` | الولايات المتحدة | United States | `PresenceSection.tsx` |
 | `tags` | جنوب أفريقيا | South Africa | `PresenceSection.tsx` |
+| `—` | شركاؤنا وعملاؤنا | Our Partners & Clients | `PartnersSection.tsx` |
+| `—` | آفاق | Afaq | `PartnersSection.tsx` |
+| `—` | الخبراء المحترفون للاستشارات المالية | Professional Experts Financial Consulting | `PartnersSection.tsx` |
