@@ -3,6 +3,7 @@ import cascoLogo from '@/assets/partners/casco.png'
 import professionalExpertsLogo from '@/assets/partners/professional-experts.png'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
+import type { CSSProperties } from 'react'
 import { copy, draft, localizeAll, resolveCopy, type Localized } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
@@ -22,12 +23,22 @@ const COPY = {
  * src/assets/partners/, import it above and add one line here: the file,
  * its pixel size (for width/height, so nothing shifts) and the name, which
  * is the logo's alt text.
+ *
+ * `logoHeight` is the drawn height in px on desktop (phones use 75% of it),
+ * tuned by eye so wide and tall logos carry the same visual weight.
  */
-const PARTNERS: { src: string; width: number; height: number; name: Localized }[] = [
-  { src: cascoLogo, width: 900, height: 286, name: copy('CASCO', 'CASCO') },
-  { src: afaqLogo, width: 511, height: 663, name: draft('آفاق', 'Afaq') },
-  { src: professionalExpertsLogo, width: 344, height: 229, name: draft('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting') },
+const PARTNERS: { src: string; width: number; height: number; name: Localized; logoHeight?: number }[] = [
+  { src: cascoLogo, width: 900, height: 286, name: copy('CASCO', 'CASCO'), logoHeight: 44 },
+  { src: afaqLogo, width: 511, height: 663, name: draft('آفاق', 'Afaq'), logoHeight: 78 },
+  { src: professionalExpertsLogo, width: 344, height: 229, name: draft('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting'), logoHeight: 72 },
 ]
+
+const DEFAULT_LOGO_HEIGHT = 56
+
+/* Passes a partner's height to LOGO as the --logo-h custom property. */
+function logoStyle(partner: (typeof PARTNERS)[number]) {
+  return { '--logo-h': `${partner.logoHeight ?? DEFAULT_LOGO_HEIGHT}px` } as CSSProperties
+}
 
 /*
  * How the strip loops. Each half of the track repeats the list until it
@@ -68,8 +79,13 @@ const LIST =
 const TILE =
   'flex shrink-0 items-center justify-center me-5 motion-reduce:me-0 w-40 h-22 md:w-55 md:h-28 rounded-xl border border-line bg-surface'
 
-/* Full colour, never cropped; at most 70% of the tile's width (no token). */
-const LOGO = 'h-auto w-auto max-h-11 md:max-h-15 max-w-[70%] object-contain'
+/*
+ * Full colour, never cropped; at most 70% of the tile's width (no token).
+ * The PNGs have white/near-white backgrounds; multiply makes them
+ * disappear on the white tile without editing the files.
+ */
+const LOGO =
+  'w-auto h-[calc(var(--logo-h)*0.75)] md:h-(--logo-h) max-w-[70%] object-contain mix-blend-multiply'
 
 export function PartnersSection() {
   const { language } = useLanguage()
@@ -100,6 +116,7 @@ export function PartnersSection() {
                     loading="lazy"
                     decoding="async"
                     className={LOGO}
+                    style={logoStyle(partner)}
                   />
                 </li>
               ))}
@@ -116,6 +133,7 @@ export function PartnersSection() {
                     loading="lazy"
                     decoding="async"
                     className={LOGO}
+                    style={logoStyle(partner)}
                   />
                 </div>
               ))}
