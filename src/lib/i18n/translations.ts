@@ -187,6 +187,7 @@ const en = {
   'btn.secondary': 'Secondary',
   'btn.outline': 'Outline',
   'btn.outlineNavy': 'Navy outline',
+  'btn.outlineOnNavy': 'White outline on navy',
   'btn.ghost': 'Ghost',
   'btn.destructive': 'Destructive',
   'btn.loading': 'Loading',
@@ -281,6 +282,10 @@ const en = {
   'icon.passport': 'Passport — residency',
   'icon.eye': 'Eye — vision',
   'icon.target': 'Target — mission',
+  'icon.users': 'People — one partner',
+  'icon.puzzle': 'Puzzle — tailored solutions',
+  'icon.route': 'Route — consultation to delivery',
+  'icon.barChart': 'Bar chart — analytics',
 
   'ds.direction.title': 'Direction & Language',
   'ds.direction.desc':
@@ -572,6 +577,7 @@ const ar: Record<keyof typeof en, string> = {
   'btn.secondary': 'ثانوي',
   'btn.outline': 'محدد',
   'btn.outlineNavy': 'محدد كحلي',
+  'btn.outlineOnNavy': 'محدد أبيض على الكحلي',
   'btn.ghost': 'شفاف',
   'btn.destructive': 'حذف',
   'btn.loading': 'جارٍ التحميل',
@@ -665,6 +671,10 @@ const ar: Record<keyof typeof en, string> = {
   'icon.passport': 'جواز — الإقامة',
   'icon.eye': 'عين — الرؤية',
   'icon.target': 'هدف — الرسالة',
+  'icon.users': 'أشخاص — شريك واحد',
+  'icon.puzzle': 'قطعة أحجية — حلول مصممة',
+  'icon.route': 'مسار — من الاستشارة للتنفيذ',
+  'icon.barChart': 'رسم بياني — التحليل',
 
   'ds.direction.title': 'الاتجاه واللغة',
   'ds.direction.desc':

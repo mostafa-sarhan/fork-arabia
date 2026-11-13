@@ -1,19 +1,26 @@
 import { useParams } from 'react-router'
-import { PlaceholderShell } from '@/components/PagePlaceholder'
-import { ICONS } from '@/components/ui/iconRegistry'
-import { PATHS } from '@/config/paths'
-import { getSectorContent } from '@/data/sectorContent'
-import { getSectorBySlug, type SectorEntry } from '@/data/sectorIndex'
-import { Copy } from '@/lib/i18n/Copy'
+import { MethodologySection } from '@/components/sections/MethodologySection'
+import { getSectorBySlug } from '@/data/sectorIndex'
+import { getSectorDetail } from '@/data/sectors'
+import type { SectorDetail } from '@/data/sectors/types'
 import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { usePageMeta } from '@/lib/usePageMeta'
 import NotFoundPage from '@/pages/not-found/NotFoundPage'
+import { ResidencyBenefits } from './sections/ResidencyBenefits'
+import { ResidencyRole } from './sections/ResidencyRole'
+import { ResidencyTracks } from './sections/ResidencyTracks'
+import { SectorConsultation } from './sections/SectorConsultation'
+import { SectorHero } from './sections/SectorHero'
+import { SectorOthersSection } from './sections/SectorOthers'
+import { SectorServices } from './sections/SectorServices'
+import { WhyForkStrip } from './sections/WhyForkStrip'
 
 /**
- * One sector, until its real template ships. The slug comes from the URL; an
- * unknown one is not a sector with no content, it is a page that does not
- * exist, so it renders the 404 rather than an empty shell.
+ * One sector's page, for every `/services/:slug`. An unknown slug is not a
+ * sector with no content, it is a page that does not exist, so it renders
+ * the 404. Keyed by slug, so moving to another sector starts its filter
+ * afresh.
  */
 export default function SectorPage() {
   const { slug } = useParams()
@@ -23,43 +30,44 @@ export default function SectorPage() {
     return <NotFoundPage />
   }
 
-  return <SectorPlaceholder sector={sector} />
+  return <SectorSections key={sector.slug} sector={getSectorDetail(sector.slug)} />
 }
 
-function SectorPlaceholder({ sector }: { sector: SectorEntry }) {
-  const { t, language } = useLanguage()
-  const Icon = ICONS[sector.icon]
-  /*
-   * The sector's own question, from the content module — which is also what
-   * keeps that module in this lazily loaded chunk rather than in the bundle
-   * the navbar pulls in.
-   */
-  const { cta } = getSectorContent(sector.id)
+/**
+ * The page, top to bottom: hero, services (or, for premium residency, its
+ * tracks, our role and its benefits), how we work, why FORK, the
+ * consultation card, and the other sectors (below 1024, or always where
+ * there is no services aside to carry them).
+ */
+function SectorSections({ sector }: { sector: SectorDetail }) {
+  const { language } = useLanguage()
+  const ctaTitle = resolveCopy(sector.ctaTitle, language)
+  const hasServices = sector.services.length > 0
 
-  usePageMeta({ titleKey: 'nav.services', indexable: false })
+  usePageMeta({
+    title: resolveCopy(sector.title, language),
+    description: resolveCopy(sector.summary, language),
+    indexable: true,
+  })
 
   return (
-    <PlaceholderShell
-      lead={<Copy value={cta.title} />}
-      crumbs={[
-        { label: t('nav.home'), to: PATHS.home },
-        { label: t('nav.services'), to: PATHS.services },
-        { label: resolveCopy(sector.title, language) },
-      ]}
-      eyebrow={
-        <p className="mt-5 flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-md bg-navy-soft text-petrol">
-            <Icon className="size-5" />
-          </span>
-          <span
-            dir="ltr"
-            className="text-overline tracking-latin-wide text-subheading"
-          >
-            {sector.number}
-          </span>
-        </p>
-      }
-      title={<Copy value={sector.title} />}
-    />
+    <>
+      <SectorHero sector={sector} />
+
+      {hasServices ? <SectorServices sector={sector} /> : null}
+
+      {sector.extras ? (
+        <>
+          <ResidencyTracks tracks={sector.extras.tracks} disclaimer={sector.extras.disclaimer} />
+          <ResidencyRole steps={sector.extras.steps} ctaTitle={ctaTitle} />
+          <ResidencyBenefits benefits={sector.extras.benefits} />
+        </>
+      ) : null}
+
+      <MethodologySection tone="light" />
+      <WhyForkStrip />
+      <SectorConsultation title={ctaTitle} />
+      <SectorOthersSection slug={sector.slug} othersInAside={hasServices} />
+    </>
   )
 }

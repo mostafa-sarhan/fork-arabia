@@ -37,6 +37,10 @@ const LABELS: Record<IconName, TranslationKey> = {
   passport: 'icon.passport',
   eye: 'icon.eye',
   target: 'icon.target',
+  users: 'icon.users',
+  puzzle: 'icon.puzzle',
+  route: 'icon.route',
+  barChart: 'icon.barChart',
 }
 
 export function IconSection() {

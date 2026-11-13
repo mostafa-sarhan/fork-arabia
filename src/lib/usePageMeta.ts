@@ -50,9 +50,17 @@ type HeadTag =
   | { tag: 'link'; rel: string; href: string; hreflang?: string }
   | { tag: 'meta'; name: string; content: string }
 
-export type PageMeta = {
-  /** The page's title, as a key of the translation table. */
-  titleKey: TranslationKey
+/*
+ * A page names its title either by a key of the translation table or, when
+ * it comes from data (a sector's own title), as the text itself.
+ */
+type PageTitle =
+  | { titleKey: TranslationKey; title?: never }
+  | { title: string; titleKey?: never }
+
+export type PageMeta = PageTitle & {
+  /** The page's own description; the site's description when omitted. */
+  description?: string
   /**
    * Whether the brand name is appended to the title. The home page's title
    * is the company's own name, so it is the one page that sets this false
@@ -78,6 +86,8 @@ export type PageMeta = {
  */
 export function usePageMeta({
   titleKey,
+  title: titleText,
+  description: descriptionText,
   brandSuffix = true,
   indexable = true,
 }: PageMeta): void {
@@ -85,17 +95,16 @@ export function usePageMeta({
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const title = brandSuffix
-      ? `${t(titleKey)} — ${t('brand.name')}`
-      : t(titleKey)
-    const description = resolveCopy(SITE_DESCRIPTION, language)
+    const name = titleText ?? (titleKey ? t(titleKey) : '')
+    const title = brandSuffix ? `${name} — ${t('brand.name')}` : name
+    const description = descriptionText ?? resolveCopy(SITE_DESCRIPTION, language)
 
     document.title = title
     setMeta('meta[name="description"]', description)
     setMeta('meta[property="og:title"]', title)
     setMeta('meta[property="og:description"]', description)
     setMeta('meta[property="og:locale"]', OG_LOCALES[language])
-  }, [brandSuffix, language, t, titleKey])
+  }, [brandSuffix, descriptionText, language, t, titleKey, titleText])
 
   useEffect(() => {
     const { origin } = window.location

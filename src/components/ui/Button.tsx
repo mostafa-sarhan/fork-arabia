@@ -14,6 +14,7 @@ export type ButtonVariant =
   | 'secondary'
   | 'outline'
   | 'outline-navy'
+  | 'outline-on-navy'
   | 'ghost'
   | 'destructive'
 
@@ -48,6 +49,10 @@ const variants: Record<ButtonVariant, string> = {
      token between 1 and 2. */
   'outline-navy':
     'border-[1.5px] border-navy bg-transparent text-navy hover:bg-navy/8 active:bg-navy/12',
+  /* A white outline for navy surfaces (heroes, navy cards); the focus
+     ring turns white and sits on navy. */
+  'outline-on-navy':
+    'border border-white/45 bg-transparent text-white hover:border-white hover:bg-white/10 active:bg-white/15 focus-visible:ring-white focus-visible:ring-offset-navy',
   ghost: 'text-ink hover:bg-navy-soft active:bg-navy-soft',
   destructive:
     'bg-danger text-white hover:bg-danger-strong active:bg-danger-strong',

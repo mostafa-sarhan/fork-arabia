@@ -22,6 +22,7 @@ const variantLabels: Record<ButtonVariant, TranslationKey> = {
   secondary: 'btn.secondary',
   outline: 'btn.outline',
   'outline-navy': 'btn.outlineNavy',
+  'outline-on-navy': 'btn.outlineOnNavy',
   ghost: 'btn.ghost',
   destructive: 'btn.destructive',
 }

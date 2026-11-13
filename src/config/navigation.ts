@@ -54,3 +54,11 @@ export const FOOTER_NAV: readonly NavItem[] = [
   { path: PATHS.requestQuote, labelKey: 'nav.requestQuote' },
   { path: PATHS.contact, labelKey: 'nav.contact' },
 ]
+
+/**
+ * Routes (in react-router's pattern syntax, without the language prefix)
+ * whose navbar stays on screen instead of hiding on a downward scroll: a
+ * sector page's sticky aside and country headings stop just under the bar,
+ * and with the bar slid away they would hang under an empty strip.
+ */
+export const PINNED_NAVBAR_ROUTES: readonly string[] = ['/services/:slug']

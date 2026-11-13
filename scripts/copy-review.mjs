@@ -8,12 +8,32 @@
  *
  *   node scripts/copy-review.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+
+/* One file per sector, in the index's order (01–09). */
+const SECTOR_FILES = [
+  'legal-corporate',
+  'business-setup',
+  'financial-accounting',
+  'governance-organization',
+  'quality-excellence',
+  'training-education',
+  'technology-ai',
+  'operational-support',
+  'premium-residency',
+].map((slug) => `src/data/sectors/${slug}.ts`)
+
+const SECTOR_PAGE_FILES = readdirSync('src/pages/sector/sections')
+  .sort()
+  .map((name) => `src/pages/sector/sections/${name}`)
 
 const FILES = [
   'src/data/sectorIndex.ts',
-  'src/data/sectorContent.ts',
+  ...SECTOR_FILES,
+  'src/data/sectors/countries.ts',
   'src/data/siteCopy.ts',
+  'src/data/whyFork.ts',
+  'src/config/consultation.ts',
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
   'src/pages/home/sections/AboutSection.tsx',
@@ -27,7 +47,9 @@ const FILES = [
   'src/pages/about/sections/VisionMissionSection.tsx',
   'src/pages/about/sections/ValuesSection.tsx',
   'src/pages/about/sections/PhilosophySection.tsx',
-  'src/pages/about/sections/MethodologySection.tsx',
+  'src/components/sections/MethodologySection.tsx',
+  'src/pages/sector/sectorCounts.ts',
+  ...SECTOR_PAGE_FILES,
 ]
 
 
@@ -37,15 +59,18 @@ const DRAFT = /draft\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)
 /**
  * The sector a character offset falls inside, for the first column.
  *
- * The sector files key their entries by id — the index as an `id` field, the
- * content as the object key — so the nearest one above the match owns it.
- * Copy that belongs to no sector keeps the dash.
+ * A sector's own file (`src/data/sectors/<slug>.ts`) names it outright with
+ * `defineSector('<id>', …)`. In the index the nearest `id` field above the
+ * match owns it. Copy that belongs to no sector keeps the dash.
  */
 function sectorAt(source, offset) {
+  const own = source.match(/defineSector\('(\w+)'/)
+  if (own) return own[1]
+
   let current = '—'
-  for (const match of source.matchAll(/^ {2}(\w+): \{|^ {4}id: '(\w+)'/gm)) {
+  for (const match of source.matchAll(/^ {4}id: '(\w+)'/gm)) {
     if (match.index > offset) break
-    current = match[1] ?? match[2]
+    current = match[1]
   }
   return current
 }

@@ -1,6 +1,7 @@
 import {
   AcademicIcon,
   ArrowRightIcon,
+  BarChartIcon,
   BriefcaseIcon,
   CalendarIcon,
   ChatIcon,
@@ -23,10 +24,13 @@ import {
   PhoneIcon,
   PhotoIcon,
   PinIcon,
+  PuzzleIcon,
+  RouteIcon,
   ScaleIcon,
   ShieldIcon,
   SupplyIcon,
   TargetIcon,
+  UsersIcon,
 } from './icons'
 
 /**
@@ -67,6 +71,10 @@ export const ICONS = {
   passport: PassportIcon,
   eye: EyeIcon,
   target: TargetIcon,
+  users: UsersIcon,
+  puzzle: PuzzleIcon,
+  route: RouteIcon,
+  barChart: BarChartIcon,
 } as const
 
 export type IconName = keyof typeof ICONS

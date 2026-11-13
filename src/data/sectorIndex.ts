@@ -7,7 +7,7 @@ import { copy, type Localized } from '@/lib/i18n/localized'
 * This is the index, not the content: identity, order, icon, title and the
 * one-line summary — enough for the mega-menu, the mobile sheet, the
 * footer and any card grid. The services, calls to action and extra blocks
-* live in `sectorContent.ts`, which is loaded only by a sector's own page.
+* live in `sectors/<slug>.ts`, loaded only by a sector's own page.
 * Splitting them keeps roughly 30 kB of body copy out of the bundle every
 * visitor downloads to see the home page.
 *
@@ -188,24 +188,6 @@ export function getSectorBySlug(slug: string | undefined) {
 
 export function getSectorById(id: SectorId) {
   return BY_ID.get(id)
-}
-
-/**
-* The sectors either side of this one, for paging through them. The list
-* wraps, so the ninth sector's "next" is the first — a dead end at either
-* end of a nine-item list is a worse answer than a loop.
-*/
-export function getAdjacentSectors(slug: SectorSlug) {
-  const index = SECTOR_INDEX.findIndex((sector) => sector.slug === slug)
-
-  if (index === -1) {
-    return { previous: undefined, next: undefined }
-  }
-
-  return {
-    previous: SECTOR_INDEX[(index - 1 + SECTOR_INDEX.length) % SECTOR_INDEX.length],
-    next: SECTOR_INDEX[(index + 1) % SECTOR_INDEX.length],
-  }
 }
 
 /** Every sector but this one, in order — the "other sectors" rail. */

@@ -72,7 +72,9 @@ export function MobileMenuToggle() {
  *
  * It is always mounted so the slide is a plain CSS transition rather than a
  * mount animation, and `inert` keeps it out of the focus order and the
- * accessibility tree while it is closed. Under prefers-reduced-motion the
+ * accessibility tree while it is closed. Closed, it is also
+ * `visibility: hidden` (switched after the slide out, at once on the way
+ * in), so nothing of it is drawn beside the screen. Under prefers-reduced-motion the
  * project's global rule flattens the transition, so it simply appears.
  */
 export function MobileMenu() {
@@ -191,8 +193,8 @@ export function MobileMenu() {
         aria-label={t('nav.primary')}
         inert={!isMobileMenuOpen}
         className={cn(
-          'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-transform duration-300 ease-emphasized scrollbar-slim xl:hidden',
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full rtl:-translate-x-full',
+          'fixed inset-y-0 end-0 z-modal flex w-10/12 max-w-compact flex-col overflow-y-auto overscroll-contain bg-surface shadow-raised transition-[translate,visibility] duration-300 ease-emphasized scrollbar-slim xl:hidden',
+          isMobileMenuOpen ? 'translate-x-0' : 'invisible translate-x-full rtl:-translate-x-full',
         )}
       >
         <nav

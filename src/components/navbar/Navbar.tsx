@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
+import { matchPath, useLocation } from 'react-router'
 import { Logo } from '@/components/brand/Logo'
 import { Container } from '@/components/layout/Container'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Button } from '@/components/ui/Button'
 import { CalendarIcon } from '@/components/ui/icons'
-import { NAV_ACTIONS, PRIMARY_NAV, type NavItem } from '@/config/navigation'
+import {
+  NAV_ACTIONS,
+  PINNED_NAVBAR_ROUTES,
+  PRIMARY_NAV,
+  type NavItem,
+} from '@/config/navigation'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { isPathActive } from '@/lib/i18n/localizePath'
+import { isPathActive, withoutPrefix } from '@/lib/i18n/localizePath'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { LanguageMenu } from './LanguageMenu'
 import { MobileMenu, MobileMenuToggle } from './MobileMenu'
@@ -108,9 +113,11 @@ function useScrollingDown(): boolean {
  * quarter: no token says 250ms), on the site's curve; with reduced motion it
  * simply appears and disappears.
  *
- * Shown, it carries `translate: none` rather than a zero translate: any
- * transform makes the header the containing block of the mobile sheet and
- * its backdrop, which are `position: fixed` inside it.
+ * The slide moves the bar inside the header, never the header itself: any
+ * transform on the header makes it the containing block of the mobile
+ * sheet and its backdrop, which are `position: fixed` inside it, and the
+ * closed sheet parked beside the screen would then widen the page. Shown,
+ * the bar carries `translate: none` rather than a zero translate.
  */
 const HEADER_MOTION =
   'transition-[translate] duration-[calc(var(--duration-hover)*1.25)] ease-out-soft motion-reduce:transition-none'
@@ -183,9 +190,19 @@ export function Navbar() {
      which leaves focus on what was clicked, does not. */
   const [hasKeyboardFocus, setKeyboardFocus] = useState(false)
 
+  /* Some pages keep the bar on screen throughout (PINNED_NAVBAR_ROUTES). */
+  const canonicalPath = withoutPrefix(pathname)
+  const isPinned = PINNED_NAVBAR_ROUTES.some((route) =>
+    matchPath(route, canonicalPath),
+  )
+
   /* The bar never hides while one of its menus is open or it has focus. */
   const isHidden =
-    isScrollingDown && !openMenu && !isMobileMenuOpen && !hasKeyboardFocus
+    !isPinned &&
+    isScrollingDown &&
+    !openMenu &&
+    !isMobileMenuOpen &&
+    !hasKeyboardFocus
 
   return (
     <>
@@ -198,12 +215,10 @@ export function Navbar() {
         className="pointer-events-none absolute inset-x-0 top-0 h-gutter"
       />
 
+      {/* Hidden, the header's own box stays at the top of the screen with
+          the bar slid out of it, so it lets taps through to the page. */}
       <header
-        className={cn(
-          'sticky top-0 z-nav',
-          HEADER_MOTION,
-          isHidden ? '-translate-y-full' : 'translate-none',
-        )}
+        className={cn('sticky top-0 z-nav', isHidden && 'pointer-events-none')}
         onFocus={(event) =>
           setKeyboardFocus(event.target.matches(':focus-visible'))
         }
@@ -213,108 +228,116 @@ export function Navbar() {
           }
         }}
       >
-        {/* Scrolling changes the shadow and nothing else. */}
         <div
-          data-scrolled={isScrolled || undefined}
-          className="relative z-toast border-b border-line bg-surface transition-shadow duration-300 ease-standard data-scrolled:shadow-header"
+          className={cn(
+            'relative z-toast',
+            HEADER_MOTION,
+            isHidden ? '-translate-y-full' : 'translate-none',
+          )}
         >
-          {/* The narrow bar runs on tight gaps: at 360px the English brand,
-              booking action, language trigger and toggle come to 318px
-              against 320px of content box, and English is the binding case.
-              Below 360px (`max-xs`) even that overflows, so the booking
-              action drops to its calendar alone — 279px against 280px. The
-              logo never gives. */}
-          <Container className="flex h-header-mobile items-center justify-between gap-1 sm:gap-4 xl:h-header">
-            <Logo className="shrink-0" />
+          {/* Scrolling changes the shadow and nothing else. */}
+          <div
+            data-scrolled={isScrolled || undefined}
+            className="relative border-b border-line bg-surface transition-shadow duration-300 ease-standard data-scrolled:shadow-header"
+          >
+            {/* The narrow bar runs on tight gaps: at 360px the English brand,
+                booking action, language trigger and toggle come to 318px
+                against 320px of content box, and English is the binding case.
+                Below 360px (`max-xs`) even that overflows, so the booking
+                action drops to its calendar alone — 279px against 280px. The
+                logo never gives. */}
+            <Container className="flex h-header-mobile items-center justify-between gap-1 sm:gap-4 xl:h-header">
+              <Logo className="shrink-0" />
 
-            <nav
-              aria-label={t('nav.primary')}
-              className="hidden min-w-0 xl:block"
-            >
-              <ul className="flex items-center gap-1">
-                {PRIMARY_NAV.map((item) => (
-                  <li key={item.path}>
-                    {/* Services is one item of the navigation like any
-                        other; only the component in its slot differs,
-                        because it carries the sector panel behind it. */}
-                    {item.path === PATHS.services ? (
-                      <>
-                        <ServicesMenuTrigger menu={servicesMenu} />
-                        {/* Right after its own trigger, so Tab walks into
-                            the panel and out the far side into the next
-                            item. It is still positioned against the bar
-                            rather than against this list item. */}
-                        <ServicesMenuPanel menu={servicesMenu} />
-                      </>
-                    ) : (
-                      <NavbarLink
-                        item={item}
-                        isActive={isPathActive(pathname, item.path)}
-                      />
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Full height, so the language panel hangs from the bar's own
-                edge rather than from the middle of it. */}
-            <div className="flex shrink-0 items-center gap-0.5 self-stretch sm:gap-2">
-              <LanguageMenu className="hidden xl:flex" />
-
-              {/* The language link belongs to the navigation, the buttons to
-                  the actions. */}
-              <span
-                aria-hidden="true"
-                className="hidden h-6 w-px bg-line xl:block"
-              />
-
-              {NAV_ACTIONS.map((action) => (
-                <Button
-                  key={action.path}
-                  to={action.path}
-                  variant={action.variant}
-                  size="sm"
-                  className="hidden xl:inline-flex"
-                >
-                  {t(action.labelKey)}
-                </Button>
-              ))}
-
-              {/* `tap-target` on the three controls of the narrow bar: they
-                are drawn to fit 320px, which is smaller than 44px, so each
-                one answers taps over a 44px square it does not occupy.
-
-                Below 640px the label shortens, the pill tightens and the
-                  calendar carries the meaning the dropped words used to;
-                  below 360px the icon carries all of it, in a square the
-                  size of the menu toggle. The accessible name is the whole
-                  action either way, and while a word is visible it is the
-                  first word of that name, so voice control still matches
-                  what is on screen (WCAG 2.5.3). */}
-              <Button
-                to={PATHS.bookConsultation}
-                variant="secondary"
-                size="sm"
-                aria-label={t('nav.bookConsultation')}
-                className="tap-target xl:hidden max-sm:px-2.5 max-xs:size-9 max-xs:tap-target-start max-xs:px-0"
+              <nav
+                aria-label={t('nav.primary')}
+                className="hidden min-w-0 xl:block"
               >
-                <CalendarIcon aria-hidden="true" className="size-4 sm:hidden" />
-                <span className="max-xs:hidden sm:hidden">
-                  {t('nav.bookConsultationShort')}
-                </span>
-                <span className="hidden sm:inline">
-                  {t('nav.bookConsultation')}
-                </span>
-              </Button>
+                <ul className="flex items-center gap-1">
+                  {PRIMARY_NAV.map((item) => (
+                    <li key={item.path}>
+                      {/* Services is one item of the navigation like any
+                          other; only the component in its slot differs,
+                          because it carries the sector panel behind it. */}
+                      {item.path === PATHS.services ? (
+                        <>
+                          <ServicesMenuTrigger menu={servicesMenu} />
+                          {/* Right after its own trigger, so Tab walks into
+                              the panel and out the far side into the next
+                              item. It is still positioned against the bar
+                              rather than against this list item. */}
+                          <ServicesMenuPanel menu={servicesMenu} />
+                        </>
+                      ) : (
+                        <NavbarLink
+                          item={item}
+                          isActive={isPathActive(pathname, item.path)}
+                        />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-              {/* The narrow bar carries the same control after the booking
-                  action. Two copies rather than one re-ordered with CSS, so
-                  the tab order follows what the eye sees at both widths. */}
-              <LanguageMenu className="flex xl:hidden" />
-              <MobileMenuToggle />
-            </div>
-          </Container>
+              {/* Full height, so the language panel hangs from the bar's own
+                  edge rather than from the middle of it. */}
+              <div className="flex shrink-0 items-center gap-0.5 self-stretch sm:gap-2">
+                <LanguageMenu className="hidden xl:flex" />
+
+                {/* The language link belongs to the navigation, the buttons to
+                    the actions. */}
+                <span
+                  aria-hidden="true"
+                  className="hidden h-6 w-px bg-line xl:block"
+                />
+
+                {NAV_ACTIONS.map((action) => (
+                  <Button
+                    key={action.path}
+                    to={action.path}
+                    variant={action.variant}
+                    size="sm"
+                    className="hidden xl:inline-flex"
+                  >
+                    {t(action.labelKey)}
+                  </Button>
+                ))}
+
+                {/* `tap-target` on the three controls of the narrow bar: they
+                  are drawn to fit 320px, which is smaller than 44px, so each
+                  one answers taps over a 44px square it does not occupy.
+
+                  Below 640px the label shortens, the pill tightens and the
+                    calendar carries the meaning the dropped words used to;
+                    below 360px the icon carries all of it, in a square the
+                    size of the menu toggle. The accessible name is the whole
+                    action either way, and while a word is visible it is the
+                    first word of that name, so voice control still matches
+                    what is on screen (WCAG 2.5.3). */}
+                <Button
+                  to={PATHS.bookConsultation}
+                  variant="secondary"
+                  size="sm"
+                  aria-label={t('nav.bookConsultation')}
+                  className="tap-target xl:hidden max-sm:px-2.5 max-xs:size-9 max-xs:tap-target-start max-xs:px-0"
+                >
+                  <CalendarIcon aria-hidden="true" className="size-4 sm:hidden" />
+                  <span className="max-xs:hidden sm:hidden">
+                    {t('nav.bookConsultationShort')}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {t('nav.bookConsultation')}
+                  </span>
+                </Button>
+
+                {/* The narrow bar carries the same control after the booking
+                    action. Two copies rather than one re-ordered with CSS, so
+                    the tab order follows what the eye sees at both widths. */}
+                <LanguageMenu className="flex xl:hidden" />
+                <MobileMenuToggle />
+              </div>
+            </Container>
+          </div>
         </div>
 
         <MobileMenu />

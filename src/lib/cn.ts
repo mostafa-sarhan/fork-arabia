@@ -155,8 +155,8 @@ export const cn = extendTailwindMerge({
     classGroups: {
       z: [{ z: zLayers }],
       tracking: [{ tracking: trackingUtilities }],
-      // bg-grid paints a background image, not a background color.
-      'bg-image': ['bg-grid'],
+      // The grids paint a background image, not a background color.
+      'bg-image': ['bg-grid', 'bg-grid-on-navy'],
     },
   },
 })

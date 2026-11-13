@@ -13,7 +13,7 @@ function normalize(pathname: string): string {
 }
 
 /** The same URL with its language prefix removed. */
-function withoutPrefix(pathname: string): string {
+export function withoutPrefix(pathname: string): string {
   const prefix = LANGUAGE_PATH_PREFIXES[languageFromPathname(pathname)]
 
   if (!prefix) {

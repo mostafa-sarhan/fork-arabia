@@ -63,7 +63,7 @@ const STEP =
   'relative flex gap-5 pb-10 last:pb-0 md:flex-col md:items-center md:gap-0 md:px-3 md:pb-0 md:text-center'
 
 /* The phone timeline's hairline, from under one circle to the next. */
-const STEP_CONNECTOR = 'absolute start-7 top-14 bottom-0 w-px md:hidden bg-white/14'
+const STEP_CONNECTOR = 'absolute start-7 top-14 bottom-0 w-px md:hidden'
 
 /*
  * The line through the circles' centres (28px down), from 1024 only. It
@@ -87,8 +87,6 @@ const RAIL_PROGRESS =
 
 const CIRCLE =
   'relative flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-turquoise bg-turquoise text-body-lg font-extrabold tabular-nums text-navy transition-colors duration-(--duration-reveal) ease-out-soft'
-const CIRCLE_WAITING =
-  'in-data-[reveal=pending]:motion-safe:bg-navy in-data-[reveal=pending]:motion-safe:text-white'
 
 /*
  * The line's timing. It draws at a constant speed, so it reaches circle i
@@ -99,22 +97,55 @@ const CIRCLE_WAITING =
 const LINE_START_MS = 200
 const LINE_DURATION_MS = 1200
 
-/* 22px, 20px on phones: sizes used only on the About page. */
-const STEP_TITLE = 'text-[1.25rem] md:text-[1.375rem] leading-[1.4] font-extrabold text-white'
+/* 22px, 20px on phones: sizes used only in this section. */
+const STEP_TITLE = 'text-[1.25rem] md:text-[1.375rem] leading-[1.4] font-extrabold'
 
-export function MethodologySection() {
+/*
+ * The two looks. `navy` (About): a navy band with the grid, white type.
+ * `light` (sector pages, where the navy Why FORK strip follows): white,
+ * navy type, muted lines. Each sets the section, the grey line and the
+ * phone hairline (`track`), the circles while they wait for the line, and
+ * the step's title and body. The turquoise line and filled circles are
+ * the same in both.
+ */
+const TONES = {
+  navy: {
+    section: 'bg-navy bg-grid-on-navy',
+    track: 'bg-white/14',
+    waiting:
+      'in-data-[reveal=pending]:motion-safe:bg-navy in-data-[reveal=pending]:motion-safe:text-white',
+    title: 'text-white',
+    line: 'text-white/75',
+  },
+  light: {
+    section: 'bg-surface',
+    track: 'bg-line',
+    waiting:
+      'in-data-[reveal=pending]:motion-safe:bg-surface in-data-[reveal=pending]:motion-safe:text-navy',
+    title: 'text-heading',
+    line: 'text-ink-muted',
+  },
+} as const
+
+type MethodologySectionProps = {
+  /** `navy` by default (About); `light` on sector pages. */
+  tone?: keyof typeof TONES
+}
+
+export function MethodologySection({ tone = 'navy' }: MethodologySectionProps) {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
+  const colors = TONES[tone]
 
   return (
-    <section className="pt-16 pb-18 lg:py-28 bg-navy bg-grid-on-navy">
+    <section className={cn('pt-16 pb-18 lg:py-28', colors.section)}>
       <Container>
         <Reveal>
-          <SectionTitle tone="navy">{text.heading}</SectionTitle>
+          <SectionTitle tone={tone}>{text.heading}</SectionTitle>
         </Reveal>
 
         <Reveal delay={120} className="relative mt-8 lg:mt-14">
-          <span aria-hidden="true" className={cn(RAIL, 'bg-white/14')} />
+          <span aria-hidden="true" className={cn(RAIL, colors.track)} />
           <span
             aria-hidden="true"
             className={cn(RAIL, RAIL_PROGRESS)}
@@ -128,13 +159,13 @@ export function MethodologySection() {
             {text.steps.map((step, index) => (
               <li key={step.title} className={STEP}>
                 {index < text.steps.length - 1 ? (
-                  <span aria-hidden="true" className={STEP_CONNECTOR} />
+                  <span aria-hidden="true" className={cn(STEP_CONNECTOR, colors.track)} />
                 ) : null}
 
                 {/* The list already numbers the steps for assistive tech. */}
                 <span
                   aria-hidden="true"
-                  className={cn(CIRCLE, CIRCLE_WAITING)}
+                  className={cn(CIRCLE, colors.waiting)}
                   style={{ transitionDelay: `${circleDelay(index, text.steps.length)}ms` }}
                 >
                   {index + 1}
@@ -142,8 +173,10 @@ export function MethodologySection() {
 
                 {/* On phones the title sits level with the circle. */}
                 <div className="pt-3 md:pt-6">
-                  <h3 className={STEP_TITLE}>{step.title}</h3>
-                  <p className="mt-2 text-body leading-paragraph text-white/75">{step.line}</p>
+                  <h3 className={cn(STEP_TITLE, colors.title)}>{step.title}</h3>
+                  <p className={cn('mt-2 text-body leading-paragraph', colors.line)}>
+                    {step.line}
+                  </p>
                 </div>
               </li>
             ))}
