@@ -4,14 +4,14 @@ import { cn } from '@/lib/cn'
 /**
  * The short label above a section title, after a turquoise rule. Inside a
  * <Reveal>, the rule grows in from the inline start a beat after the
- * section appears.
+ * section appears. Without children it is the rule alone.
  */
 export function Eyebrow({
   className,
   children,
 }: {
   className?: string
-  children: ReactNode
+  children?: ReactNode
 }) {
   return (
     <p className={cn('flex items-center gap-3 text-eyebrow text-petrol', className)}>

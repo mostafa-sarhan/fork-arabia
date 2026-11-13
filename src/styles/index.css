@@ -103,6 +103,14 @@
   --text-hero--font-weight: 800;
 
   /*
+   * An inner page's H1, in the navy page hero: 36px on a phone, 64px from
+   * about 1240.
+   */
+  --text-page-title: clamp(2.25rem, 3.6vw + 1.25rem, 4rem);
+  --text-page-title--line-height: 1.25;
+  --text-page-title--font-weight: 800;
+
+  /*
    * A home section's H2: 30px on a phone, growing with the viewport to
    * 46px from about 1280.
    */

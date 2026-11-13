@@ -87,7 +87,11 @@ const TILE =
 const LOGO =
   'w-auto h-[calc(var(--logo-h)*0.75)] md:h-(--logo-h) max-w-[70%] object-contain mix-blend-multiply'
 
-export function PartnersSection() {
+/*
+ * `heading` replaces the title where a page words it differently (About
+ * says "Our Partners"); without it the section uses its own.
+ */
+export function PartnersSection({ heading }: { heading?: string }) {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
 
@@ -96,7 +100,7 @@ export function PartnersSection() {
       <Container>
         <Reveal>
           <h2 className="font-display text-section-title text-balance text-center text-heading">
-            {text.heading}
+            {heading ?? text.heading}
           </h2>
         </Reveal>
 

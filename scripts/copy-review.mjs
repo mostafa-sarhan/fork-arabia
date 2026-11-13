@@ -20,11 +20,18 @@ const FILES = [
   'src/pages/home/sections/ServicesSection.tsx',
   'src/pages/home/sections/WhyForkSection.tsx',
   'src/pages/home/sections/PresenceSection.tsx',
-  'src/pages/home/sections/PartnersSection.tsx',
-  'src/pages/home/sections/CtaSection.tsx',
+  'src/components/sections/PartnersSection.tsx',
+  'src/components/sections/CtaSection.tsx',
+  'src/pages/about/AboutPage.tsx',
+  'src/pages/about/sections/IntroSection.tsx',
+  'src/pages/about/sections/VisionMissionSection.tsx',
+  'src/pages/about/sections/ValuesSection.tsx',
+  'src/pages/about/sections/PhilosophySection.tsx',
+  'src/pages/about/sections/MethodologySection.tsx',
 ]
 
 
+/* draft('ar', 'en') marks the English; proposed('ar', 'en') marks both. */
 const DRAFT = /draft\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
 
 /**
@@ -43,18 +50,28 @@ function sectorAt(source, offset) {
   return current
 }
 
-const rows = []
-for (const file of FILES) {
-  const source = readFileSync(file, 'utf8')
-  for (const match of source.matchAll(DRAFT)) {
-    rows.push({
-      sector: sectorAt(source, match.index),
-      file,
-      ar: match[1],
-      en: match[2],
-    })
+const PROPOSED = /proposed\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
+
+function collect(pattern) {
+  const found = []
+  for (const file of FILES) {
+    const source = readFileSync(file, 'utf8')
+    for (const match of source.matchAll(pattern)) {
+      found.push({
+        sector: sectorAt(source, match.index),
+        file,
+        ar: match[1],
+        en: match[2],
+      })
+    }
   }
+  return found
 }
+
+const rows = collect(DRAFT)
+const bothRows = collect(PROPOSED)
+
+const fileName = (row) => `\`${row.file.split('/').pop()}\``
 
 const lines = [
   '# Copy awaiting approval',
@@ -69,16 +86,28 @@ const lines = [
   'changing the English string in place. Re-run `node scripts/copy-review.mjs`',
   'afterwards to regenerate this list.',
   '',
-  `${rows.length} strings await approval.`,
+  `${rows.length + bothRows.length} strings await approval.`,
+  '',
+  '## Arabic and English both proposed',
+  '',
+  'The storyboard has no Arabic for these either, so both languages were',
+  "written here, with `proposed('…', '…')`. Approving one means changing it to",
+  "`copy('…', '…')`.",
+  '',
+  '| Proposed Arabic | Proposed English | File |',
+  '| --- | --- | --- |',
+  ...bothRows.map((row) => `| ${row.ar} | ${row.en} | ${fileName(row)} |`),
+  '',
+  '## English proposed',
   '',
   '| Sector | Arabic (approved) | Proposed English | File |',
   '| --- | --- | --- | --- |',
   ...rows.map(
     (row) =>
-      `| \`${row.sector}\` | ${row.ar} | ${row.en} | \`${row.file.split('/').pop()}\` |`,
+      `| \`${row.sector}\` | ${row.ar} | ${row.en} | ${fileName(row)} |`,
   ),
   '',
 ]
 
 writeFileSync('docs/copy-review.md', lines.join('\n'))
-console.log(`docs/copy-review.md: ${rows.length} proposed strings`)
+console.log(`docs/copy-review.md: ${rows.length + bothRows.length} proposed strings`)

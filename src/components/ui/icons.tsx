@@ -394,3 +394,38 @@ export function GiftIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+/* -------------------------------------------------------------------------- */
+/* Values icons — the About page's six values                                 */
+/* -------------------------------------------------------------------------- */
+
+/** Two chain links: specialisms joined into one solution. */
+export function LinkIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
+      <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+    </IconBase>
+  )
+}
+
+/** A light bulb: an idea, innovation. */
+export function LightbulbIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M9 18h6" />
+      <path d="M10 21.5h4" />
+      <path d="M12 2.5a6.5 6.5 0 0 0-4 11.6c.6.5 1 1.2 1 2V18h6v-1.9c0-.8.4-1.5 1-2a6.5 6.5 0 0 0-4-11.6Z" />
+    </IconBase>
+  )
+}
+
+/** A leaf with its vein: sustainability. */
+export function LeafIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" />
+      <path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12" />
+    </IconBase>
+  )
+}

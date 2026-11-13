@@ -36,6 +36,17 @@ export function draft(arabic: string, english: string): Localized {
   return { ar: arabic, en: { text: english, status: 'proposed' } }
 }
 
+/**
+ * Both languages written here: the storyboard has no Arabic for it either.
+ * `docs/copy-review.md` lists these apart, as the Arabic needs approval too.
+ */
+export function proposed(arabic: string, english: string): Localized {
+  return {
+    ar: { text: arabic, status: 'proposed' },
+    en: { text: english, status: 'proposed' },
+  }
+}
+
 /** The text to render, approved or proposed alike. */
 export function resolveCopy(value: Localized, language: Language): string {
   const text = value[language]

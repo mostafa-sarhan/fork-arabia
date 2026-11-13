@@ -24,6 +24,7 @@ import { extendTailwindMerge, type ClassNameValue } from 'tailwind-merge'
 const text = [
   'display',
   'hero',
+  'page-title',
   'section-title',
   'eyebrow',
   'h1',
