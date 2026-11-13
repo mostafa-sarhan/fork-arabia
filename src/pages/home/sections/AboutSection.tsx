@@ -2,7 +2,10 @@ import { BrandMarkWatermark } from '@/components/BrandMarkWatermark'
 import { Reveal } from '@/components/Reveal'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Container } from '@/components/layout/Container'
-import { ArrowRightIcon, EyeIcon, TargetIcon } from '@/components/ui/icons'
+import { BUTTON_MOTION } from '@/components/ui/Button'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { LinkArrow } from '@/components/ui/LinkArrow'
+import { EyeIcon, TargetIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
 import { copy, draft, localizeAll } from '@/lib/i18n/localized'
@@ -60,14 +63,14 @@ const COPY = {
  * The "learn more" link. Below 1024 it is a full-width outline button,
  * 52px tall with a 1.5px navy border (no border-width token for 1.5px).
  * From 1024 up it is an underlined text link at 17px, a size used only
- * here.
+ * here; the 2px of padding is where the underline is drawn.
  */
 const LINK =
-  'flex items-center gap-2 font-bold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2'
+  'flex items-center gap-2 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2'
 const LINK_MOBILE =
   'max-lg:h-13 max-lg:justify-center max-lg:rounded-lg max-lg:border-[1.5px] max-lg:text-body max-lg:border-navy max-lg:text-heading max-lg:hover:bg-navy-soft'
 const LINK_DESKTOP =
-  'lg:min-h-11 lg:self-start lg:border-b-2 lg:text-[1.0625rem] lg:border-turquoise lg:text-link lg:hover:text-link-hover'
+  'lg:min-h-11 lg:self-start lg:pb-0.5 lg:link-underline lg:text-[1.0625rem] lg:text-link lg:hover:text-link-hover'
 
 /*
  * The two cards. Below 1024 they stack 14px apart. From 1024 up the
@@ -92,13 +95,7 @@ export function AboutSection() {
           {/* Text column, at the inline start. It enters first, then the
               two cards, 120ms apart. */}
           <Reveal className="flex flex-col gap-5.5 lg:gap-7">
-            <p className="flex items-center gap-3 text-eyebrow text-petrol">
-              <span
-                aria-hidden="true"
-                className="h-0.5 w-8 rounded-full bg-turquoise"
-              />
-              {text.eyebrow}
-            </p>
+            <Eyebrow>{text.eyebrow}</Eyebrow>
 
             <h2 className="font-display text-section-title text-balance text-heading">
               {/* One string with its space: Arabic shapes the last word
@@ -133,10 +130,10 @@ export function AboutSection() {
 
             <LocalizedLink
               to={PATHS.about}
-              className={cn(LINK, LINK_MOBILE, LINK_DESKTOP)}
+              className={cn(LINK, BUTTON_MOTION, LINK_MOBILE, LINK_DESKTOP)}
             >
               {text.link}
-              <ArrowRightIcon className="size-4.5 rtl:-scale-x-100" />
+              <LinkArrow className="size-4.5" />
             </LocalizedLink>
           </Reveal>
 

@@ -1,7 +1,8 @@
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
-import { ArrowRightIcon } from '@/components/ui/icons'
+import { BUTTON_MOTION } from '@/components/ui/Button'
+import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
 import { copy, draft, localizeAll } from '@/lib/i18n/localized'
@@ -76,18 +77,19 @@ const HEADER_START = 'flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-8'
 const BIG_NUMBER = 'text-[4rem] leading-none font-extrabold tabular-nums text-white'
 
 /*
- * "Office addresses" from 1024: white, bold, a 2px turquoise underline,
- * light turquoise on hover. 44px tall for the target.
+ * "Office addresses" from 1024: white, bold, a 2px turquoise underline
+ * under the label (`link-underline` on its span), light turquoise on
+ * hover. 44px tall for the target.
  */
 const LINK_DESKTOP =
-  'max-lg:hidden inline-flex h-11 items-center gap-2 text-body font-bold text-white underline decoration-turquoise decoration-2 underline-offset-8 transition-colors duration-200 hover:text-turquoise-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy rounded-sm'
+  'max-lg:hidden inline-flex h-11 items-center gap-2 text-body font-bold text-white transition-colors duration-200 hover:text-turquoise-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy rounded-sm'
 
 /*
  * The same link below 1024: a full-width 52px outline button at the foot
  * of the section, 1.5px white border (no border-width token for 1.5px).
  */
 const LINK_MOBILE =
-  'flex h-13 w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-white text-body font-bold text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy'
+  'flex h-13 w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-white text-body font-bold text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy'
 
 /*
  * The two offices. Stacked below 1024 with a hairline between them; side
@@ -147,8 +149,10 @@ export function PresenceSection() {
           </div>
 
           <LocalizedLink to={PATHS.presence} className={LINK_DESKTOP}>
-            {text.link}
-            <ArrowRightIcon className="size-4.5 rtl:-scale-x-100" />
+            {/* The padding drops the line to where the old 8px underline offset
+                put it; the matching negative margin keeps the label in place. */}
+            <span className="link-underline pb-0.75 -mb-0.75">{text.link}</span>
+            <LinkArrow className="size-4.5" />
           </LocalizedLink>
         </Reveal>
 
@@ -185,9 +189,9 @@ export function PresenceSection() {
 
         {/* Below 1024 the link moves to the foot of the section. */}
         <Reveal className="lg:hidden mt-10">
-          <LocalizedLink to={PATHS.presence} className={LINK_MOBILE}>
+          <LocalizedLink to={PATHS.presence} className={cn(LINK_MOBILE, BUTTON_MOTION)}>
             {text.link}
-            <ArrowRightIcon className="size-4.5 rtl:-scale-x-100" />
+            <LinkArrow className="size-4.5" />
           </LocalizedLink>
         </Reveal>
       </Container>

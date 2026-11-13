@@ -3,6 +3,7 @@ import meetingPhotoWide from '@/assets/images/home/client-meeting-1400.webp'
 import meetingPhotoNarrow from '@/assets/images/home/client-meeting-800.webp'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
+import { Eyebrow } from '@/components/ui/Eyebrow'
 import {
   BarChartIcon,
   GlobeIcon,
@@ -108,13 +109,7 @@ export function WhyForkSection() {
               enter first, then the cards. */}
           <Reveal className={START_COLUMN}>
             <div className="flex flex-col gap-4 lg:gap-5">
-              <p className="flex items-center gap-3 text-eyebrow text-petrol">
-                <span
-                  aria-hidden="true"
-                  className="h-0.5 w-8 rounded-full bg-turquoise"
-                />
-                {text.eyebrow}
-              </p>
+              <Eyebrow>{text.eyebrow}</Eyebrow>
 
               <h2 className="font-display text-section-title text-balance text-heading">
                 {text.heading}
@@ -123,7 +118,9 @@ export function WhyForkSection() {
 
             {/* Below the fold, so it loads lazily; a 4:3 box below 1024. */}
             {/* From 1024 it fills the height left under the heading, so its foot lines up with the last card. */}
-            <picture className="relative block lg:flex-1 lg:min-h-80">
+            {/* It settles from 104% as the column fades in, and leans in to
+                103% under a pointer; the rounded box clips both. */}
+            <picture className="relative block overflow-hidden rounded-3xl isolate lg:flex-1 lg:min-h-80">
               <source
                 type="image/webp"
                 srcSet={`${meetingPhotoNarrow} 800w, ${meetingPhotoWide} 1400w`}
@@ -136,7 +133,7 @@ export function WhyForkSection() {
                 alt={text.imageAlt}
                 loading="lazy"
                 decoding="async"
-                className="aspect-4/3 w-full rounded-3xl object-cover object-center lg:absolute lg:inset-0 lg:h-full lg:aspect-auto lg:object-[center_40%]"
+                className="reveal-media aspect-4/3 w-full rounded-3xl object-cover object-center transition-transform duration-600 ease-out-soft motion-safe:hover:scale-[1.03] lg:absolute lg:inset-0 lg:h-full lg:aspect-auto lg:object-[center_40%]"
               />
             </picture>
           </Reveal>

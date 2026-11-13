@@ -2,7 +2,9 @@ import { Reveal } from '@/components/Reveal'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { Container } from '@/components/layout/Container'
 import { ICONS } from '@/components/ui/iconRegistry'
-import { ArrowRightIcon } from '@/components/ui/icons'
+import { BUTTON_MOTION } from '@/components/ui/Button'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS, sectorPath } from '@/config/paths'
 import { SECTOR_INDEX, type SectorEntry } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
@@ -45,7 +47,7 @@ const GRID =
  * border-width token for 1.5px). Full width below 768.
  */
 const BUTTON =
-  'flex md:inline-flex h-13 items-center justify-center gap-2 rounded-lg border-[1.5px] px-6 text-body font-bold border-navy text-heading transition-colors duration-200 hover:bg-navy-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-page'
+  'flex md:inline-flex h-13 items-center justify-center gap-2 rounded-lg border-[1.5px] px-6 text-body font-bold border-navy text-heading hover:bg-navy-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-page'
 
 /*
  * The card, which is the link. Hover, keyboard focus and a tap (active)
@@ -77,11 +79,6 @@ const SUMMARY =
 const FOOTER =
   'flex items-center gap-2 border-t pt-4 text-button font-bold border-line text-link transition-colors duration-200 group-card-on:border-white/14 group-card-on:text-turquoise'
 
-/* The arrow points along the reading direction and, unless motion is
-   reduced, nudges 4px further that way when the card is on. */
-const ARROW =
-  'size-4 rtl:-scale-x-100 transition-transform duration-200 motion-safe:group-card-on:translate-x-1 motion-safe:rtl:group-card-on:-translate-x-1'
-
 export function ServicesSection() {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
@@ -92,13 +89,7 @@ export function ServicesSection() {
         <div className={LAYOUT}>
           {/* Header, at the inline start. It enters first. */}
           <Reveal className="flex flex-col gap-4 lg:gap-5">
-            <p className="flex items-center gap-3 text-eyebrow text-petrol">
-              <span
-                aria-hidden="true"
-                className="h-0.5 w-8 rounded-full bg-turquoise"
-              />
-              {text.eyebrow}
-            </p>
+            <Eyebrow>{text.eyebrow}</Eyebrow>
 
             <h2 className="font-display text-section-title text-balance text-heading">
               {text.heading}
@@ -110,9 +101,9 @@ export function ServicesSection() {
           </Reveal>
 
           <Reveal className={BUTTON_SLOT}>
-            <LocalizedLink to={PATHS.services} className={BUTTON}>
+            <LocalizedLink to={PATHS.services} className={cn(BUTTON, BUTTON_MOTION)}>
               {text.button}
-              <ArrowRightIcon className="size-4.5 rtl:-scale-x-100" />
+              <LinkArrow className="size-4.5" />
             </LocalizedLink>
           </Reveal>
 
@@ -166,7 +157,7 @@ function SectorCard({
 
       <span className={FOOTER}>
         {linkLabel}
-        <ArrowRightIcon className={ARROW} />
+        <LinkArrow className="size-4" />
       </span>
     </LocalizedLink>
   )

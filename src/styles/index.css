@@ -260,10 +260,16 @@
   --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
   --default-transition-duration: 200ms;
 
+  /* The site's motion vocabulary: one curve, one hover speed, one reveal
+     speed. Hover and reveal behaviour reads these, never raw numbers. */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-hover: 200ms;
+  --duration-reveal: 650ms;
+
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  /* One step of an entrance sequence. The delay is set per element at the
-     call site; prefers-reduced-motion drops the animation entirely. */
-  --animate-enter: fade-up 500ms var(--ease-emphasized) both;
+  /* A <Reveal>'s entrance. The delay is set per element at the call site;
+     prefers-reduced-motion drops the animation entirely. */
+  --animate-reveal: reveal var(--duration-reveal) var(--ease-out-soft) both;
   --animate-shimmer: shimmer 2.6s ease-in-out infinite;
   --animate-dot: dot 1.4s ease-in-out infinite;
   /* The partners strip. A strip may set its own animation-duration. */
@@ -654,6 +660,121 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared motion                                                       */
+/* ------------------------------------------------------------------ */
+/*
+ * Everything here moves only without prefers-reduced-motion, and touches
+ * transform-family properties (or a background's size) — never layout.
+ * <Reveal> marks its box data-reveal="pending" | "in"; the rules keyed on
+ * that attribute let pieces inside a revealed box run their own beat.
+ */
+
+/*
+ * The arrow after a link or button label (<LinkArrow>). It nudges 4px
+ * along the reading direction while its link or button is hovered or has
+ * keyboard focus.
+ */
+@utility link-arrow {
+  --arrow-nudge: 4px;
+  transition: translate var(--duration-hover) var(--ease-out-soft);
+
+  &:dir(rtl) {
+    --arrow-nudge: -4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @media (hover: hover) {
+      :is(a, button):hover & {
+        translate: var(--arrow-nudge) 0;
+      }
+    }
+    :is(a, button):focus-visible & {
+      translate: var(--arrow-nudge) 0;
+    }
+  }
+}
+
+/*
+ * A 2px turquoise underline, fully drawn at rest. On hover or keyboard
+ * focus of its link it is redrawn from the inline start to the end. Put it
+ * on the link itself or on the label inside it.
+ */
+@utility link-underline {
+  background-image: linear-gradient(var(--color-turquoise), var(--color-turquoise));
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: left bottom;
+
+  &:dir(rtl) {
+    background-position: right bottom;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @media (hover: hover) {
+      &:is(a):hover,
+      a:hover & {
+        animation: underline-draw calc(var(--duration-hover) * 2) var(--ease-out-soft);
+      }
+    }
+    &:is(a):focus-visible,
+    a:focus-visible & {
+      animation: underline-draw calc(var(--duration-hover) * 2) var(--ease-out-soft);
+    }
+  }
+}
+
+@keyframes underline-draw {
+  from {
+    background-size: 0 2px;
+  }
+}
+
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    /* An eyebrow's rule grows from the inline start, a beat after its
+       section has come in (<Eyebrow>). */
+    [data-reveal] .eyebrow-line {
+      scale: 0 1;
+      transform-origin: left;
+      transition: scale var(--duration-reveal) var(--ease-out-soft) 400ms;
+    }
+
+    [data-reveal] .eyebrow-line:dir(rtl) {
+      transform-origin: right;
+    }
+
+    [data-reveal='in'] .eyebrow-line {
+      scale: 1;
+    }
+
+    /* A photograph settles from 104% as its box fades in. The fill is
+       `backwards` so that, once done, hover may scale it again. Clip it
+       with a rounded overflow-hidden parent. */
+    [data-reveal='in'] .reveal-media {
+      animation: media-settle 900ms var(--ease-out-soft) var(--reveal-delay, 0ms)
+        backwards;
+    }
+  }
+}
+
+@keyframes media-settle {
+  from {
+    scale: 1.04;
   }
 }
 

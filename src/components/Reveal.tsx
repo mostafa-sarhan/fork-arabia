@@ -17,6 +17,10 @@ type RevealProps = {
  * Until then it is transparent but keeps its space, so nothing shifts.
  * Under prefers-reduced-motion it is simply there: no waiting state and no
  * animation.
+ *
+ * It marks itself `data-reveal="pending" | "in"` and exposes its delay as
+ * `--reveal-delay`, so pieces inside (an eyebrow's rule, a photograph) can
+ * time their own motion from it in CSS (see "Shared motion" in index.css).
  */
 export function Reveal({
   as: Tag = 'div',
@@ -52,13 +56,20 @@ export function Reveal({
   return (
     <Tag
       ref={setElement}
+      data-reveal={inView ? 'in' : 'pending'}
       className={cn(
         className,
         inView
-          ? 'animate-enter motion-reduce:animate-none'
+          ? 'animate-reveal motion-reduce:animate-none'
           : 'motion-safe:opacity-0',
       )}
-      style={{ ...style, animationDelay: `${delay}ms` }}
+      style={
+        {
+          ...style,
+          animationDelay: `${delay}ms`,
+          '--reveal-delay': `${delay}ms`,
+        } as CSSProperties
+      }
     >
       {children}
     </Tag>

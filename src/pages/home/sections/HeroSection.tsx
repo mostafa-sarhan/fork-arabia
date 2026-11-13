@@ -5,7 +5,8 @@ import heroPhotoNarrow from '@/assets/images/home/riyadh-meeting-800.webp'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
-import { ArrowRightIcon, PinIcon, ShieldIcon } from '@/components/ui/icons'
+import { LinkArrow } from '@/components/ui/LinkArrow'
+import { PinIcon, ShieldIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
 import { copy, draft, localizeAll } from '@/lib/i18n/localized'
@@ -132,7 +133,7 @@ export function HeroSection() {
                 )}
               >
                 {t('nav.bookConsultation')}
-                <ArrowRightIcon className="size-4 max-lg:hidden rtl:-scale-x-100" />
+                <LinkArrow className="size-4 max-lg:hidden" />
               </Button>
 
               <Button
@@ -153,8 +154,10 @@ export function HeroSection() {
             <TrustLine className="max-lg:hidden mt-7">{text.trust}</TrustLine>
           </div>
 
-          {/* The image and the card that overlaps it, one box together. */}
-          <div className="relative">
+          {/* The image and the card that overlaps it, one box together.
+              It fades in with the text; the photograph settles from 104%
+              inside its rounded clip. */}
+          <Reveal className="relative">
             {/*
               The page's largest image and its LCP element, so it is fetched
               at once rather than lazily. The photograph is 5:4, which is the
@@ -163,7 +166,7 @@ export function HeroSection() {
               people and the logo on the wall behind them stay in frame in
               both.
             */}
-            <picture>
+            <picture className="block overflow-hidden rounded-3xl isolate">
               <source
                 type="image/webp"
                 srcSet={`${heroPhotoNarrow} 800w, ${heroPhotoWide} 1400w`}
@@ -177,7 +180,7 @@ export function HeroSection() {
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
-                className="aspect-4/3 w-full lg:aspect-5/4 rounded-3xl object-cover object-top"
+                className="reveal-media aspect-4/3 w-full lg:aspect-5/4 rounded-3xl object-cover object-top"
               />
             </picture>
 
@@ -207,7 +210,7 @@ export function HeroSection() {
                 </span>
               </span>
             </div>
-          </div>
+          </Reveal>
         </div>
 
         {/* Below 1024 the trust line comes after the photograph and its

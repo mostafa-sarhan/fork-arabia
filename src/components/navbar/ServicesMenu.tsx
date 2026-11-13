@@ -3,7 +3,8 @@ import { useLocation } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { LocalizedLink } from '@/components/LocalizedLink'
 import { ICONS } from '@/components/ui/iconRegistry'
-import { ArrowRightIcon, ChevronDownIcon } from '@/components/ui/icons'
+import { LinkArrow } from '@/components/ui/LinkArrow'
+import { ChevronDownIcon } from '@/components/ui/icons'
 import { PATHS, sectorPath } from '@/config/paths'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
@@ -393,7 +394,7 @@ export function ServicesMenuPanel({
             className="inline-flex items-center gap-2 rounded-sm text-body-sm font-semibold text-link transition-colors duration-200 hover:text-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             {t('nav.allServices')}
-            <ArrowRightIcon className="size-4 rtl:-scale-x-100" />
+            <LinkArrow className="size-4" />
           </LocalizedLink>
         </div>
       </Container>

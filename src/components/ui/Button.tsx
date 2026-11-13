@@ -26,8 +26,16 @@ export type ButtonSize = 'sm' | 'md' | 'lg'
  * behind the spinner. The guard is a selector rather than a prop test, so it
  * also holds for a consumer that sets `aria-busy` itself.
  */
+/*
+ * A button's motion: colours ease at the hover speed and, unless motion is
+ * reduced, a press sinks it to 98%. Exported for the few links drawn as
+ * buttons by hand.
+ */
+export const BUTTON_MOTION =
+  'transition-[color,background-color,border-color,scale] duration-(--duration-hover) ease-standard motion-safe:active:scale-[0.98]'
+
 const base =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition-colors duration-200 ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:pointer-events-none disabled:not-aria-busy:border-disabled-border disabled:not-aria-busy:bg-disabled-bg disabled:not-aria-busy:text-disabled-fg'
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:pointer-events-none disabled:not-aria-busy:border-disabled-border disabled:not-aria-busy:bg-disabled-bg disabled:not-aria-busy:text-disabled-fg'
 
 const variants: Record<ButtonVariant, string> = {
   primary: 'bg-navy text-white hover:bg-navy-strong active:bg-navy-strong',
@@ -99,7 +107,7 @@ function buttonClassName({
   fullWidth = false,
   className,
 }: SharedProps): string {
-  return cn(base, variants[variant], sizes[size], fullWidth && 'w-full', className)
+  return cn(base, BUTTON_MOTION, variants[variant], sizes[size], fullWidth && 'w-full', className)
 }
 
 /**

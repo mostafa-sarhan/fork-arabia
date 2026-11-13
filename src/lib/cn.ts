@@ -107,10 +107,10 @@ const leading = ['paragraph']
 const tracking = ['brand', 'brand-wide']
 
 /** --ease-* */
-const ease = ['standard', 'emphasized']
+const ease = ['standard', 'emphasized', 'out-soft']
 
 /** --animate-* */
-const animate = ['fade-up', 'enter', 'shimmer', 'dot']
+const animate = ['fade-up', 'reveal', 'shimmer', 'dot']
 
 /** --breakpoint-* */
 const breakpoint = ['sm', 'md', 'lg', 'xl', '2xl']
