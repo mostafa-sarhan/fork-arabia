@@ -24,6 +24,8 @@ import { extendTailwindMerge, type ClassNameValue } from 'tailwind-merge'
 const text = [
   'display',
   'hero',
+  'section-title',
+  'eyebrow',
   'h1',
   'h2',
   'h3',
@@ -90,13 +92,16 @@ const container = [
 ]
 
 /** --radius-* */
-const radius = ['xs', 'sm', 'md', 'lg', 'xl', '2xl']
+const radius = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
 
 /** --shadow-* */
 const shadows = ['xs', 'card', 'raised', 'header']
 
 /** --font-* : both families resolve through the same stack. */
 const font = ['sans', 'display']
+
+/** --leading-* */
+const leading = ['paragraph']
 
 /** --tracking-* */
 const tracking = ['brand', 'brand-wide']
@@ -140,6 +145,7 @@ export const cn = extendTailwindMerge({
       radius,
       shadow: shadows,
       font,
+      leading,
       tracking,
       ease,
       animate,

@@ -102,6 +102,22 @@
   --text-hero--letter-spacing: -0.02em;
   --text-hero--font-weight: 800;
 
+  /*
+   * A home section's H2: 30px on a phone, growing with the viewport to
+   * 46px from about 1280.
+   */
+  --text-section-title: clamp(1.875rem, 2.4vw + 1rem, 2.875rem);
+  --text-section-title--line-height: 1.45;
+  --text-section-title--font-weight: 800;
+
+  /* The short label above a section title, after a turquoise rule. */
+  --text-eyebrow: 0.9375rem;
+  --text-eyebrow--line-height: 1.65;
+  --text-eyebrow--font-weight: 700;
+
+  /* Line height for a section's opening paragraph, in both languages. */
+  --leading-paragraph: 1.9;
+
   --tracking-brand: 0.16em;
   --tracking-brand-wide: 0.22em;
 
@@ -201,6 +217,8 @@
   --radius-xl: 1rem;
   /* The large surfaces: the statistics cards and the hero's floating card. */
   --radius-2xl: 1.25rem;
+  /* The feature surfaces: the hero photograph and the About cards. */
+  --radius-3xl: 1.5rem;
 
   /* ------------------------------------------------------------------ */
   /* Elevation                                                           */

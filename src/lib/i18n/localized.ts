@@ -42,3 +42,53 @@ export function resolveCopy(value: Localized, language: Language): string {
 
   return typeof text === 'string' ? text : text.text
 }
+
+/** The type of a COPY object once every copy()/draft() pair is a string. */
+export type LocalizedText<T> = T extends Localized
+  ? string
+  : T extends readonly (infer Item)[]
+    ? LocalizedText<Item>[]
+    : T extends object
+      ? { [Key in keyof T]: LocalizedText<T[Key]> }
+      : T
+
+/**
+ * A section's whole COPY in one language, ready for the JSX:
+ *
+ *   const text = localizeAll(COPY, language)
+ *   <h2>{text.heading}</h2>
+ *
+ * Every copy()/draft() pair becomes the string to render, inside arrays
+ * and nested objects too. Anything else, such as a number or a plain
+ * string, is passed through as it is.
+ */
+export function localizeAll<T>(source: T, language: Language): LocalizedText<T> {
+  return localizeValue(source, language) as LocalizedText<T>
+}
+
+function localizeValue(value: unknown, language: Language): unknown {
+  if (Array.isArray(value)) {
+    return value.map((item) => localizeValue(item, language))
+  }
+
+  if (isLocalized(value)) {
+    return resolveCopy(value, language)
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [
+        key,
+        localizeValue(item, language),
+      ]),
+    )
+  }
+
+  return value
+}
+
+function isLocalized(value: unknown): value is Localized {
+  return (
+    typeof value === 'object' && value !== null && 'ar' in value && 'en' in value
+  )
+}

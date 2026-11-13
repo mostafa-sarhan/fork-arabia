@@ -2,12 +2,13 @@ import { Fragment } from 'react'
 import heroPhotoFallback from '@/assets/images/home/riyadh-meeting-1400.jpg'
 import heroPhotoWide from '@/assets/images/home/riyadh-meeting-1400.webp'
 import heroPhotoNarrow from '@/assets/images/home/riyadh-meeting-800.webp'
+import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { ArrowRightIcon, PinIcon, ShieldIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, resolveCopy } from '@/lib/i18n/localized'
+import { copy, draft, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -57,80 +58,81 @@ const COPY = {
 const TITLE_SEPARATOR = ' · '
 
 /*
- * The entrance sequence, in the order the eye should travel: badge,
- * heading, paragraph, buttons, 60ms apart. prefers-reduced-motion removes
- * the animation, which leaves every element at its final state — and the
- * text is in the markup from the first byte either way, so nothing is
- * hidden from a crawler.
+ * The two buttons. Below 1024 they are equal grid columns, 50px tall,
+ * with 15px text and no arrow; from 1024 up they go back to the
+ * size="lg" defaults at their own width. The 15px is arbitrary on
+ * purpose: text-button would also set line-height 1 and nudge the label.
  */
-const ENTER = 'animate-enter motion-reduce:animate-none'
+const BUTTON = 'h-12.5 w-full px-4 text-[0.9375rem]'
+const BUTTON_DESKTOP = 'lg:h-12 lg:w-auto lg:px-6 lg:text-body'
+const BUTTON_OUTLINE_ON_NAVY =
+  'border-white/45 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white active:bg-white/15 focus-visible:ring-white'
 
 /*
- * The two hero buttons below 1024: equal grid columns, 50px tall, 15px
- * text. From 1024 up they keep the size="lg" defaults at their own width.
+ * The floating card over the photograph's bottom corner, a size smaller
+ * below 1024. It is as wide as its two lines need, up to the photograph's
+ * width less 12px on each side (a calc, since no width token says that),
+ * or 19rem from 1024 up.
  */
-const HERO_BUTTON =
-  'h-[50px] w-full px-4 text-[0.9375rem] lg:h-12 lg:w-auto lg:px-6 lg:text-body'
-
-function enterDelay(step: number) {
-  return { animationDelay: `${step * 60}ms` }
-}
+const PHOTO_CARD =
+  'absolute start-3 -bottom-4 flex w-fit max-w-[calc(100%-24px)] items-center rounded-2xl gap-3 px-3.5 py-2.5 bg-surface shadow-raised'
+const PHOTO_CARD_DESKTOP = 'lg:start-6 lg:-bottom-7 lg:max-w-76 lg:px-4 lg:py-4'
 
 export function HeroSection() {
   const { language, t } = useLanguage()
+  const text = localizeAll(COPY, language)
 
   return (
     <section className="relative overflow-hidden bg-navy">
       <HeroBackdrop />
 
       <Container className="relative z-raised pt-9 pb-14 md:pb-32 lg:pt-24 lg:pb-38">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-18">
-          {/* A size container, so the English heading can fit its width. */}
+        {/* From 1024 the text column is a little wider than the photograph. */}
+        <div className="grid items-center lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-18">
+          {/* The text column is a size container, so the English heading can
+              fit its width. It enters badge, heading, paragraph, buttons,
+              60ms apart. */}
           <div className="@container">
-            <span
-              className={cn(
-                'inline-flex items-center gap-2 rounded-full border border-turquoise/35 bg-turquoise/14 px-3.5 py-1.5 text-body-sm font-medium text-turquoise-soft',
-                ENTER,
-              )}
-              style={enterDelay(0)}
+            <Reveal
+              as="span"
+              className="inline-flex items-center rounded-full border gap-2 px-3.5 py-1.5 text-body-sm font-medium border-turquoise/35 bg-turquoise/14 text-turquoise-soft"
             >
               <span
                 aria-hidden="true"
                 className="size-1.5 rounded-full bg-turquoise"
               />
-              {resolveCopy(COPY.badge, language)}
-            </span>
+              {text.badge}
+            </Reveal>
 
-            <HeroTitle
-              text={resolveCopy(COPY.title, language)}
-              alwaysTwoLines={language === 'en'}
-            />
+            <HeroTitle text={text.title} alwaysTwoLines={language === 'en'} />
 
-            <p
-              className={cn(
-                'mt-6 max-w-measure text-body leading-[1.9] text-on-navy-muted text-pretty lg:text-[1.25rem]',
-                ENTER,
-              )}
-              style={enterDelay(2)}
+            {/* The 20px from 1024 is used nowhere else, so it has no token. */}
+            <Reveal
+              as="p"
+              delay={120}
+              className="max-w-measure mt-6 text-body leading-paragraph text-pretty lg:text-[1.25rem] text-on-navy-muted"
             >
-              {resolveCopy(COPY.lead, language)}
-            </p>
+              {text.lead}
+            </Reveal>
 
-            <div
-              className={cn(
-                'mt-9 grid gap-2.5 min-[360px]:grid-cols-2 lg:flex lg:items-center lg:gap-3',
-                ENTER,
-              )}
-              style={enterDelay(3)}
+            {/* Below 360px the two labels do not fit side by side, so the
+                buttons stack. */}
+            <Reveal
+              delay={180}
+              className="grid min-[360px]:grid-cols-2 lg:flex lg:items-center mt-9 gap-2.5 lg:gap-3"
             >
               <Button
                 to={PATHS.bookConsultation}
                 variant="secondary"
                 size="lg"
-                className={cn(HERO_BUTTON, 'focus-visible:ring-offset-navy')}
+                className={cn(
+                  BUTTON,
+                  BUTTON_DESKTOP,
+                  'focus-visible:ring-offset-navy',
+                )}
               >
                 {t('nav.bookConsultation')}
-                <ArrowRightIcon className="size-4 rtl:-scale-x-100 max-lg:hidden" />
+                <ArrowRightIcon className="size-4 max-lg:hidden rtl:-scale-x-100" />
               </Button>
 
               <Button
@@ -138,17 +140,17 @@ export function HeroSection() {
                 variant="outline"
                 size="lg"
                 className={cn(
-                  HERO_BUTTON,
-                  'border-white/45 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white active:bg-white/15 focus-visible:ring-white focus-visible:ring-offset-navy',
+                  BUTTON,
+                  BUTTON_DESKTOP,
+                  BUTTON_OUTLINE_ON_NAVY,
+                  'focus-visible:ring-offset-navy',
                 )}
               >
                 {t('nav.requestQuote')}
               </Button>
-            </div>
+            </Reveal>
 
-            <TrustLine className="mt-7 max-lg:hidden">
-              {resolveCopy(COPY.trust, language)}
-            </TrustLine>
+            <TrustLine className="max-lg:hidden mt-7">{text.trust}</TrustLine>
           </div>
 
           {/* The image and the card that overlaps it, one box together. */}
@@ -171,43 +173,37 @@ export function HeroSection() {
                 src={heroPhotoFallback}
                 width={1400}
                 height={1120}
-                alt={resolveCopy(COPY.imageAlt, language)}
+                alt={text.imageAlt}
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
-                className="aspect-[4/3] w-full rounded-[1.5rem] object-cover object-top lg:aspect-[5/4]"
+                className="aspect-4/3 w-full lg:aspect-5/4 rounded-3xl object-cover object-top"
               />
             </picture>
 
-            {/*
-              The card is as wide as its two lines need and no wider, so on
-              a phone it overlaps the photograph's bottom corner instead of
-              lying across the picture. It is the same card at every width,
-              a size smaller below 1024.
-            */}
-            <div className="absolute -bottom-4 start-3 flex w-fit max-w-[calc(100%-24px)] items-center gap-3 rounded-2xl bg-surface px-3.5 py-2.5 shadow-raised lg:-bottom-7 lg:start-6 lg:max-w-[19rem] lg:px-4 lg:py-4">
+            <div className={cn(PHOTO_CARD, PHOTO_CARD_DESKTOP)}>
               <span
                 aria-hidden="true"
-                className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-turquoise-soft text-petrol lg:size-11"
+                className="flex size-9 lg:size-11 shrink-0 items-center justify-center rounded-lg bg-turquoise-soft text-petrol"
               >
-                <ShieldIcon className="size-[18px] lg:size-[22px]" />
+                <ShieldIcon className="size-4.5 lg:size-5.5" />
               </span>
 
               <span>
                 <span className="block text-body-sm font-semibold text-heading">
-                  {resolveCopy(COPY.cardTitle, language)}
+                  {text.cardTitle}
                 </span>
                 {/* Hidden where it would wrap, so the card stays two lines:
-                    the English needs about 400px of screen, the Arabic 360. */}
+                    the English needs about 414px of screen, the Arabic 360. */}
                 <span
                   className={cn(
-                    'mt-0.5 block text-caption text-ink-muted',
+                    'block mt-0.5 text-caption text-ink-muted',
                     language === 'en'
                       ? 'max-[413px]:hidden'
                       : 'max-[359px]:hidden',
                   )}
                 >
-                  {resolveCopy(COPY.cardSubtitle, language)}
+                  {text.cardSubtitle}
                 </span>
               </span>
             </div>
@@ -215,10 +211,9 @@ export function HeroSection() {
         </div>
 
         {/* Below 1024 the trust line comes after the photograph and its
-            card; 46px is the card's 16px overhang plus 30px of air. */}
-        <TrustLine className="mt-[46px] lg:hidden">
-          {resolveCopy(COPY.trust, language)}
-        </TrustLine>
+            card: 46px (mt-11.5) is the card's 16px overhang plus 30px of
+            air. */}
+        <TrustLine className="lg:hidden mt-11.5">{text.trust}</TrustLine>
       </Container>
     </section>
   )
@@ -263,11 +258,12 @@ function HeroBackdrop() {
         }}
       />
 
-      {/* The F mark, run off the inline-end corner: left in Arabic. */}
+      {/* The F mark, run off the inline-end corner: left in Arabic. Hidden
+          below 1024, where it read as dark blobs behind the buttons. */}
       <svg
         viewBox="0 0 474 501"
         focusable="false"
-        className="absolute -bottom-20 -end-24 h-[34rem] w-auto opacity-7 max-lg:hidden"
+        className="absolute -end-24 -bottom-20 h-136 w-auto max-lg:hidden opacity-7"
         fill="var(--color-turquoise)"
       >
         <rect x="0" y="0" width="474" height="150" rx="75" />
@@ -280,7 +276,7 @@ function HeroBackdrop() {
 
 /** One turquoise "·". The no-break space keeps it on the word it follows. */
 function TitleSeparator({ className }: { className?: string }) {
-  return <span className={cn('text-turquoise', className)}>{'\u00a0·'}</span>
+  return <span className={cn('text-turquoise', className)}>{' ·'}</span>
 }
 
 /*
@@ -291,6 +287,7 @@ function TitleSeparator({ className }: { className?: string }) {
  * The English is always two lines. "Administrative · Technology" is about
  * 11.6em wide, wider than the column at the hero size, so its size is
  * capped at 1/12 of the column (100cqi; the column is a size container).
+ * It is set inline so the text-hero class keeps its weight and leading.
  *
  * The Arabic is two lines below 1024 only. From 1024 up its pairs run on
  * as one sentence, at the hero size, and wrap where they fall.
@@ -306,14 +303,11 @@ function HeroTitle({
   const lines = [words.slice(0, 2), words.slice(2)]
 
   return (
-    <h1
-      className={cn(
-        'mt-6 font-display text-hero tracking-latin-tight text-white text-balance',
-        ENTER,
-      )}
+    <Reveal
+      as="h1"
+      delay={60}
+      className="mt-6 font-display text-hero tracking-latin-tight text-balance text-white"
       style={{
-        ...enterDelay(1),
-        // Set inline so the text-hero class keeps its weight and leading.
         fontSize: alwaysTwoLines
           ? 'min(var(--text-hero), 100cqi / 12)'
           : undefined,
@@ -348,6 +342,6 @@ function HeroTitle({
           </span>
         </Fragment>
       ))}
-    </h1>
+    </Reveal>
   )
 }
