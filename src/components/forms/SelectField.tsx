@@ -68,6 +68,7 @@ export function SelectField({
           rank={rank}
           openAtGroup={openAtGroup}
           placeholder={resolveCopy(FORM_COPY.choose, language)}
+          title={label}
         />
       )}
     </FieldShell>

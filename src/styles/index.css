@@ -287,6 +287,8 @@
   --animate-fade-in: fade-in 250ms var(--ease-out-soft) both;
   --animate-dialog-in: dialog-in 350ms var(--ease-out-soft) both;
   --animate-pop-in: pop-in 450ms var(--ease-emphasized) 150ms both;
+  /* A bottom sheet rising from the screen's edge. */
+  --animate-sheet-in: sheet-in 320ms var(--ease-emphasized) both;
 }
 
 :root {
@@ -843,6 +845,12 @@
 @keyframes fade-in {
   from {
     opacity: 0;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
   }
 }
 

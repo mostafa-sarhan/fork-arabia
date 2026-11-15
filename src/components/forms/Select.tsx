@@ -22,6 +22,8 @@ import {
   triggerClass,
   usePopover,
 } from './popover'
+import { hasFinePointer, prefersSheet } from './sheet'
+import { SelectSheet } from './SelectSheet'
 
 export type SelectHow = 'keyboard' | 'pointer'
 
@@ -52,6 +54,8 @@ const MAX_HEIGHT_SEARCHABLE = 360
 /* The panel stacks the search box over the list, which scrolls on its own. */
 const PANEL = 'inset-x-0 overflow-hidden'
 const LIST = 'relative min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 scrollbar-slim focus:outline-none'
+/* In a sheet the list is the one thing that scrolls, by finger: vertical panning is its own. */
+const LIST_IN_SHEET = 'touch-pan-y'
 
 /* The search box: a quiet field across the panel's top, its icon at the start. */
 const SEARCH = 'relative shrink-0 border-b border-line p-2'
@@ -103,6 +107,8 @@ type SelectProps = {
   openAtGroup?: string
   /** Shown, muted, while nothing is chosen. */
   placeholder: string
+  /** The field's label, as the title of the phone sheet. */
+  title?: string
   /** The visible label's id: the trigger and the list are named by it. */
   labelId: string
   invalid?: boolean
@@ -122,6 +128,11 @@ type SelectProps = {
  * it. With one (`searchable`), focus goes to the box instead, typing
  * filters the options (ignoring case, diacritics and hamza forms), and the
  * keys above work from the box.
+ *
+ * On phones and touch screens it opens as a bottom sheet instead
+ * (SelectSheet): the same search box and list, the list the one scroll
+ * area, the search box focused only when tapped (so the keyboard does not
+ * jump up uninvited). The desktop dropdown is unchanged.
  */
 export function Select({
   id,
@@ -134,6 +145,7 @@ export function Select({
   rank,
   openAtGroup,
   placeholder,
+  title = '',
   labelId,
   invalid = false,
   disabled = false,
@@ -149,6 +161,8 @@ export function Select({
   const listRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   const [open, setOpen] = useState(false)
+  /* Decided as it opens: a bottom sheet (phones, touch) or the dropdown. */
+  const [asSheet, setAsSheet] = useState(false)
   const [query, setQuery] = useState('')
   /* The active row, as a position in the rows now shown. */
   const [active, setActive] = useState(-1)
@@ -199,21 +213,26 @@ export function Select({
     setQuery('')
   }, [])
   const { side, room } = usePopover({
-    open,
+    open: open && !asSheet,
     onDismiss: dismiss,
     rootRef,
     panelRef,
     maxHeight: searchable ? MAX_HEIGHT_SEARCHABLE : MAX_HEIGHT,
   })
 
-  /* Opened: focus goes to the search box or the list (once it is shown). */
+  /*
+   * Opened: focus goes to the search box or the list (once it is shown).
+   * In a sheet on a touch screen, to the list: the keyboard opens only
+   * when the visitor taps the search box.
+   */
   useEffect(() => {
     if (open) {
-      ;(searchable ? searchRef.current : listRef.current)?.focus({ preventScroll: true })
+      const toSearch = searchable && (!asSheet || hasFinePointer())
+      ;(toSearch ? searchRef.current : listRef.current)?.focus({ preventScroll: true })
     } else {
       typed.current = { text: '', at: 0 }
     }
-  }, [open, searchable])
+  }, [open, searchable, asSheet])
 
   /* Keep the active row in view as the arrows or typing move it. */
   const activeIndex = activeRow?.index
@@ -237,12 +256,26 @@ export function Select({
     const groupStart = openAtGroup && !value ? all.findIndex((row) => row.group.id === openAtGroup) : -1
     const start = selectedRow?.index ?? (groupStart >= 0 ? groupStart : fallback === 'last' ? all.length - 1 : 0)
     setActive(start)
+    setAsSheet(prefersSheet())
     setOpen(true)
   }
 
   function close(returnFocus: boolean) {
     dismiss()
-    if (returnFocus) {
+    if (!returnFocus) {
+      return
+    }
+    if (asSheet) {
+      /*
+       * After the sheet has gone and the page is back in place, unless the
+       * choice already sent focus on (the country hands it to the phone).
+       */
+      requestAnimationFrame(() => {
+        if (!document.activeElement || document.activeElement === document.body) {
+          triggerRef.current?.focus({ preventScroll: true })
+        }
+      })
+    } else {
       triggerRef.current?.focus()
     }
   }
@@ -285,6 +318,7 @@ export function Select({
     } else if (isLetter(event) && !searchable) {
       const match = typeahead(event.key, selectedRow?.index ?? -1)
       setActive(match >= 0 ? match : Math.max(selectedRow?.index ?? 0, 0))
+      setAsSheet(prefersSheet())
       setOpen(true)
     }
   }
@@ -368,6 +402,59 @@ export function Select({
     })
   }
 
+  /* The search box and the list: in the dropdown, or in the phone sheet. */
+  const panelBody = (
+    <>
+      {searchable ? (
+        <div className={SEARCH}>
+          <SearchIcon aria-hidden="true" className={SEARCH_ICON} />
+          <input
+            ref={searchRef}
+            type="search"
+            role="combobox"
+            aria-expanded={open}
+            aria-controls={listId}
+            aria-autocomplete="list"
+            aria-activedescendant={open && activeRow ? optionId(activeRow.index) : undefined}
+            aria-label={text.search}
+            placeholder={text.search}
+            autoComplete="off"
+            spellCheck={false}
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value)
+              setActive(0)
+            }}
+            onKeyDown={onPanelKeyDown}
+            className={SEARCH_INPUT}
+          />
+        </div>
+      ) : null}
+
+      <div
+        ref={listRef}
+        id={listId}
+        role="listbox"
+        tabIndex={-1}
+        aria-labelledby={labelId}
+        aria-required={ariaRequired}
+        aria-activedescendant={!searchable && open && activeRow ? optionId(activeRow.index) : undefined}
+        onKeyDown={searchable ? undefined : onPanelKeyDown}
+        /* With a search box, a press on the list leaves focus (and the
+           phone keyboard) in the box. */
+        onMouseDown={searchable ? (event) => event.preventDefault() : undefined}
+        className={cn(LIST, asSheet && LIST_IN_SHEET)}
+      >
+        {renderRows()}
+      </div>
+      {searchable ? (
+        <p role="status" className={shown.length ? 'sr-only' : EMPTY}>
+          {shown.length ? '' : text.noResults}
+        </p>
+      ) : null}
+    </>
+  )
+
   return (
     <div ref={rootRef} className="relative">
       {name ? <input type="hidden" name={name} value={value} /> : null}
@@ -398,64 +485,24 @@ export function Select({
         />
       </button>
 
-      <div
-        ref={panelRef}
-        onBlur={(event) => {
-          if (!rootRef.current?.contains(event.relatedTarget)) {
-            dismiss()
-          }
-        }}
-        style={{ maxHeight: room }}
-        className={panelClass(open, side, PANEL, 'column')}
-      >
-        {searchable ? (
-          <div className={SEARCH}>
-            <SearchIcon aria-hidden="true" className={SEARCH_ICON} />
-            <input
-              ref={searchRef}
-              type="search"
-              role="combobox"
-              aria-expanded={open}
-              aria-controls={listId}
-              aria-autocomplete="list"
-              aria-activedescendant={open && activeRow ? optionId(activeRow.index) : undefined}
-              aria-label={text.search}
-              placeholder={text.search}
-              autoComplete="off"
-              spellCheck={false}
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value)
-                setActive(0)
-              }}
-              onKeyDown={onPanelKeyDown}
-              className={SEARCH_INPUT}
-            />
-          </div>
-        ) : null}
-
+      {open && asSheet ? (
+        <SelectSheet title={title} onClose={() => close(true)}>
+          {panelBody}
+        </SelectSheet>
+      ) : (
         <div
-          ref={listRef}
-          id={listId}
-          role="listbox"
-          tabIndex={-1}
-          aria-labelledby={labelId}
-          aria-required={ariaRequired}
-          aria-activedescendant={!searchable && open && activeRow ? optionId(activeRow.index) : undefined}
-          onKeyDown={searchable ? undefined : onPanelKeyDown}
-          /* With a search box, a press on the list leaves focus (and the
-             phone keyboard) in the box. */
-          onMouseDown={searchable ? (event) => event.preventDefault() : undefined}
-          className={LIST}
+          ref={panelRef}
+          onBlur={(event) => {
+            if (!rootRef.current?.contains(event.relatedTarget)) {
+              dismiss()
+            }
+          }}
+          style={{ maxHeight: room }}
+          className={panelClass(open, side, PANEL, 'column')}
         >
-          {renderRows()}
+          {panelBody}
         </div>
-        {searchable ? (
-          <p role="status" className={shown.length ? 'sr-only' : EMPTY}>
-            {shown.length ? '' : text.noResults}
-          </p>
-        ) : null}
-      </div>
+      )}
     </div>
   )
 }
