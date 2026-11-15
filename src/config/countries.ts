@@ -18,19 +18,22 @@ export type ServedCountry = {
   readonly office?: OfficeId
   /** The cities served there, where the storyboard names them. */
   readonly cities?: Localized
+  /** The international dialling code, as the phone field's prefix shows it. */
+  readonly dialCode: string
 }
 
 export const SERVED_COUNTRIES: readonly ServedCountry[] = [
-  { id: 'sa', name: COUNTRIES.sa.name, office: 'riyadh' },
-  { id: 'eg', name: COUNTRIES.eg.name, office: 'tanta' },
+  { id: 'sa', name: COUNTRIES.sa.name, office: 'riyadh', dialCode: '+966' },
+  { id: 'eg', name: COUNTRIES.eg.name, office: 'tanta', dialCode: '+20' },
   {
     id: 'ae',
     name: COUNTRIES.ae.name,
     cities: copy('دبي، الشارقة، أبوظبي', 'Dubai, Sharjah and Abu Dhabi'),
+    dialCode: '+971',
   },
-  { id: 'om', name: COUNTRIES.om.name },
-  { id: 'jo', name: draft('الأردن', 'Jordan') },
-  { id: 'gb', name: copy('المملكة المتحدة', 'United Kingdom') },
-  { id: 'us', name: draft('الولايات المتحدة', 'United States') },
-  { id: 'za', name: draft('جنوب أفريقيا', 'South Africa') },
+  { id: 'om', name: COUNTRIES.om.name, dialCode: '+968' },
+  { id: 'jo', name: draft('الأردن', 'Jordan'), dialCode: '+962' },
+  { id: 'gb', name: copy('المملكة المتحدة', 'United Kingdom'), dialCode: '+44' },
+  { id: 'us', name: draft('الولايات المتحدة', 'United States'), dialCode: '+1' },
+  { id: 'za', name: draft('جنوب أفريقيا', 'South Africa'), dialCode: '+27' },
 ]

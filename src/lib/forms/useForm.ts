@@ -113,7 +113,7 @@ function validate<Name extends string>(
 
   for (const name of Object.keys(rules) as Name[]) {
     for (const rule of rules[name] ?? []) {
-      const message = rule(values[name])
+      const message = rule(values[name], values)
       if (message) {
         errors[name] = message
         break

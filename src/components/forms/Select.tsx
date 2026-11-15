@@ -23,10 +23,27 @@ import {
   usePopover,
 } from './popover'
 
-export type SelectOption = { value: string; label: string; icon?: ReactNode }
+export type SelectHow = 'keyboard' | 'pointer'
+
+export type SelectOption = {
+  value: string
+  label: string
+  icon?: ReactNode
+  /** A short muted note at the row's end, read left to right ("+49"). */
+  detail?: string
+}
+
+/**
+ * How well an option answers a search: a tier (0 is best), or null when
+ * it does not match. Results show by tier, in list order within each.
+ */
+export type SelectRank = (option: SelectOption, query: string) => number | null
 
 /** Options under one heading. A group with no label shows no heading. */
 export type SelectGroup = { id: string; label?: string; icon?: ReactNode; options: readonly SelectOption[] }
+
+/* An option's note: muted, tabular digits, its own left-to-right island ("+49", never "49+"). */
+const OPTION_DETAIL = 'shrink-0 text-body-sm tabular-nums text-ink-muted [unicode-bidi:isolate]'
 
 /* The list scrolls past 288px (about six rows); with a search box, 360px. */
 const MAX_HEIGHT = 288
@@ -72,13 +89,16 @@ type SelectProps = {
   /** Also written to a hidden input, so the value is part of the form's data. */
   name?: string
   value: string
-  onChange: (value: string) => void
+  /** The new value, and whether it was chosen with the keyboard or a pointer (mouse, touch). */
+  onChange: (value: string, how: SelectHow) => void
   /** A flat list of options… */
   options?: readonly SelectOption[]
   /** …or options under headings (one or the other). */
   groups?: readonly SelectGroup[]
   /** A search box at the top of the panel that filters the options. */
   searchable?: boolean
+  /** Ranks search results (SelectRank); without it, matches keep the list's order. */
+  rank?: SelectRank
   /** With nothing chosen, the list opens scrolled to this group. */
   openAtGroup?: string
   /** Shown, muted, while nothing is chosen. */
@@ -111,6 +131,7 @@ export function Select({
   options,
   groups,
   searchable = false,
+  rank,
   openAtGroup,
   placeholder,
   labelId,
@@ -145,14 +166,28 @@ export function Select({
     [allGroups],
   )
 
-  /* The rows shown: all, or those matching the search (by their own label or their group's). */
-  const shown = useMemo(
-    () =>
-      query.trim()
-        ? all.filter((row) => matchesSearch(row.option.label, query) || matchesSearch(row.group.label ?? '', query))
-        : all,
-    [all, query],
-  )
+  /*
+   * The rows shown: all, or those matching the search — by their own
+   * label or its group's label; or, with `rank`, those it ranks,
+   * best tier first (a stable sort keeps the list's order within a tier).
+   */
+  const shown = useMemo(() => {
+    if (!query.trim()) {
+      return all
+    }
+    if (rank) {
+      return all
+        .map((row) => ({ row, tier: rank(row.option, query) }))
+        .filter((ranked): ranked is { row: (typeof all)[number]; tier: number } => ranked.tier !== null)
+        .sort((a, b) => a.tier - b.tier)
+        .map((ranked) => ranked.row)
+    }
+    return all.filter(
+      (row) =>
+        matchesSearch(row.option.label, query) ||
+        matchesSearch(row.group.label ?? '', query),
+    )
+  }, [all, query, rank])
 
   const selectedRow = all.find((row) => row.option.value === value)
   const selected = selectedRow?.option
@@ -212,12 +247,12 @@ export function Select({
     }
   }
 
-  function choose(position: number) {
+  function choose(position: number, how: SelectHow) {
     const row = shown[position]
     if (!row) {
       return
     }
-    onChange(row.option.value)
+    onChange(row.option.value, how)
     close(true)
   }
 
@@ -269,7 +304,7 @@ export function Select({
       setActive(moves[event.key])
     } else if (event.key === 'Enter' || (event.key === ' ' && !searchable && !isSearching())) {
       event.preventDefault()
-      choose(active)
+      choose(active, 'keyboard')
     } else if (event.key === 'Escape') {
       event.preventDefault()
       event.stopPropagation()
@@ -293,11 +328,16 @@ export function Select({
         aria-selected={option.value === value}
         data-active={position === active || undefined}
         onMouseMove={() => setActive(position)}
-        onClick={() => choose(position)}
+        onClick={() => choose(position, 'pointer')}
         className={OPTION}
       >
         {option.icon}
         <span className="min-w-0 flex-1">{option.label}</span>
+        {option.detail ? (
+          <bdi dir="ltr" className={OPTION_DETAIL}>
+            {option.detail}
+          </bdi>
+        ) : null}
         {option.value === value ? <CheckIcon aria-hidden="true" className={OPTION_CHECK} /> : null}
       </div>
     )

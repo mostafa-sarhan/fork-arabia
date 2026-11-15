@@ -2,7 +2,7 @@ import { useId, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { FormIncomplete, FormSendError, Honeypot } from '@/components/forms/FormStates'
 import { FORM_COPY } from '@/components/forms/formCopy'
-import { countryOptions } from '@/components/forms/countryOptions'
+import { CountryPhoneFields } from '@/components/forms/CountryPhoneFields'
 import { SectorTile } from '@/components/forms/SectorTile'
 import { SelectField } from '@/components/forms/SelectField'
 import { SuccessDialog } from '@/components/forms/SuccessDialog'
@@ -10,11 +10,12 @@ import { TextareaField } from '@/components/forms/TextareaField'
 import { TextField } from '@/components/forms/TextField'
 import { Button } from '@/components/ui/Button'
 import { LinkArrow } from '@/components/ui/LinkArrow'
-import { SERVED_COUNTRIES } from '@/config/countries'
 import { getSectorBySlug, SECTOR_INDEX } from '@/data/sectorIndex'
+import { countryForEmail } from '@/lib/forms/countries'
+import { fullPhone, phonePrefix } from '@/lib/forms/phone'
 import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
-import { email, latinDigits, minLength, phone, required } from '@/lib/forms/validation'
+import { countryFirst, email, minLength, phone, required } from '@/lib/forms/validation'
 import type { Language } from '@/lib/i18n/languageConfig'
 import { draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -89,7 +90,7 @@ export function QuoteForm() {
     rules: {
       name: [required],
       email: [required, email],
-      phone: [required, phone],
+      phone: [countryFirst('country'), required, phone],
       country: [required],
       service: [required],
       details: [required, minLength(MIN_DETAILS)],
@@ -100,7 +101,7 @@ export function QuoteForm() {
         replyTo: sent.email.trim(),
         language,
         botcheck,
-        fields: emailFields(sent),
+        fields: emailFields(sent, phonePrefix(sent.country)),
       }),
   })
 
@@ -158,16 +159,7 @@ export function QuoteForm() {
               autoComplete="email"
               dir="ltr"
             />
-            <TextField
-              field={field('phone')}
-              label={text.phone}
-              required
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              dir="ltr"
-            />
-            <SelectField field={field('country')} label={text.country} options={countryOptions(language)} required />
+            <CountryPhoneFields country={field('country')} phone={field('phone')} />
           </div>
         </div>
 
@@ -222,18 +214,17 @@ export function QuoteForm() {
 
 /**
  * The request as the team reads it: Arabic labels, and readable values —
- * the service's title and its sector, not ids.
+ * the service's title and its sector, not ids; the phone with its dial code.
  */
-function emailFields(values: Record<string, string>) {
+function emailFields(values: Record<string, string>, phonePrefixUsed: string) {
   const ar = (value: Localized) => resolveCopy(value, EMAIL_LANGUAGE)
-  const country = SERVED_COUNTRIES.find((item) => item.id === values.country)
   const service = findQuoteService(values.service)
 
   return {
     [ar(FORM_COPY.name)]: values.name.trim(),
     [ar(FORM_COPY.email)]: values.email.trim(),
-    [ar(FORM_COPY.phone)]: latinDigits(values.phone).trim(),
-    [ar(FORM_COPY.country)]: country ? ar(country.name) : ar(FORM_COPY.otherCountry),
+    [ar(FORM_COPY.phone)]: fullPhone(values.phone, phonePrefixUsed),
+    [ar(FORM_COPY.country)]: countryForEmail(values.country),
     [ar(COPY.service)]: service ? serviceLabel(service, EMAIL_LANGUAGE) : ar(COPY.otherService),
     [ar(COPY.summarySector)]: service ? ar(service.sector.title) : '—',
     [ar(COPY.details)]: values.details.trim(),

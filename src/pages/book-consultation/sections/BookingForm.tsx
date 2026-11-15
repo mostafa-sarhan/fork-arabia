@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router'
 import { DateField } from '@/components/forms/DateField'
 import { FormIncomplete, FormSendError, Honeypot } from '@/components/forms/FormStates'
 import { FORM_COPY } from '@/components/forms/formCopy'
-import { countryOptions } from '@/components/forms/countryOptions'
+import { CountryPhoneFields } from '@/components/forms/CountryPhoneFields'
 import { SectorTile } from '@/components/forms/SectorTile'
 import { RadioCards } from '@/components/forms/RadioCards'
 import { SelectField } from '@/components/forms/SelectField'
@@ -14,12 +14,13 @@ import { Button } from '@/components/ui/Button'
 import { GlobeIcon, PhoneIcon, UsersIcon } from '@/components/ui/icons'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { CONSULTATION_METHODS } from '@/config/consultation'
-import { SERVED_COUNTRIES } from '@/config/countries'
 import { getSectorBySlug, SECTOR_INDEX } from '@/data/sectorIndex'
 import { addDays, formatDate, isFriday, todayValue } from '@/lib/forms/dates'
+import { countryForEmail } from '@/lib/forms/countries'
+import { fullPhone, phonePrefix } from '@/lib/forms/phone'
 import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
-import { email, latinDigits, notFriday, notPast, phone, required } from '@/lib/forms/validation'
+import { countryFirst, email, notFriday, notPast, phone, required } from '@/lib/forms/validation'
 import type { Language } from '@/lib/i18n/languageConfig'
 import { draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -121,7 +122,7 @@ export function BookingForm() {
     rules: {
       name: [required],
       email: [required, email],
-      phone: [required, phone],
+      phone: [countryFirst('country'), required, phone],
       country: [required],
       sector: [required],
       date: [required, notPast, notFriday],
@@ -133,7 +134,7 @@ export function BookingForm() {
         replyTo: sent.email.trim(),
         language,
         botcheck,
-        fields: emailFields(sent),
+        fields: emailFields(sent, phonePrefix(sent.country)),
       }),
   })
 
@@ -187,16 +188,7 @@ export function BookingForm() {
               autoComplete="email"
               dir="ltr"
             />
-            <TextField
-              field={field('phone')}
-              label={text.phone}
-              required
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              dir="ltr"
-            />
-            <SelectField field={field('country')} label={text.country} options={countryOptions(language)} required />
+            <CountryPhoneFields country={field('country')} phone={field('phone')} />
           </div>
         </div>
 
@@ -262,19 +254,18 @@ function previewValues() {
 
 /**
  * The request as the team reads it: Arabic labels, and readable values —
- * names and dates in words, not ids or slugs.
+ * names and dates in words, not ids or slugs; the phone with its dial code.
  */
-function emailFields(values: Record<string, string>) {
+function emailFields(values: Record<string, string>, phonePrefixUsed: string) {
   const ar = (value: Localized) => resolveCopy(value, EMAIL_LANGUAGE)
-  const country = SERVED_COUNTRIES.find((item) => item.id === values.country)
   const sector = getSectorBySlug(values.sector)
   const method = CONSULTATION_METHODS.find((item) => item.id === values.method)
 
   return {
     [ar(FORM_COPY.name)]: values.name.trim(),
     [ar(FORM_COPY.email)]: values.email.trim(),
-    [ar(FORM_COPY.phone)]: latinDigits(values.phone).trim(),
-    [ar(FORM_COPY.country)]: country ? ar(country.name) : ar(FORM_COPY.otherCountry),
+    [ar(FORM_COPY.phone)]: fullPhone(values.phone, phonePrefixUsed),
+    [ar(FORM_COPY.country)]: countryForEmail(values.country),
     [ar(COPY.sector)]: sector ? ar(sector.title) : '',
     [ar(COPY.date)]: formatDate(values.date, EMAIL_LANGUAGE),
     [ar(COPY.time)]: timeLabel(Number(values.time), EMAIL_LANGUAGE),

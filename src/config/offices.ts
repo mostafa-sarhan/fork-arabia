@@ -31,6 +31,8 @@ export type Office = {
   /** City and country in full, for the Presence page: "الرياض، المملكة العربية السعودية". */
   readonly location: Localized
   readonly address: Localized
+  /** The address in one short line, for the contact page. */
+  readonly shortAddress: Localized
   readonly phones: readonly OfficePhone[]
   /** The office on Google Maps, to open in a new tab. */
   readonly mapUrl: string
@@ -64,6 +66,10 @@ export const OFFICES = [
       'الرياض، المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، المدخل التجاري للشركات، شركة فورك العربية، مكتب 110',
       'Office 110, FORK ARABIA, Corporate Business Entrance, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham District, Al Murabba, Riyadh',
     ),
+    shortAddress: draft(
+      'المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110',
+      'Office 110, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham, Al Murabba',
+    ),
     phones: [contactPhone('riyadh'), { display: '+966 50 195 1017', href: 'tel:+966501951017' }],
     mapUrl: 'https://maps.app.goo.gl/hVCk5aJ1frFbZuiy6',
     mapEmbed:
@@ -82,6 +88,10 @@ export const OFFICES = [
       'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر (أعلى هيئة قضايا الدولة)، طنطا، الغربية',
       '11th Floor, Tower A, Abdel Moneim Riad Towers (above the State Lawsuits Authority), Station Square, Tanta, Gharbia',
     ),
+    shortAddress: draft(
+      'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور 11',
+      '11th Floor, Tower A, Abdel Moneim Riad Towers, Station Square',
+    ),
     phones: [contactPhone('tanta'), { display: '+20 155 990 0523', href: 'tel:+201559900523' }],
     mapUrl: 'https://maps.app.goo.gl/VUsii9iMvnivJg256',
     mapEmbed:
@@ -89,6 +99,29 @@ export const OFFICES = [
     mapTitle: proposed('خريطة فرع طنطا', 'Map of the Tanta branch'),
   },
 ] as const satisfies ReadonlyArray<Office>
+
+/**
+ * A place the company serves by phone without an office there. Listed on
+ * the contact page beside the offices; not an office, so the Presence
+ * page's office cards never read it.
+ */
+export type ServiceContact = {
+  readonly id: 'uae'
+  /** The place, as the contact page names it. */
+  readonly name: Localized
+  /** What is offered there, in one short line. */
+  readonly note: Localized
+  readonly phones: readonly OfficePhone[]
+}
+
+export const SERVICE_CONTACTS = [
+  {
+    id: 'uae',
+    name: draft('الإمارات', 'United Arab Emirates'),
+    note: draft('خدمات في دبي والشارقة وأبوظبي', 'Services in Dubai, Sharjah and Abu Dhabi'),
+    phones: [{ display: '+971 52 225 5402', href: 'tel:+971522255402' }],
+  },
+] as const satisfies ReadonlyArray<ServiceContact>
 
 export type OfficeId = (typeof OFFICES)[number]['id']
 

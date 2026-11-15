@@ -3,7 +3,7 @@ import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { FieldShell, type FieldBinding } from './Field'
 import { FORM_COPY } from './formCopy'
-import { Select, type SelectGroup, type SelectOption } from './Select'
+import { Select, type SelectGroup, type SelectHow, type SelectOption, type SelectRank } from './Select'
 
 type SelectFieldProps = {
   /** From `useForm().field(name)`. */
@@ -14,8 +14,12 @@ type SelectFieldProps = {
   groups?: readonly SelectGroup[]
   /** A search box at the top of the list. */
   searchable?: boolean
+  /** Orders the search's results (see Select). */
+  rank?: SelectRank
   /** With nothing chosen, the list opens scrolled to this group. */
   openAtGroup?: string
+  /** Called after a choice, with how it was made (keyboard or pointer). */
+  onChoose?: (value: string, how: SelectHow) => void
   required?: boolean
   hint?: string
   className?: string
@@ -28,7 +32,9 @@ export function SelectField({
   options,
   groups,
   searchable,
+  rank,
   openAtGroup,
+  onChoose,
   required,
   hint,
   className,
@@ -52,10 +58,14 @@ export function SelectField({
           labelId={labelId}
           name={field.name}
           value={field.value}
-          onChange={field.setValue}
+          onChange={(value, how) => {
+            field.setValue(value)
+            onChoose?.(value, how)
+          }}
           options={options}
           groups={groups}
           searchable={searchable}
+          rank={rank}
           openAtGroup={openAtGroup}
           placeholder={resolveCopy(FORM_COPY.choose, language)}
         />

@@ -11,7 +11,6 @@ export const FORM_COPY = {
   email: draft('البريد الإلكتروني', 'Email'),
   phone: draft('رقم الهاتف', 'Phone number'),
   country: draft('الدولة', 'Country'),
-  otherCountry: proposed('دولة أخرى', 'Other country'),
 
   /* The first, empty option of a select. */
   choose: proposed('اختر من القائمة', 'Select an option'),

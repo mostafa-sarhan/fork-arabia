@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-185 strings await approval.
+211 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -28,7 +28,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
 | خدمة | services | `ServicesPage.tsx` |
-| دولة أخرى | Other country | `formCopy.ts` |
 | اختر من القائمة | Select an option | `formCopy.ts` |
 | اكتب للبحث | Type to search | `formCopy.ts` |
 | لا توجد نتائج | No results | `formCopy.ts` |
@@ -42,12 +41,26 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | الشهر التالي | Next month | `DatePicker.tsx` |
 | إغلاق | Close | `SuccessDialog.tsx` |
 | تصفح خدماتنا | Browse our services | `SuccessDialog.tsx` |
+| بعد إرسال طلبك | After you send | `NextSteps.tsx` |
 | هذا الحقل مطلوب. | This field is required. | `validation.ts` |
 | اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com. | Enter a valid email address, like name@example.com. | `validation.ts` |
 | اكتب رقم الهاتف بالأرقام فقط (7 أرقام على الأقل)، ويمكن أن يبدأ بعلامة +. | Use digits only (at least 7); the number may start with +. | `validation.ts` |
+| اكتب {n} أحرف على الأقل. | Write at least {n} characters. | `validation.ts` |
 | اكتب {n} حرفًا على الأقل. | Write at least {n} characters. | `validation.ts` |
 | اختر اليوم أو تاريخًا بعده. | Choose today or a later date. | `validation.ts` |
+| اختر الدولة أولًا | Choose the country first | `validation.ts` |
 | يوم الجمعة إجازة؛ اختر يومًا من السبت إلى الخميس. | Friday is a day off; choose a day from Saturday to Thursday. | `validation.ts` |
+| نستلم طلبك | We receive your request | `BookConsultationPage.tsx` |
+| نتواصل معك خلال يوم عمل | We contact you within one business day | `BookConsultationPage.tsx` |
+| نؤكد موعد الاستشارة | We confirm your consultation | `BookConsultationPage.tsx` |
+| نستلم طلبك | We receive your request | `RequestQuotePage.tsx` |
+| ندرس تفاصيل طلبك | We study the details of your request | `RequestQuotePage.tsx` |
+| نرسل لك عرض السعر على بريدك الإلكتروني | We email you the quote | `RequestQuotePage.tsx` |
+| نستلم رسالتك | We receive your message | `ContactPage.tsx` |
+| نراجعها | We review it | `ContactPage.tsx` |
+| نرد عليك خلال يوم عمل | We reply within one business day | `ContactPage.tsx` |
+| تم إرسال رسالتك بنجاح | Your message has been sent | `ContactForm.tsx` |
+| شكرًا لتواصلك معنا، سيرد عليك فريقنا خلال يوم عمل. | Thank you for getting in touch. Our team will reply within one business day. | `ContactForm.tsx` |
 | بياناتك | Your details | `QuoteForm.tsx` |
 | خدمة أخرى | Another service | `QuoteForm.tsx` |
 | 20 حرفًا على الأقل | At least 20 characters | `QuoteForm.tsx` |
@@ -134,11 +147,15 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `riyadh` | الرياض، السعودية | Riyadh, Saudi Arabia | `offices.ts` |
 | `riyadh` | الرياض، المملكة العربية السعودية | Riyadh, Kingdom of Saudi Arabia | `offices.ts` |
 | `riyadh` | الرياض، المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، المدخل التجاري للشركات، شركة فورك العربية، مكتب 110 | Office 110, FORK ARABIA, Corporate Business Entrance, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham District, Al Murabba, Riyadh | `offices.ts` |
+| `riyadh` | المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110 | Office 110, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham, Al Murabba | `offices.ts` |
 | `tanta` | فرع | Branch | `offices.ts` |
 | `tanta` | طنطا | Tanta | `offices.ts` |
 | `tanta` | طنطا، مصر | Tanta, Egypt | `offices.ts` |
 | `tanta` | طنطا، جمهورية مصر العربية | Tanta, Arab Republic of Egypt | `offices.ts` |
 | `tanta` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر (أعلى هيئة قضايا الدولة)، طنطا، الغربية | 11th Floor, Tower A, Abdel Moneim Riad Towers (above the State Lawsuits Authority), Station Square, Tanta, Gharbia | `offices.ts` |
+| `tanta` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور 11 | 11th Floor, Tower A, Abdel Moneim Riad Towers, Station Square | `offices.ts` |
+| `uae` | الإمارات | United Arab Emirates | `offices.ts` |
+| `uae` | خدمات في دبي والشارقة وأبوظبي | Services in Dubai, Sharjah and Abu Dhabi | `offices.ts` |
 | `ae` | الأردن | Jordan | `countries.ts` |
 | `ae` | الولايات المتحدة | United States | `countries.ts` |
 | `ae` | جنوب أفريقيا | South Africa | `countries.ts` |
@@ -187,12 +204,21 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | البريد الإلكتروني | Email | `formCopy.ts` |
 | `—` | رقم الهاتف | Phone number | `formCopy.ts` |
 | `—` | الدولة | Country | `formCopy.ts` |
+| `—` | راسلنا على واتساب | Message us on WhatsApp | `WhatsAppButton.tsx` |
 | `—` | حجز استشارة | Book a consultation | `BookConsultationPage.tsx` |
 | `—` | احجز استشارة مجانية | Book a free consultation | `BookConsultationPage.tsx` |
 | `—` | املأ البيانات وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Fill in your details and our team will contact you within one business day to confirm the appointment. | `BookConsultationPage.tsx` |
 | `—` | طلب عرض سعر | Request a quote | `RequestQuotePage.tsx` |
 | `—` | اطلب عرض سعر | Request a quote | `RequestQuotePage.tsx` |
 | `—` | اختر الخدمة واكتب تفاصيل طلبك، وسنرسل لك عرض السعر على بريدك الإلكتروني. | Choose the service and describe your request, and we will email you a quote. | `RequestQuotePage.tsx` |
+| `—` | تواصل معنا | Contact us | `ContactPage.tsx` |
+| `—` | تواصل معنا | Contact us | `ContactPage.tsx` |
+| `—` | فريقنا في الرياض وطنطا جاهز يرد على استفساراتك. | Our team in Riyadh and Tanta is ready to answer your questions. | `ContactPage.tsx` |
+| `—` | أرسل رسالة | Send a message | `ContactForm.tsx` |
+| `—` | الاسم | Name | `ContactForm.tsx` |
+| `—` | رسالتك | Your message | `ContactForm.tsx` |
+| `—` | إرسال | Send | `ContactForm.tsx` |
+| `—` | للاستفسارات والطلبات | Enquiries and requests | `ContactDetails.tsx` |
 | `—` | الخدمة المطلوبة | Service required | `QuoteForm.tsx` |
 | `—` | تفاصيل الطلب | Request details | `QuoteForm.tsx` |
 | `—` | إرسال الطلب | Send request | `QuoteForm.tsx` |
