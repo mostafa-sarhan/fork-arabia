@@ -10,6 +10,97 @@
 @source not '../lib/cn.ts';
 
 /*
+ * Cairo, self-hosted (public/fonts/cairo/, OFL 1.1: OFL.txt there).
+ *
+ * The official variable font (weight axis 200-1000) from Google Fonts, via
+ * @fontsource-variable/cairo, in two subsets. unicode-range makes the
+ * browser fetch a subset only when the page draws a character from it:
+ * Arabic pages get the Arabic file (preloaded in index.html), and the
+ * Latin one for the Latin text they also show (the logo, the digits).
+ * The URLs are absolute so Vite leaves the files where they are, under
+ * /fonts/ (cached for a year by vercel.json).
+ */
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/cairo/cairo-arabic.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EEFF;
+}
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/cairo/cairo-latin.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+ * 'Cairo Fallback': what `swap` shows until Cairo arrives, a local font
+ * reshaped to Cairo's box so the text does not move when Cairo replaces
+ * it. Tahoma for Arabic, Arial for Latin, regular and bold faces apart.
+ *
+ * size-adjust: Cairo's width over the local font's, measured on all the
+ *   text of eight pages (home, about, a sector, the quote form; both
+ *   languages), each run in the weight the site sets it in.
+ * ascent / descent: Cairo's own (1.303em above the baseline, 0.571em
+ *   below, no line gap; from its hhea table) divided by size-adjust,
+ *   because the overrides are scaled with it.
+ * Where neither local font exists (Android) these faces are skipped.
+ */
+
+/* Arabic, regular weights: Cairo is 98.6% as wide as Tahoma */
+@font-face {
+  font-family: 'Cairo Fallback';
+  src: local('Tahoma');
+  font-weight: 200 549;
+  size-adjust: 98.6%;
+  ascent-override: 132.15%;
+  descent-override: 57.91%;
+  line-gap-override: 0%;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EEFF;
+}
+
+/* Arabic, bold weights: Cairo is 91.3% as wide as Tahoma Bold */
+@font-face {
+  font-family: 'Cairo Fallback';
+  src: local('Tahoma Bold'), local('Tahoma-Bold');
+  font-weight: 550 1000;
+  size-adjust: 91.3%;
+  ascent-override: 142.72%;
+  descent-override: 62.54%;
+  line-gap-override: 0%;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EEFF;
+}
+
+/* Latin, regular weights: Cairo is 94.6% as wide as Arial */
+@font-face {
+  font-family: 'Cairo Fallback';
+  src: local('Arial'), local('ArialMT');
+  font-weight: 200 549;
+  size-adjust: 94.6%;
+  ascent-override: 137.74%;
+  descent-override: 60.36%;
+  line-gap-override: 0%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Latin, bold weights: Cairo is 89.5% as wide as Arial Bold */
+@font-face {
+  font-family: 'Cairo Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 550 1000;
+  size-adjust: 89.5%;
+  ascent-override: 145.59%;
+  descent-override: 63.8%;
+  line-gap-override: 0%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
  * FORK ARABIA — Design Tokens
  * Single source of truth for color, type, spacing, radius, elevation,
  * containers, breakpoints, motion, and layering.
@@ -25,11 +116,11 @@
   /* Typography                                                          */
   /* ------------------------------------------------------------------ */
   --font-sans:
-    'Neo Sans W23', 'Cairo', ui-sans-serif, system-ui, -apple-system,
-    'Segoe UI', Roboto, sans-serif;
+    'Neo Sans W23', 'Cairo', 'Cairo Fallback', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display:
-    'Neo Sans W23', 'Cairo', ui-sans-serif, system-ui, -apple-system,
-    'Segoe UI', Roboto, sans-serif;
+    'Neo Sans W23', 'Cairo', 'Cairo Fallback', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   --text-display: clamp(2.5rem, 4.5vw + 1rem, 3.75rem);
   --text-display--line-height: 1.12;
