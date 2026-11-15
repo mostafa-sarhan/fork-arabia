@@ -6,6 +6,13 @@ import { languageBootPlugin } from './build/languageBootPlugin.ts'
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), languageBootPlugin()],
+  /*
+   * Fixed at build time, so the client and the prerendered HTML agree on
+   * it whatever the visitor's clock says.
+   */
+  define: {
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+  },
   resolve: {
     alias: {
       /*

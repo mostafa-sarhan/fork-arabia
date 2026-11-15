@@ -1,7 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { PageHero } from '@/components/PageHero'
 import { PRIVACY_TITLE, PRIVACY_UPDATED } from '@/config/legal'
-import type { Language } from '@/lib/i18n/languageConfig'
 import { localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { PRIVACY_COPY, PRIVACY_EMAIL, PRIVACY_SECTIONS } from './privacyContent'
@@ -39,14 +38,6 @@ const PARAGRAPH = 'mt-4 text-body-lg leading-paragraph text-ink text-pretty'
 const LIST = 'mt-4 flex list-disc flex-col gap-2 ps-6 text-body-lg leading-paragraph text-ink marker:text-turquoise'
 const EMAIL_LINK = 'font-semibold text-petrol underline underline-offset-4 hover:text-navy'
 
-/** "15 November 2026", «15 نوفمبر 2026»: the policy's date, Latin digits on both sites. */
-function formatUpdated(date: string, language: Language) {
-  const locale = language === 'ar' ? 'ar-u-nu-latn-ca-gregory' : 'en-GB'
-  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(
-    new Date(`${date}T00:00:00Z`),
-  )
-}
-
 /** A paragraph with the policy's contact address made a mail link wherever it appears. */
 function WithEmailLink({ text }: { text: string }) {
   const parts = text.split(PRIVACY_EMAIL)
@@ -72,7 +63,7 @@ export default function PrivacyPage() {
   const text = localizeAll(PRIVACY_COPY, language)
   const title = resolveCopy(PRIVACY_TITLE, language)
   const sections = localizeAll(PRIVACY_SECTIONS, language)
-  const updated = text.updated.replace('{date}', formatUpdated(PRIVACY_UPDATED, language))
+  const updated = text.updated.replace('{date}', PRIVACY_UPDATED[language])
 
   return (
     <>

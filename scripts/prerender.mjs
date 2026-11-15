@@ -11,6 +11,7 @@
  * the browser hydrates what it finds. Each root records the URL it was
  * rendered for (data-prerendered), which main.tsx checks before hydrating.
  */
+import { createHash } from 'node:crypto'
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -125,8 +126,25 @@ ${sitemapEntries.join('\n')}
 /* robots.txt: everything may be crawled; the sitemap is named in full. */
 writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
 
+/*
+ * The Content-Security-Policy in vercel.json allows the page's one inline
+ * script (the language boot script) by its SHA-256 hash, so it must change
+ * whenever that script does. Every page shares the template's head, so
+ * checking the template covers them all. JSON-LD blocks are data, not
+ * scripts, and need no hash.
+ */
+const csp = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'))
+  .headers.flatMap((rule) => rule.headers)
+  .find((header) => header.key.startsWith('Content-Security-Policy'))?.value ?? ''
+const missingHashes = [...template.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>([\s\S]*?)<\/script>/g)]
+  .map((match) => `'sha256-${createHash('sha256').update(match[1]).digest('base64')}'`)
+  .filter((hash) => !csp.includes(hash))
+
 rmSync(SERVER_BUILD, { recursive: true, force: true })
 console.log(`prerendered ${routes.length} pages and 404.html; sitemap.xml (${sitemapEntries.length} URLs), robots.txt`)
 if (descriptionWarnings.length) {
   console.warn(`\n⚠ ${descriptionWarnings.length} description(s) outside ${DESCRIPTION_LENGTH.min}-${DESCRIPTION_LENGTH.max} characters (src/config/seo.ts):\n${descriptionWarnings.join('\n')}\n`)
+}
+if (missingHashes.length) {
+  console.warn(`\n⚠ The Content-Security-Policy in vercel.json does not allow ${missingHashes.length} inline script(s); add to script-src:\n  ${missingHashes.join('\n  ')}\n`)
 }

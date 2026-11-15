@@ -1,12 +1,31 @@
-import { useLocation } from 'react-router'
+import { useLocation, type Location } from 'react-router'
+import { PATHS } from '@/config/paths'
+import { SITE_ROUTES } from '@/config/routes'
 import {
   DIRECTIONS,
   LANGUAGES,
   type Direction,
   type Language,
 } from './languageConfig'
-import { samePathInLanguage } from './localizePath'
+import { localizePath, samePathInLanguage, withoutPrefix } from './localizePath'
 import { useLanguage } from './useLanguage'
+
+/**
+ * Where switching to `language` leads from here: the same page, with its
+ * query and hash, when the URL is one of the site's pages; that language's
+ * home page from a 404, where the same wrong URL would only be another 404.
+ */
+function switchTarget(location: Location, language: Language) {
+  const isPage = SITE_ROUTES.some((route) => route.path === withoutPrefix(location.pathname))
+  if (!isPage) {
+    return { pathname: localizePath(PATHS.home, language), search: '', hash: '' }
+  }
+  return {
+    pathname: samePathInLanguage(location.pathname, language),
+    search: location.search,
+    hash: location.hash,
+  }
+}
 
 /**
  * How each language refers to itself and to the act of switching to it.
@@ -39,7 +58,7 @@ export type LanguageSwap = {
   /** The language being offered — the one the visitor is not reading. */
   readonly language: Language
   readonly direction: Direction
-  /** The same page in that language: path, query and hash all preserved. */
+  /** The same page in that language (path, query and hash), or its home from a 404. */
   readonly to: { pathname: string; search: string; hash: string }
   /** Its name in its own script, for the visible label. */
   readonly endonym: string
@@ -64,11 +83,7 @@ export function useLanguageSwap(): LanguageSwap {
   return {
     language: other,
     direction: DIRECTIONS[other],
-    to: {
-      pathname: samePathInLanguage(location.pathname, other),
-      search: location.search,
-      hash: location.hash,
-    },
+    to: switchTarget(location, other),
     ...LANGUAGE_SELF[other],
   }
 }
@@ -79,7 +94,7 @@ export type LanguageOption = {
   readonly endonym: string
   /** "AR" / "EN" — the only part of the option that is on screen. */
   readonly code: string
-  /** This page in that language: path, query and hash all preserved. */
+  /** This page in that language (path, query and hash), or its home from a 404. */
   readonly to: { pathname: string; search: string; hash: string }
   readonly isCurrent: boolean
 }
@@ -101,11 +116,11 @@ export function useLanguageOptions(): readonly LanguageOption[] {
     language: candidate,
     code: candidate.toUpperCase(),
     endonym: LANGUAGE_SELF[candidate].endonym,
-    to: {
-      pathname: samePathInLanguage(location.pathname, candidate),
-      search: location.search,
-      hash: location.hash,
-    },
+    /* The current language stays where it is, even on a 404. */
+    to:
+      candidate === language
+        ? { pathname: location.pathname, search: location.search, hash: location.hash }
+        : switchTarget(location, candidate),
     isCurrent: candidate === language,
   }))
 }

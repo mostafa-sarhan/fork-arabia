@@ -9,7 +9,7 @@ import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PinIcon, ShieldIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, draft, localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -44,7 +44,8 @@ const COPY = {
     'Head office in Riyadh, a branch in Tanta, and services across 8 countries.',
   ),
 
-  imageAlt: draft(
+  /* Not in the storyboard: both languages proposed. */
+  imageAlt: proposed(
     'فريق فورك العربية في اجتماع عمل بمكتب الرياض',
     'The FORK ARABIA team in a business meeting at the Riyadh office',
   ),

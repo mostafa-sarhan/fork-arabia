@@ -126,6 +126,56 @@ const LEGAL_FILES = [
   'src/components/forms/FormSubmit.tsx',
 ]
 
+/*
+ * Interface labels: words the site says that are no one's copy deck —
+ * mostly heard by screen readers (link and landmark names), plus the
+ * mobile footer's short button labels and the copyright line. They live
+ * in translations.ts and social.ts, outside the draft/proposed markers,
+ * so they are listed here by key for the client to approve too.
+ */
+const INTERFACE_KEYS = [
+  'a11y.skipToContent',
+  'a11y.loading',
+  'a11y.openMenu',
+  'a11y.closeMenu',
+  'nav.primary',
+  'nav.servicesMenu',
+  'lang.label',
+  'breadcrumb.label',
+  'footer.call',
+  'footer.email',
+  'footer.rights',
+]
+
+/** One key's text in the `en` or `ar` table of translations.ts. */
+function translation(source, table, key) {
+  const start = source.indexOf(`const ${table}`)
+  const escaped = key.replace(/\./g, '\\.')
+  const match = source.slice(start).match(new RegExp(`'${escaped}':\\s*'((?:[^'\\\\]|\\\\.)*)'`))
+  if (!match) throw new Error(`translations.ts has no ${table} text for ${key}`)
+  return match[1]
+}
+
+const translationsSource = readFileSync('src/lib/i18n/translations.ts', 'utf8')
+const interfaceRows = INTERFACE_KEYS.map((key) => ({
+  where: `\`${key}\` (translations.ts)`,
+  ar: translation(translationsSource, 'ar', key),
+  en: translation(translationsSource, 'en', key),
+}))
+
+/* The social links' accessible names (config/social.ts). */
+const COPY_CALL = /copy\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
+for (const match of readFileSync('src/config/social.ts', 'utf8').matchAll(COPY_CALL)) {
+  interfaceRows.push({ where: 'Social link name (social.ts)', ar: match[1], en: match[2] })
+}
+
+/* The copyright line, as the footer puts it together (Footer.tsx). */
+interfaceRows.push({
+  where: 'Copyright line (Footer.tsx)',
+  ar: `© {السنة} ${translation(translationsSource, 'ar', 'brand.legal')}. ${translation(translationsSource, 'ar', 'footer.rights')}`,
+  en: `© {year} ${translation(translationsSource, 'en', 'brand.legal')}. ${translation(translationsSource, 'en', 'footer.rights')}`,
+})
+
 const rows = collect(DRAFT)
 const bothRows = collect(PROPOSED)
 const legalRows = collect(PROPOSED, LEGAL_FILES)
@@ -145,7 +195,7 @@ const lines = [
   'changing the English string in place. Re-run `node scripts/copy-review.mjs`',
   'afterwards to regenerate this list.',
   '',
-  `${rows.length + bothRows.length + legalRows.length} strings await approval.`,
+  `${rows.length + bothRows.length + legalRows.length + interfaceRows.length} strings await approval.`,
   '',
   '## Changed by client request',
   '',
@@ -178,6 +228,18 @@ const lines = [
   '| --- | --- | --- |',
   ...bothRows.map((row) => `| ${row.ar} | ${row.en} | ${fileName(row)} |`),
   '',
+  '## Interface labels',
+  '',
+  'Words the site uses that are in neither the storyboard nor the profile:',
+  'most are heard rather than seen (screen-reader names for links, menus and',
+  'landmarks); the rest are the mobile footer\'s button labels and the',
+  'copyright line. Both languages were written here. Edit them in the file',
+  'named; this list is regenerated from it.',
+  '',
+  '| Where | Proposed Arabic | Proposed English |',
+  '| --- | --- | --- |',
+  ...interfaceRows.map((row) => `| ${row.where} | ${row.ar} | ${row.en} |`),
+  '',
   '## English proposed',
   '',
   '| Sector | Arabic (approved) | Proposed English | File |',
@@ -190,4 +252,6 @@ const lines = [
 ]
 
 writeFileSync('docs/copy-review.md', lines.join('\n'))
-console.log(`docs/copy-review.md: ${rows.length + bothRows.length} proposed strings, plus ${legalRows.length} privacy strings pending legal approval`)
+console.log(
+  `docs/copy-review.md: ${rows.length + bothRows.length} proposed strings, ${interfaceRows.length} interface labels, plus ${legalRows.length} privacy strings pending legal approval`,
+)

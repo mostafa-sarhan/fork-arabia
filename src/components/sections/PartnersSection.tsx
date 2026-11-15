@@ -1,11 +1,11 @@
-import afaqLogo from '@/assets/partners/afaq.png'
-import cascoLogo from '@/assets/partners/casco.png'
-import professionalExpertsLogo from '@/assets/partners/professional-experts.png'
+import afaqLogo from '@/assets/partners/afaq.webp'
+import cascoLogo from '@/assets/partners/casco.webp'
+import professionalExpertsLogo from '@/assets/partners/professional-experts.webp'
 import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
-import type { CSSProperties } from 'react'
-import { copy, draft, localizeAll, resolveCopy, type Localized } from '@/lib/i18n/localized'
+import { useState, type CSSProperties } from 'react'
+import { copy, draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -20,18 +20,20 @@ const COPY = {
 }
 
 /*
- * The logos, in the order they appear. To add one, drop the file in
- * src/assets/partners/, import it above and add one line here: the file,
- * its pixel size (for width/height, so nothing shifts) and the name, which
- * is the logo's alt text.
+ * The logos, in the order they appear. To add one, drop the PNG in
+ * src/assets/partners/, add its height to scripts/brand-assets.mjs and run
+ * `npm run brand` (it writes a WebP at twice the drawn height), then import
+ * the WebP above and add one line here: the file, its pixel size (for
+ * width/height, so nothing shifts) and the name, which is the logo's alt
+ * text. The names are `proposed`: not in the storyboard.
  *
  * `logoHeight` is the drawn height in px on desktop (phones use 75% of it),
  * tuned by eye so wide and tall logos carry the same visual weight.
  */
 const PARTNERS: { src: string; width: number; height: number; name: Localized; logoHeight?: number }[] = [
-  { src: cascoLogo, width: 900, height: 286, name: copy('CASCO', 'CASCO'), logoHeight: 44 },
-  { src: afaqLogo, width: 511, height: 663, name: draft('آفاق', 'Afaq'), logoHeight: 78 },
-  { src: professionalExpertsLogo, width: 344, height: 229, name: draft('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting'), logoHeight: 72 },
+  { src: cascoLogo, width: 277, height: 88, name: copy('CASCO', 'CASCO'), logoHeight: 44 },
+  { src: afaqLogo, width: 120, height: 156, name: proposed('آفاق', 'Afaq'), logoHeight: 78 },
+  { src: professionalExpertsLogo, width: 216, height: 144, name: proposed('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting'), logoHeight: 72 },
 ]
 
 const DEFAULT_LOGO_HEIGHT = 56
@@ -69,6 +71,7 @@ const STRIP =
  */
 const TRACK = 'flex motion-safe:w-max animate-marquee'
 
+
 /* The real list. With reduced motion: one centered row that wraps. */
 const LIST =
   'flex motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-5'
@@ -83,7 +86,7 @@ const TILE =
 
 /*
  * Full colour, never cropped; at most 70% of the tile's width (no token).
- * The PNGs have white/near-white backgrounds; multiply makes them
+ * The logos have white/near-white backgrounds; multiply makes them
  * disappear on the white tile without editing the files.
  */
 const LOGO =
@@ -96,6 +99,14 @@ const LOGO =
 export function PartnersSection({ heading }: { heading?: string }) {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
+  /*
+   * Held still while a finger (or a pressed mouse) is on the strip: touch
+   * screens have no hover, so this is their way to stop it and read a
+   * logo. A swipe that turns into a scroll cancels the press and lets it
+   * move on. The pause itself is CSS (`marquee` in index.css).
+   */
+  const [isHeld, setIsHeld] = useState(false)
+  const release = () => setIsHeld(false)
 
   return (
     <section className="pt-16 pb-18 lg:py-28 bg-surface">
@@ -104,9 +115,16 @@ export function PartnersSection({ heading }: { heading?: string }) {
           <SectionTitle align="center">{heading ?? text.heading}</SectionTitle>
         </Reveal>
 
-        <div className={STRIP}>
+        <div
+          className={STRIP}
+          onPointerDown={() => setIsHeld(true)}
+          onPointerUp={release}
+          onPointerLeave={release}
+          onPointerCancel={release}
+        >
           <div
             className={TRACK}
+            data-held={isHeld || undefined}
             style={{ animationDuration: `${DURATION_SECONDS}s` }}
           >
             <ul className={LIST}>

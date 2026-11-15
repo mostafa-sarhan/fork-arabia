@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-265 strings await approval.
+282 strings await approval.
 
 ## Changed by client request
 
@@ -73,14 +73,20 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | للرد | to reply | `consultation.ts` |
 | خريطة مقر الرياض | Map of the Riyadh head office | `offices.ts` |
 | خريطة فرع طنطا | Map of the Tanta branch | `offices.ts` |
+| تواصل سريع | Quick contact | `whatsapp.ts` |
 | مرحبًا، أود الاستفسار عن خدمات فورك العربية. | Hello, I’d like to ask about FORK ARABIA’s services. | `whatsapp.ts` |
 | مرحبًا، أود الاستفسار عن خدماتكم. | Hello, I’d like to ask about your services. | `whatsapp.ts` |
 | مرحبًا، أود الاستفسار عن خدمات {sector}. | Hello, I’d like to ask about {sector}. | `whatsapp.ts` |
 | مرحبًا، أود معرفة المزيد عن مكاتبكم وفروعكم. | Hello, I’d like to know more about your offices and branches. | `whatsapp.ts` |
+| فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
+| آفاق | Afaq | `PartnersSection.tsx` |
+| الخبراء المحترفون للاستشارات المالية | Professional Experts Financial Consulting | `PartnersSection.tsx` |
 | سنة التأسيس | Year founded | `AboutPage.tsx` |
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
+| فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `IntroSection.tsx` |
 | خدمة | services | `ServicesPage.tsx` |
+| جميع القطاعات | All sectors | `ServicesPage.tsx` |
 | اختر من القائمة | Select an option | `formCopy.ts` |
 | اكتب للبحث | Type to search | `formCopy.ts` |
 | لا توجد نتائج | No results | `formCopy.ts` |
@@ -160,6 +166,32 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | الكل | All | `SectorServices.tsx` |
 | تصفية الخدمات حسب الدولة | Filter services by country | `SectorServices.tsx` |
 
+## Interface labels
+
+Words the site uses that are in neither the storyboard nor the profile:
+most are heard rather than seen (screen-reader names for links, menus and
+landmarks); the rest are the mobile footer's button labels and the
+copyright line. Both languages were written here. Edit them in the file
+named; this list is regenerated from it.
+
+| Where | Proposed Arabic | Proposed English |
+| --- | --- | --- |
+| `a11y.skipToContent` (translations.ts) | تخطَّ إلى المحتوى | Skip to content |
+| `a11y.loading` (translations.ts) | جارٍ التحميل… | Loading… |
+| `a11y.openMenu` (translations.ts) | فتح القائمة | Open menu |
+| `a11y.closeMenu` (translations.ts) | إغلاق القائمة | Close menu |
+| `nav.primary` (translations.ts) | التنقل الرئيسي | Main navigation |
+| `nav.servicesMenu` (translations.ts) | قائمة الخدمات | Services menu |
+| `lang.label` (translations.ts) | اللغة | Language |
+| `breadcrumb.label` (translations.ts) | مسار التنقل | Breadcrumb |
+| `footer.call` (translations.ts) | اتصل | Call |
+| `footer.email` (translations.ts) | إيميل | Email |
+| `footer.rights` (translations.ts) | جميع الحقوق محفوظة. | All rights reserved. |
+| Social link name (social.ts) | فورك العربية على فيسبوك | FORK ARABIA on Facebook |
+| Social link name (social.ts) | فورك العربية على إنستغرام | FORK ARABIA on Instagram |
+| Social link name (social.ts) | فورك العربية على تيك توك | FORK ARABIA on TikTok |
+| Copyright line (Footer.tsx) | © {السنة} فورك العربية المحدودة. جميع الحقوق محفوظة. | © {year} FORK ARABIA LIMITED. All rights reserved. |
+
 ## English proposed
 
 | Sector | Arabic (approved) | Proposed English | File |
@@ -236,7 +268,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | راسلنا على واتساب | Message us on WhatsApp | `whatsapp.ts` |
 | `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `HeroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `HeroSection.tsx` |
-| `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
 | `—` | شريك مهني واحد منذ 2016 | One professional partner since 2016 | `HeroSection.tsx` |
 | `—` | من الاستشارة للتنفيذ للمتابعة | From consultation to implementation and follow-up | `HeroSection.tsx` |
 | `—` | سنوات خبرة | Years of experience | `StatsSection.tsx` |
@@ -258,8 +289,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | فرع | Branch | `PresenceSection.tsx` |
 | `—` | خدمات | Services | `PresenceSection.tsx` |
 | `—` | شركاؤنا وعملاؤنا | Our Partners & Clients | `PartnersSection.tsx` |
-| `—` | آفاق | Afaq | `PartnersSection.tsx` |
-| `—` | الخبراء المحترفون للاستشارات المالية | Professional Experts Financial Consulting | `PartnersSection.tsx` |
 | `—` | جاهز تبدأ؟ | Ready to get started? | `CtaSection.tsx` |
 | `—` | احجز استشارة مجانية مدتها 50 دقيقة، حضوريًا أو أونلاين أو بالتليفون، وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Book a free 50-minute consultation — in person, online or by phone — and our team will contact you within one business day to confirm the time. | `CtaSection.tsx` |
 | `—` | 50 دقيقة | 50 minutes | `CtaSection.tsx` |
@@ -268,7 +297,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | منذ 2016 | Since 2016 | `IntroSection.tsx` |
 | `—` | شركة خدمات مهنية رائدة في مصر والخليج | A leading professional services company in Egypt and the Gulf | `IntroSection.tsx` |
 | `—` | فورك شركة خدمات مهنية رائدة، تقدم منظومة حلول متكاملة من الحلول القانونية والمالية والمحاسبية والإدارية والتقنية لقطاع الأعمال في مصر والسعودية والإمارات وعُمان. تأسست الشركة عام 2016. | FORK is a leading professional services company offering an integrated suite of legal, financial, accounting, administrative and technology solutions for the business sector in Egypt, Saudi Arabia, the UAE and Oman. The company was founded in 2016. | `IntroSection.tsx` |
-| `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `IntroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا | Head office in Riyadh, and a branch in Tanta | `IntroSection.tsx` |
 | `—` | احتياجات متعددة تُدار من خلال شريك واحد ورؤية واحدة، عبر 9 قطاعات. | Multiple needs, managed through one partner and one vision, across 9 sectors. | `ServicesPage.tsx` |
 | `—` | قطاعات | sectors | `ServicesPage.tsx` |

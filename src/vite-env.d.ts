@@ -10,3 +10,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+/** The year the site was built, set in vite.config.ts (the footer's copyright year). */
+declare const __BUILD_YEAR__: number

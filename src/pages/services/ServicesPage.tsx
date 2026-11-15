@@ -35,6 +35,8 @@ const COPY = {
   sectorsWord: draft('قطاعات', 'sectors'),
   servicesWord: proposed('خدمة', 'services'),
 
+  /* Heard, not seen: names the grid, so the cards' h3 sit under an h2. */
+  gridHeading: proposed('جميع القطاعات', 'All sectors'),
   cardLink: draft('تفاصيل القطاع', 'Sector details'),
   ctaTitle: draft('مش متأكد أنهي خدمة تناسبك؟', 'Not sure which service fits you?'),
   partnersHeading: copy('شركاؤنا', 'Our Partners'),
@@ -51,6 +53,9 @@ const ALL_SERVICES = SECTORS.flatMap((sector) => sector.services)
 /* White, straight under the hero; the consultation card's own top
    padding spaces the next section. */
 const SECTION = 'pt-14 lg:pt-20 bg-surface'
+
+/* The grid's hidden heading, which also names its section. */
+const GRID_HEADING_ID = 'all-sectors'
 
 /* The home page's grid: one column, two from 768, three from 1024. */
 const GRID = 'grid md:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-6'
@@ -79,8 +84,11 @@ export default function ServicesPage() {
     <>
       <PageHero title={text.title} crumb={t('nav.services')} lead={text.lead} facts={facts} />
 
-      <section className={SECTION}>
+      <section aria-labelledby={GRID_HEADING_ID} className={SECTION}>
         <Container>
+          <h2 id={GRID_HEADING_ID} className="sr-only">
+            {text.gridHeading}
+          </h2>
           <ul className={GRID}>
             {SECTORS.map((sector, index) => (
               <li key={sector.id}>

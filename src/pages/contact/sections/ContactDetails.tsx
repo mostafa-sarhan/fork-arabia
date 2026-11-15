@@ -27,15 +27,23 @@ const PLACES = 'grid gap-5 sm:grid-cols-2 lg:grid-cols-1'
 
 const TILE = 'rounded-lg bg-turquoise-soft text-petrol'
 
+/*
+ * Small inline links get a touch area at least 44px tall in every browser
+ * (14px above and below a 16-22px line): vertical padding taken back by
+ * an equal negative margin, so the layout does not move.
+ */
+const TOUCH_TARGET = 'inline-block py-3.5 -my-3.5'
+
 /* A place's name: a small petrol link to the Presence page. */
 const PLACE_NAME =
-  'rounded-sm text-label font-bold text-link hover:text-petrol-strong hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2'
+  `${TOUCH_TARGET} rounded-sm text-label font-bold text-link hover:text-petrol-strong hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2`
 const PLACE_TEXT = 'mt-1 text-body-sm leading-paragraph text-ink-muted'
 
 /* Phone numbers and the address: links, read left to right inside Arabic. */
 const LINE_LINK =
-  'rounded-sm font-bold text-heading hover:text-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2'
-const PHONES = 'mt-1 flex flex-wrap gap-x-2 text-body-sm'
+  `${TOUCH_TARGET} rounded-sm font-bold text-heading hover:text-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2`
+/* 4px between numbers that wrap onto two lines, so their touch areas stay 24px apart. */
+const PHONES = 'mt-1 flex flex-wrap gap-x-2 gap-y-1 text-body-sm'
 const LABEL = 'text-body-sm text-ink-muted'
 
 /** One place: its name (to the Presence page), a short line, and its phones. */

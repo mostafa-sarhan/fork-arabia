@@ -5,7 +5,7 @@ import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { PinIcon } from '@/components/ui/icons'
-import { copy, draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, draft, localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -36,7 +36,8 @@ const COPY = {
     copy('عُمان', 'Oman'),
   ],
 
-  imageAlt: draft(
+  /* Not in the storyboard: both languages proposed. */
+  imageAlt: proposed(
     'فريق فورك العربية في اجتماع عمل بمكتب الرياض',
     'The FORK ARABIA team in a business meeting at the Riyadh office',
   ),

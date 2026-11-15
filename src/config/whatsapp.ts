@@ -8,6 +8,9 @@ import { PATHS } from './paths'
 /* "Message us on WhatsApp": the storyboard's contact page (English written here, `draft`). */
 export const WHATSAPP_LABEL = draft('راسلنا على واتساب', 'Message us on WhatsApp')
 
+/* The floating button's landmark name, heard by screen readers (`proposed`). */
+export const WHATSAPP_DOCK_LABEL = proposed('تواصل سريع', 'Quick contact')
+
 /*
  * The text the floating WhatsApp button writes for the visitor, by route
  * (the Arabic paths of paths.ts; `/en` is the same route). Any route not

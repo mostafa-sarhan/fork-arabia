@@ -15,7 +15,6 @@ import { SITE_CONTACT, type ContactChannel } from '@/config/contact'
 import { FOOTER_NAV } from '@/config/navigation'
 import { PRIVACY_TITLE } from '@/config/legal'
 import { PATHS, sectorPath } from '@/config/paths'
-import { SITE_URL } from '@/config/site'
 import { getSectorById } from '@/data/sectorIndex'
 import {
   FOOTER_DESCRIPTION,
@@ -29,14 +28,12 @@ import type { TranslationKey } from '@/lib/i18n/translations'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
- * The copyright year. The prerendered page carries the build's year; a
- * visitor's browser after New Year may know a later one, which is the
- * one difference allowed here (React keeps the prerendered text).
+ * The copyright year: the build's year, fixed at build time (vite.config.ts)
+ * so the prerendered page and the browser always print the same number.
+ * Redeploy in January to move it on.
  */
-const YEAR = new Date().getFullYear()
-
 function Year() {
-  return <span suppressHydrationWarning>{YEAR}</span>
+  return <>{__BUILD_YEAR__}</>
 }
 
 /**
@@ -457,13 +454,10 @@ function WideFooter() {
           </LegalLine>
           <span className="flex items-center gap-5">
             <LanguageFooterLink />
-            <a
-              href={SITE_URL}
-              dir="ltr"
-              className={cn(footerLink, 'font-medium')}
-            >
+            {/* The domain, as a link home in the visitor's language (no reload). */}
+            <LocalizedLink to={PATHS.home} dir="ltr" className={cn(footerLink, 'font-medium')}>
               {BRAND_DOMAIN}
-            </a>
+            </LocalizedLink>
           </span>
         </Container>
       </div>

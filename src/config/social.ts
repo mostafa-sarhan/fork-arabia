@@ -15,7 +15,7 @@ export type SocialNetwork = {
 export const SOCIAL_NETWORKS = [
   {
     id: 'facebook',
-    url: 'https://www.facebook.com/share/1C9ifZe3BE/',
+    url: 'https://www.facebook.com/ForkBusiness',
     label: copy('فورك العربية على فيسبوك', 'FORK ARABIA on Facebook'),
   },
   {

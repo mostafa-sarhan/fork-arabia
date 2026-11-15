@@ -37,8 +37,14 @@ const CARDS = 'mt-10 lg:mt-14 flex flex-col gap-6 lg:gap-8'
 const CARD =
   'group grid overflow-hidden rounded-2xl border border-line bg-surface shadow-card lg:grid-cols-12'
 
-/* 220px tall on phones and tablets; from 1024 as tall as the details. */
-const MAP_BOX = 'relative h-55 lg:h-auto lg:col-span-7 bg-navy-soft'
+/*
+ * 220px tall on phones and tablets; from 1024 as tall as the details.
+ * While the map has keyboard focus (`data-focused`, see useKeyboardInFrame),
+ * a petrol ring inside the box's edge, drawn on an overlay above the map:
+ * the map would paint over the box's own shadow.
+ */
+const MAP_BOX =
+  "relative h-55 lg:h-auto lg:col-span-7 bg-navy-soft after:pointer-events-none after:absolute after:inset-0 after:content-[''] data-focused:after:ring-3 data-focused:after:ring-inset data-focused:after:ring-petrol"
 
 /*
  * The map frame: grey until the card is hovered or anything in it (the
@@ -160,6 +166,51 @@ function OfficeCard({ office }: { office: Office }) {
 }
 
 /**
+ * Whether the keyboard has moved focus into a frame inside `box`. CSS cannot
+ * tell: once focus is in the map's own document, neither the frame nor the
+ * box matches :focus, :focus-visible or :focus-within (Chrome and Safari).
+ * Seen from this page, the window loses focus and the frame becomes the
+ * active element; a Tab pressed just before says it was the keyboard.
+ */
+function useKeyboardInFrame(box: HTMLElement | null) {
+  const [isFocused, setIsFocused] = useState(false)
+
+  useEffect(() => {
+    if (!box) {
+      return
+    }
+
+    let byKeyboard = false
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Tab') byKeyboard = true
+    }
+    const onPointer = () => {
+      byKeyboard = false
+    }
+    /* The active element settles after the blur event, so read it a tick later. */
+    const onWindowBlur = () =>
+      setTimeout(() => {
+        const active = document.activeElement
+        setIsFocused(byKeyboard && active instanceof HTMLIFrameElement && box.contains(active))
+      })
+    const onWindowFocus = () => setIsFocused(false)
+
+    document.addEventListener('keydown', onKey, true)
+    document.addEventListener('pointerdown', onPointer, true)
+    window.addEventListener('blur', onWindowBlur)
+    window.addEventListener('focus', onWindowFocus)
+    return () => {
+      document.removeEventListener('keydown', onKey, true)
+      document.removeEventListener('pointerdown', onPointer, true)
+      window.removeEventListener('blur', onWindowBlur)
+      window.removeEventListener('focus', onWindowFocus)
+    }
+  }, [box])
+
+  return isFocused
+}
+
+/**
  * The map's box, which holds its size from the start, and the map itself.
  * The browser's own `loading="lazy"` starts iframes a few thousand pixels
  * early, which on this page is both maps at once; the frame is mounted
@@ -168,6 +219,7 @@ function OfficeCard({ office }: { office: Office }) {
 function OfficeMap({ src, title }: { src: string; title: string }) {
   const [box, setBox] = useState<HTMLDivElement | null>(null)
   const [isNear, setIsNear] = useState(false)
+  const isFocused = useKeyboardInFrame(box)
 
   useEffect(() => {
     if (!box) {
@@ -190,7 +242,7 @@ function OfficeMap({ src, title }: { src: string; title: string }) {
   }, [box])
 
   return (
-    <div ref={setBox} className={MAP_BOX}>
+    <div ref={setBox} data-focused={isFocused || undefined} className={MAP_BOX}>
       {isNear ? (
         <iframe
           src={src}

@@ -912,7 +912,8 @@
  * one half, so the loop is seamless. It travels toward the inline end —
  * leftward in Arabic, rightward in English — so the track starts half its
  * width toward the inline start: to the right in Arabic, the left in English.
- * It pauses while hovered or while anything in it has keyboard focus,
+ * It pauses while hovered, while anything in it has keyboard focus, and
+ * while it is pressed or touched (`data-held`, set by PartnersSection),
  * and never moves with reduced motion.
  */
 @keyframes marquee {
@@ -930,7 +931,8 @@
   }
 
   .animate-marquee:hover,
-  .animate-marquee:focus-within {
+  .animate-marquee:focus-within,
+  .animate-marquee[data-held] {
     animation-play-state: paused;
   }
 

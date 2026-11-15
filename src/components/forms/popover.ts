@@ -19,7 +19,7 @@ export const TRIGGER_ICON = 'pointer-events-none absolute end-4 top-1/2 size-4 -
 
 /* The chosen value, cut with an ellipsis; the muted placeholder. */
 export const TRIGGER_VALUE = 'min-w-0 flex-1 truncate'
-export const TRIGGER_PLACEHOLDER = 'min-w-0 flex-1 truncate text-ink-muted/70'
+export const TRIGGER_PLACEHOLDER = 'min-w-0 flex-1 truncate text-ink-muted'
 
 /*
  * The panel: white, 12px radius, thin border, soft shadow, 8px off the

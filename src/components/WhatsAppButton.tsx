@@ -2,7 +2,13 @@ import { useEffect, useRef, useState, type RefObject } from 'react'
 import { useLocation } from 'react-router'
 import { WhatsAppIcon } from '@/components/icons/brandIcons'
 import { useNavbar } from '@/components/navbar/useNavbar'
-import { WHATSAPP_FLOATING_HIDDEN_ON, WHATSAPP_LABEL, whatsappHref, whatsappMessage } from '@/config/whatsapp'
+import {
+  WHATSAPP_DOCK_LABEL,
+  WHATSAPP_FLOATING_HIDDEN_ON,
+  WHATSAPP_LABEL,
+  whatsappHref,
+  whatsappMessage,
+} from '@/config/whatsapp'
 import { cn } from '@/lib/cn'
 import { withoutPrefix } from '@/lib/i18n/localizePath'
 import { resolveCopy } from '@/lib/i18n/localized'
@@ -163,12 +169,16 @@ function useScrollState(dock: RefObject<HTMLElement | null>, pathname: string) {
  * is near, the menu sheet or a dialog is open, or the language card is
  * up. Nothing loops, nothing opens by itself. In the page's order it
  * comes before `main`, so Tab meets it right after the header.
+ *
+ * It is its own small landmark ("Quick contact"), so screen-reader users
+ * who move by landmarks find it. While away it is `inert` at once: the
+ * fade takes 300ms, and nothing should take focus during it.
  */
 export function WhatsAppButton() {
   const { language } = useLanguage()
   const { pathname } = useLocation()
   const { isMobileMenuOpen } = useNavbar()
-  const dockRef = useRef<HTMLDivElement>(null)
+  const dockRef = useRef<HTMLElement>(null)
 
   const coverOpen = useCoverOpen()
   const footerNear = useFooterNear()
@@ -180,7 +190,12 @@ export function WhatsAppButton() {
   const label = resolveCopy(WHATSAPP_LABEL, language)
 
   return (
-    <div ref={dockRef} className={cn(DOCK, isAway ? DOCK_AWAY : isWaiting ? DOCK_WAITING : DOCK_SHOWN)}>
+    <aside
+      ref={dockRef}
+      aria-label={resolveCopy(WHATSAPP_DOCK_LABEL, language)}
+      inert={isAway}
+      className={cn(DOCK, isAway ? DOCK_AWAY : isWaiting ? DOCK_WAITING : DOCK_SHOWN)}
+    >
       <a
         href={whatsappHref(whatsappMessage(pathname, language))}
         target="_blank"
@@ -194,6 +209,6 @@ export function WhatsAppButton() {
           {label}
         </span>
       </a>
-    </div>
+    </aside>
   )
 }

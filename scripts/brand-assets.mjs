@@ -13,6 +13,10 @@
  *     public/og/default.png      1200x630: the lockup and the tagline on
  *                                the hero's navy grid
  *
+ *   src/assets/partners/*.png  the partner logos as received; drawn from
+ *     src/assets/partners/*.webp   each at twice its drawn height on the
+ *                                  site, for sharp 2x screens
+ *
  * Run it after any logo or icon change:  npm run brand
  *
  * sharp (a dev dependency, never shipped) draws the PNGs; the share
@@ -161,4 +165,22 @@ writeFileSync(join(PUBLIC, 'favicon.ico'), icoFrom(icoImages))
 
 await (await shareImage()).toFile(join(PUBLIC, 'og/default.png'))
 
+/*
+ * The partner logos. Each height is twice the logo's `logoHeight` in
+ * src/components/sections/PartnersSection.tsx (its largest drawn size);
+ * change both together. Width follows the logo's own proportions.
+ */
+const PARTNERS_DIR = join(ROOT, 'src/assets/partners')
+const PARTNER_LOGO_HEIGHTS = { casco: 88, afaq: 156, 'professional-experts': 144 }
+
+const partnerSizes = []
+for (const [name, height] of Object.entries(PARTNER_LOGO_HEIGHTS)) {
+  const info = await sharp(join(PARTNERS_DIR, `${name}.png`))
+    .resize({ height, withoutEnlargement: true })
+    .webp({ quality: 90, effort: 6 })
+    .toFile(join(PARTNERS_DIR, `${name}.webp`))
+  partnerSizes.push(`${name}.webp ${info.width}x${info.height}`)
+}
+
 console.log('Brand files written: favicon.ico (from favicon.svg), og/default.png (from brand/mark.svg)')
+console.log(`Partner logos written: ${partnerSizes.join(', ')}`)

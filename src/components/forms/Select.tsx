@@ -60,7 +60,7 @@ const LIST_IN_SHEET = 'touch-pan-y'
 /* The search box: a quiet field across the panel's top, its icon at the start. */
 const SEARCH = 'relative shrink-0 border-b border-line p-2'
 const SEARCH_INPUT =
-  'h-11 w-full rounded-lg bg-page ps-10 pe-3 text-body text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-turquoise/40'
+  'h-11 w-full rounded-lg bg-page ps-10 pe-3 text-body text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-turquoise/40'
 const SEARCH_ICON = 'pointer-events-none absolute start-5 top-1/2 size-4 -translate-y-1/2 text-ink-muted'
 
 /*

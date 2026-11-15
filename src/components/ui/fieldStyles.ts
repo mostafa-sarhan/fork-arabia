@@ -11,7 +11,7 @@
  * the outcome would fall back to stylesheet order.
  */
 export const fieldBase =
-  'w-full rounded-xl border border-line-strong bg-surface ps-4 pe-4 text-body text-ink transition-[border-color,box-shadow] duration-(--duration-hover) placeholder:text-ink-muted/70 hover:border-ink-muted/45 focus:border-petrol focus:outline-none focus:ring-4 focus:ring-turquoise/25 disabled:cursor-not-allowed disabled:border-disabled-border disabled:bg-disabled-bg disabled:text-disabled-fg'
+  'w-full rounded-xl border border-line-strong bg-surface ps-4 pe-4 text-body text-ink transition-[border-color,box-shadow] duration-(--duration-hover) placeholder:text-ink-muted hover:border-ink-muted/45 focus:border-petrol focus:outline-none focus:ring-4 focus:ring-turquoise/25 disabled:cursor-not-allowed disabled:border-disabled-border disabled:bg-disabled-bg disabled:text-disabled-fg'
 
 /** Applied on top of fieldBase while a field is invalid: the error red, focused or not. */
 export const fieldInvalid =
