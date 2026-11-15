@@ -4,6 +4,9 @@ import { Footer } from '@/components/footer'
 import { InertWhileMenuOpen, Navbar, NavbarProvider } from '@/components/navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { SkipLink } from '@/components/ui/SkipLink'
+import { JsonLd } from '@/components/JsonLd'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import { organizationJsonLd } from '@/lib/seo/structuredData'
 import { useDocumentHead } from '@/lib/seo/useDocumentHead'
 import { useNavigationReset } from '@/lib/useNavigationReset'
 import { LanguageSuggestion } from './LanguageSuggestion'
@@ -23,6 +26,7 @@ export function SiteLayout() {
   /* The page's head tags (config/seo.ts), and the scroll and focus a real navigation would reset. */
   useDocumentHead()
   useNavigationReset()
+  const { language } = useLanguage()
 
   return (
     <NavbarProvider>
@@ -44,6 +48,9 @@ export function SiteLayout() {
       </InertWhileMenuOpen>
 
       <LanguageSuggestion />
+
+      {/* The company, as schema.org data, on every page. */}
+      <JsonLd data={organizationJsonLd(language)} />
     </NavbarProvider>
   )
 }

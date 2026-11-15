@@ -29,8 +29,9 @@ export async function render(url: string): Promise<string> {
   return new Response(prelude).text()
 }
 
-export { localizedRoutes } from './config/routes'
+export { localizedRoutes, SITE_ROUTES } from './config/routes'
+export { SITE_URL } from './config/site'
 export { COMPANY_DESCRIPTION } from './data/siteCopy'
-export { DIRECTIONS } from './lib/i18n/languageConfig'
+export { DEFAULT_LANGUAGE, DIRECTIONS, LANGUAGES } from './lib/i18n/languageConfig'
 export { resolveCopy } from './lib/i18n/localized'
-export { headHtml, pageHead } from './lib/seo/pageHead'
+export { absoluteUrl, headHtml, pageHead } from './lib/seo/pageHead'

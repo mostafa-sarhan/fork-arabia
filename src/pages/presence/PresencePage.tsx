@@ -2,9 +2,6 @@ import { PageHero, type PageHeroFact } from '@/components/PageHero'
 import { CtaSection } from '@/components/sections/CtaSection'
 import { SERVED_COUNTRIES } from '@/config/countries'
 import { OFFICES } from '@/config/offices'
-import { SITE_URL } from '@/config/site'
-import { COUNTRIES } from '@/data/sectors/countries'
-import type { Language } from '@/lib/i18n/languageConfig'
 import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { countriesWord } from '@/pages/sector/sectorCounts'
@@ -43,39 +40,10 @@ export default function PresencePage() {
 
   return (
     <>
-      <script type="application/ld+json">
-        {JSON.stringify(organizationJsonLd(language, t('brand.legal')))}
-      </script>
-
       <PageHero title={t('nav.presence')} lead={text.lead} facts={facts} />
       <OfficesSection />
       <CountriesSection />
       <CtaSection />
     </>
   )
-}
-
-/**
- * The company and its two offices as schema.org data, in the page's
- * language, built from config/offices.ts.
- */
-function organizationJsonLd(language: Language, name: string) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name,
-    url: language === 'en' ? `${SITE_URL}/en` : SITE_URL,
-    location: OFFICES.map((office) => ({
-      '@type': 'Place',
-      name: `${name} — ${resolveCopy(office.label, language)}`,
-      hasMap: office.mapUrl,
-      telephone: office.phones.map((phone) => phone.href.replace('tel:', '')),
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: resolveCopy(office.address, language),
-        addressLocality: resolveCopy(office.name, language),
-        addressCountry: COUNTRIES[office.country].code,
-      },
-    })),
-  }
 }

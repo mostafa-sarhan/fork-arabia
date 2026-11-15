@@ -115,6 +115,7 @@ export function PageHero({
     <section className={SECTION}>
       <Container className={cn(CONTENT, !closesWithFigures && CONTENT_FOOT)}>
         <Breadcrumb
+          structuredData
           tone="navy"
           items={[{ label: t('nav.home'), to: PATHS.home }, ...trail, { label: crumb ?? title }]}
         />

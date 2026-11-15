@@ -1,6 +1,10 @@
 import { cn } from '@/lib/cn'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import { useLocation } from 'react-router'
+import { JsonLd } from '@/components/JsonLd'
 import { LocalizedLink } from '@/components/LocalizedLink'
+import { absoluteUrl, routeAt } from '@/lib/seo/pageHead'
+import { breadcrumbJsonLd } from '@/lib/seo/structuredData'
 import type { SitePath } from '@/config/paths'
 import { ChevronRightIcon } from './icons'
 
@@ -39,6 +43,12 @@ export type BreadcrumbProps = {
   label?: string
   tone?: keyof typeof TONES
   className?: string
+  /**
+   * Also describe the trail to search engines (a schema.org
+   * BreadcrumbList), built from the same items. For a page's own trail;
+   * off for samples (the design-system page).
+   */
+  structuredData?: boolean
 }
 
 export function Breadcrumb({
@@ -46,9 +56,21 @@ export function Breadcrumb({
   label,
   tone = 'light',
   className,
+  structuredData = false,
 }: BreadcrumbProps) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
+  const { pathname } = useLocation()
   const colors = TONES[tone]
+
+  /* Each crumb's page; the last is the page itself. A hash or another site is not a page of its own. */
+  const currentRoute = routeAt(pathname)
+  const entries =
+    structuredData && currentRoute
+      ? items.flatMap((item, index) => {
+          if (index === items.length - 1) return [{ name: item.label, url: absoluteUrl(currentRoute.path, language) }]
+          return item.to ? [{ name: item.label, url: absoluteUrl(item.to, language) }] : []
+        })
+      : []
 
   return (
     <nav aria-label={label ?? t('breadcrumb.label')} className={className}>
@@ -84,6 +106,7 @@ export function Breadcrumb({
           )
         })}
       </ol>
+      {entries.length > 1 ? <JsonLd data={breadcrumbJsonLd(entries)} /> : null}
     </nav>
   )
 }

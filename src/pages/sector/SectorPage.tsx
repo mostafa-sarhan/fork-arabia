@@ -1,3 +1,4 @@
+import { JsonLd } from '@/components/JsonLd'
 import { ConsultationCta } from '@/components/sections/ConsultationCta'
 import { MethodologySection } from '@/components/sections/MethodologySection'
 import { CONSULTATION_INVITE } from '@/config/consultation'
@@ -6,6 +7,7 @@ import { getSectorDetail } from '@/data/sectors'
 import type { SectorDetail } from '@/data/sectors/types'
 import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import { sectorServicesJsonLd } from '@/lib/seo/structuredData'
 import NotFoundPage from '@/pages/not-found/NotFoundPage'
 import { ResidencyBenefits } from './sections/ResidencyBenefits'
 import { ResidencyRole } from './sections/ResidencyRole'
@@ -44,6 +46,8 @@ function SectorSections({ sector }: { sector: SectorDetail }) {
   return (
     <>
       <SectorHero sector={sector} />
+      {/* Its services for search engines, each linked to its block (#id). Premium residency has tracks instead. */}
+      {hasServices ? <JsonLd data={sectorServicesJsonLd(sector, language)} /> : null}
 
       {hasServices ? <SectorServices sector={sector} /> : null}
 
