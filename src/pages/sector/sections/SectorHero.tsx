@@ -2,7 +2,7 @@ import { PageHero, type PageHeroFact } from '@/components/PageHero'
 import { Button } from '@/components/ui/Button'
 import { ICONS } from '@/components/ui/iconRegistry'
 import { CONSULTATION_FACTS } from '@/config/consultation'
-import { bookingQuery, PATHS } from '@/config/paths'
+import { bookingQuery, PATHS, quoteQuery } from '@/config/paths'
 import type { SectorDetail } from '@/data/sectors/types'
 import { localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -62,7 +62,7 @@ export function SectorHero({ sector }: { sector: SectorDetail }) {
           <Button to={PATHS.bookConsultation} search={bookingQuery(sector.slug)} variant="secondary" size="lg" className={BUTTON}>
             {t('nav.bookConsultation')}
           </Button>
-          <Button to={PATHS.requestQuote} variant="outline-on-navy" size="lg" className={BUTTON}>
+          <Button to={PATHS.requestQuote} search={quoteQuery({ sector: sector.slug })} variant="outline-on-navy" size="lg" className={BUTTON}>
             {t('nav.requestQuote')}
           </Button>
         </div>

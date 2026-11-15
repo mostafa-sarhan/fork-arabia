@@ -1,3 +1,6 @@
+import { LocalizedLink } from '@/components/LocalizedLink'
+import { LinkArrow } from '@/components/ui/LinkArrow'
+import { PATHS, quoteQuery } from '@/config/paths'
 import { COUNTRIES } from '@/data/sectors/countries'
 import { cn } from '@/lib/cn'
 import { resolveCopy } from '@/lib/i18n/localized'
@@ -41,11 +44,19 @@ const BODY =
  */
 const UNDER_STICKY_HEADING = 'scroll-mt-16'
 
+/*
+ * "Request a quote" for this service: a small petrol text link with the
+ * arrow, under the body, opening the quote form with the service chosen.
+ */
+const QUOTE_LINK =
+  'col-span-2 mt-3 inline-flex items-center gap-1.5 justify-self-start rounded-sm text-body-sm font-bold text-link hover:text-petrol-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol focus-visible:ring-offset-2 lg:col-span-1 lg:col-start-2'
+
 const COUNTRY_TAG =
   'ms-2 inline-flex rounded-full bg-navy-soft px-2.5 py-0.5 align-middle text-caption font-bold text-petrol'
 
 export function ServiceBlock({ service, showCountry }: ServiceBlockProps) {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
+  const titleId = `${service.id}-title`
 
   return (
     <li id={service.id} className={cn(BLOCK, !showCountry && UNDER_STICKY_HEADING)}>
@@ -53,7 +64,7 @@ export function ServiceBlock({ service, showCountry }: ServiceBlockProps) {
         {service.number}
       </span>
 
-      <h3 className={TITLE}>
+      <h3 id={titleId} className={TITLE}>
         {resolveCopy(service.title, language)}
         {showCountry && service.country ? (
           <span className={COUNTRY_TAG}>{resolveCopy(COUNTRIES[service.country].name, language)}</span>
@@ -61,6 +72,17 @@ export function ServiceBlock({ service, showCountry }: ServiceBlockProps) {
       </h3>
 
       <p className={BODY}>{resolveCopy(service.body, language)}</p>
+
+      {/* Every block has this link; the title tells them apart when read out. */}
+      <LocalizedLink
+        to={PATHS.requestQuote}
+        search={quoteQuery({ service: service.id })}
+        aria-describedby={titleId}
+        className={QUOTE_LINK}
+      >
+        {t('nav.requestQuote')}
+        <LinkArrow className="size-4" />
+      </LocalizedLink>
     </li>
   )
 }

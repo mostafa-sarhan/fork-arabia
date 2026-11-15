@@ -57,6 +57,8 @@ const FILES = [
   'src/components/forms/SuccessDialog.tsx',
   'src/lib/forms/validation.ts',
   'src/pages/book-consultation/BookConsultationPage.tsx',
+  'src/pages/request-quote/RequestQuotePage.tsx',
+  'src/pages/request-quote/sections/QuoteForm.tsx',
   'src/pages/book-consultation/sections/BookingForm.tsx',
   'src/pages/book-consultation/sections/ConsultationDetails.tsx',
   'src/pages/presence/sections/OfficesSection.tsx',

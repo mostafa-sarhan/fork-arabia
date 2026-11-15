@@ -29,6 +29,14 @@ export function sectorPath(slug: SectorSlug): SectorPath {
  * The booking page's query for one sector: its form opens with that sector
  * chosen. Pass it as a link's `search`.
  */
+/**
+ * The quote form's query: a service preselects it; a sector opens the
+ * service list at that sector's group.
+ */
+export function quoteQuery(target: { service: string } | { sector: SectorSlug }) {
+  return 'service' in target ? `?service=${target.service}` : `?sector=${target.sector}`
+}
+
 export function bookingQuery(slug: SectorSlug) {
   return `?sector=${slug}`
 }

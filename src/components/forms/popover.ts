@@ -33,14 +33,21 @@ const PANEL =
 const PANEL_SIDE = { bottom: 'top-full mt-2', top: 'bottom-full mb-2' }
 const PANEL_CLOSED = { bottom: 'hidden opacity-0 -translate-y-1', top: 'hidden opacity-0 translate-y-1' }
 const PANEL_OPEN = {
-  bottom: 'block opacity-100 translate-y-0 starting:opacity-0 starting:-translate-y-1',
-  top: 'block opacity-100 translate-y-0 starting:opacity-0 starting:translate-y-1',
+  bottom: 'opacity-100 translate-y-0 starting:opacity-0 starting:-translate-y-1',
+  top: 'opacity-100 translate-y-0 starting:opacity-0 starting:translate-y-1',
 }
+
+/* How an open panel lays out its content: plain blocks, or a column (search box over list). */
+const PANEL_DISPLAY = { block: 'block', column: 'flex flex-col' }
 
 export type PanelSide = keyof typeof PANEL_SIDE
 
-export function panelClass(open: boolean, side: PanelSide, className?: string) {
-  return cn(PANEL, PANEL_SIDE[side], open ? PANEL_OPEN[side] : PANEL_CLOSED[side], className)
+/*
+ * The display is chosen here, never by the caller's classes, so a
+ * caller's `flex` cannot override the closed panel's `hidden`.
+ */
+export function panelClass(open: boolean, side: PanelSide, className?: string, display: keyof typeof PANEL_DISPLAY = 'block') {
+  return cn(PANEL, PANEL_SIDE[side], className, open ? [PANEL_DISPLAY[display], PANEL_OPEN[side]] : PANEL_CLOSED[side])
 }
 
 /* Room kept between a panel and the screen's edges. */

@@ -3,7 +3,7 @@ import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { CONSULTATION_DETAILS } from '@/config/consultation'
-import { bookingQuery, PATHS } from '@/config/paths'
+import { bookingQuery, PATHS, quoteQuery } from '@/config/paths'
 import type { SectorSlug } from '@/data/sectorIndex'
 import { localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -78,7 +78,10 @@ export function ConsultationCta({
                 >
                   {t('nav.bookConsultation')}
                 </Button>
-                <Button to={PATHS.requestQuote} variant="outline-navy" size="lg" className={BUTTON}>
+                <Button
+                  to={PATHS.requestQuote}
+                  search={sector ? quoteQuery({ sector }) : undefined}
+                  variant="outline-navy" size="lg" className={BUTTON}>
                   {t('nav.requestQuote')}
                 </Button>
               </div>

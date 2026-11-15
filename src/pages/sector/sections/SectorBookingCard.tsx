@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button'
 import { CONSULTATION_TIMING } from '@/config/consultation'
-import { bookingQuery, PATHS } from '@/config/paths'
+import { bookingQuery, PATHS, quoteQuery } from '@/config/paths'
 import type { SectorSlug } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
 import { resolveCopy } from '@/lib/i18n/localized'
@@ -41,7 +41,7 @@ export function SectorBookingCard({ title, slug }: { title: string; slug: Sector
         >
           {t('nav.bookConsultation')}
         </Button>
-        <Button to={PATHS.requestQuote} variant="outline-on-navy" size="lg" fullWidth className={BUTTON}>
+        <Button to={PATHS.requestQuote} search={quoteQuery({ sector: slug })} variant="outline-on-navy" size="lg" fullWidth className={BUTTON}>
           {t('nav.requestQuote')}
         </Button>
       </div>

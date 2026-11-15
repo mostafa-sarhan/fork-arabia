@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-171 strings await approval.
+185 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -30,6 +30,9 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | خدمة | services | `ServicesPage.tsx` |
 | دولة أخرى | Other country | `formCopy.ts` |
 | اختر من القائمة | Select an option | `formCopy.ts` |
+| اكتب للبحث | Type to search | `formCopy.ts` |
+| لا توجد نتائج | No results | `formCopy.ts` |
+| تم إرسال طلبك بنجاح | Your request has been sent | `formCopy.ts` |
 | يرجى استكمال الحقول المطلوبة | Please complete the required fields. | `formCopy.ts` |
 | تعذّر إرسال الطلب. تحقق من اتصالك بالإنترنت وحاول مرة أخرى. | We couldn’t send your request. Check your connection and try again. | `formCopy.ts` |
 | إعادة المحاولة | Try again | `formCopy.ts` |
@@ -42,12 +45,16 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | هذا الحقل مطلوب. | This field is required. | `validation.ts` |
 | اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com. | Enter a valid email address, like name@example.com. | `validation.ts` |
 | اكتب رقم الهاتف بالأرقام فقط (7 أرقام على الأقل)، ويمكن أن يبدأ بعلامة +. | Use digits only (at least 7); the number may start with +. | `validation.ts` |
-| اكتب {n} أحرف على الأقل. | Write at least {n} characters. | `validation.ts` |
+| اكتب {n} حرفًا على الأقل. | Write at least {n} characters. | `validation.ts` |
 | اختر اليوم أو تاريخًا بعده. | Choose today or a later date. | `validation.ts` |
 | يوم الجمعة إجازة؛ اختر يومًا من السبت إلى الخميس. | Friday is a day off; choose a day from Saturday to Thursday. | `validation.ts` |
+| بياناتك | Your details | `QuoteForm.tsx` |
+| خدمة أخرى | Another service | `QuoteForm.tsx` |
+| 20 حرفًا على الأقل | At least 20 characters | `QuoteForm.tsx` |
+| الخدمة | Service | `QuoteForm.tsx` |
+| القطاع | Sector | `QuoteForm.tsx` |
 | بياناتك | Your details | `BookingForm.tsx` |
 | تفاصيل الاستشارة | Consultation details | `BookingForm.tsx` |
-| تم إرسال طلبك بنجاح | Your request has been sent | `BookingForm.tsx` |
 | المجال | Area | `BookingForm.tsx` |
 | الموعد | Appointment | `BookingForm.tsx` |
 | الطريقة | Format | `BookingForm.tsx` |
@@ -183,6 +190,13 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | حجز استشارة | Book a consultation | `BookConsultationPage.tsx` |
 | `—` | احجز استشارة مجانية | Book a free consultation | `BookConsultationPage.tsx` |
 | `—` | املأ البيانات وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Fill in your details and our team will contact you within one business day to confirm the appointment. | `BookConsultationPage.tsx` |
+| `—` | طلب عرض سعر | Request a quote | `RequestQuotePage.tsx` |
+| `—` | اطلب عرض سعر | Request a quote | `RequestQuotePage.tsx` |
+| `—` | اختر الخدمة واكتب تفاصيل طلبك، وسنرسل لك عرض السعر على بريدك الإلكتروني. | Choose the service and describe your request, and we will email you a quote. | `RequestQuotePage.tsx` |
+| `—` | الخدمة المطلوبة | Service required | `QuoteForm.tsx` |
+| `—` | تفاصيل الطلب | Request details | `QuoteForm.tsx` |
+| `—` | إرسال الطلب | Send request | `QuoteForm.tsx` |
+| `—` | شكرًا لك، تم استلام طلبك وسيتواصل معك فريقنا قريبًا. | Thank you, we have received your request and our team will contact you soon. | `QuoteForm.tsx` |
 | `—` | مجال الاستشارة المطلوبة | Consultation area | `BookingForm.tsx` |
 | `—` | التاريخ المفضل | Preferred date | `BookingForm.tsx` |
 | `—` | الوقت المفضل (بتوقيت السعودية) | Preferred time (Saudi time) | `BookingForm.tsx` |

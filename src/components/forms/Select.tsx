@@ -1,6 +1,19 @@
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { CheckIcon, ChevronDownIcon } from '@/components/ui/icons'
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react'
+import { CheckIcon, ChevronDownIcon, SearchIcon } from '@/components/ui/icons'
 import { cn } from '@/lib/cn'
+import { matchesSearch } from '@/lib/forms/search'
+import { localizeAll } from '@/lib/i18n/localized'
+import { useLanguage } from '@/lib/i18n/useLanguage'
+import { FORM_COPY } from './formCopy'
 import {
   panelClass,
   TRIGGER_ICON,
@@ -12,11 +25,29 @@ import {
 
 export type SelectOption = { value: string; label: string; icon?: ReactNode }
 
-/* The list scrolls past 288px (about six rows). */
-const MAX_HEIGHT = 288
+/** Options under one heading. A group with no label shows no heading. */
+export type SelectGroup = { id: string; label?: string; icon?: ReactNode; options: readonly SelectOption[] }
 
-/* The list inside the panel: 6px around the rows, scrolling on its own. */
-const LIST = 'overflow-y-auto overscroll-contain p-1.5 scrollbar-slim focus:outline-none'
+/* The list scrolls past 288px (about six rows); with a search box, 360px. */
+const MAX_HEIGHT = 288
+const MAX_HEIGHT_SEARCHABLE = 360
+
+/* The panel stacks the search box over the list, which scrolls on its own. */
+const PANEL = 'inset-x-0 overflow-hidden'
+const LIST = 'relative min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 scrollbar-slim focus:outline-none'
+
+/* The search box: a quiet field across the panel's top, its icon at the start. */
+const SEARCH = 'relative shrink-0 border-b border-line p-2'
+const SEARCH_INPUT =
+  'h-11 w-full rounded-lg bg-page ps-10 pe-3 text-body text-ink placeholder:text-ink-muted/70 focus:outline-none focus:ring-2 focus:ring-turquoise/40'
+const SEARCH_ICON = 'pointer-events-none absolute start-5 top-1/2 size-4 -translate-y-1/2 text-ink-muted'
+
+/*
+ * A group heading: icon and title, small and petrol, held at the list's
+ * top while its options scroll under it.
+ */
+const GROUP_HEADING =
+  'sticky top-0 z-raised -mx-1.5 flex items-center gap-2.5 bg-surface px-4.5 pt-3 pb-2 text-label font-bold text-petrol'
 
 /*
  * One option: at least 44px, an optional icon at the start, the check at
@@ -26,6 +57,9 @@ const LIST = 'overflow-y-auto overscroll-contain p-1.5 scrollbar-slim focus:outl
 const OPTION =
   'group flex min-h-11 cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-body text-ink data-active:bg-turquoise-soft aria-selected:font-bold aria-selected:text-heading'
 const OPTION_CHECK = 'ms-auto size-4 shrink-0 text-turquoise'
+
+/* No option matches the search. */
+const EMPTY = 'px-3 py-6 text-center text-body-sm text-ink-muted'
 
 /* The chosen option's icon, repeated in the trigger. */
 const TRIGGER_OPTION_ICON = 'shrink-0'
@@ -39,7 +73,14 @@ type SelectProps = {
   name?: string
   value: string
   onChange: (value: string) => void
-  options: readonly SelectOption[]
+  /** A flat list of options… */
+  options?: readonly SelectOption[]
+  /** …or options under headings (one or the other). */
+  groups?: readonly SelectGroup[]
+  /** A search box at the top of the panel that filters the options. */
+  searchable?: boolean
+  /** With nothing chosen, the list opens scrolled to this group. */
+  openAtGroup?: string
   /** Shown, muted, while nothing is chosen. */
   placeholder: string
   /** The visible label's id: the trigger and the list are named by it. */
@@ -53,10 +94,14 @@ type SelectProps = {
 
 /**
  * The site's dropdown (ARIA collapsible listbox). The trigger is a button;
- * opening it moves focus to the list, where the arrows, Home and End move,
- * Enter or Space chooses, a letter jumps to the next option starting with
- * it, and Escape closes. Choosing or Escape returns focus to the trigger;
- * Tab, or a press outside, simply closes it.
+ * opening it moves focus into the panel, where the arrows, Home and End
+ * move, Enter (or Space) chooses, and Escape closes. Choosing or Escape
+ * returns focus to the trigger; Tab, or a press outside, simply closes it.
+ *
+ * Without a search box, a letter jumps to the next option starting with
+ * it. With one (`searchable`), focus goes to the box instead, typing
+ * filters the options (ignoring case, diacritics and hamza forms), and the
+ * keys above work from the box.
  */
 export function Select({
   id,
@@ -64,6 +109,9 @@ export function Select({
   value,
   onChange,
   options,
+  groups,
+  searchable = false,
+  openAtGroup,
   placeholder,
   labelId,
   invalid = false,
@@ -72,70 +120,105 @@ export function Select({
   'aria-describedby': describedBy,
   className,
 }: SelectProps) {
+  const { language } = useLanguage()
+  const text = localizeAll(FORM_COPY, language)
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
-  const listRef = useRef<HTMLUListElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  /* The active row, as a position in the rows now shown. */
   const [active, setActive] = useState(-1)
   const typed = useRef({ text: '', at: 0 })
+  const headingId = useId()
 
   const listId = `${id}-list`
   const optionId = (index: number) => `${id}-option-${index}`
-  const selectedIndex = options.findIndex((option) => option.value === value)
-  const selected = options[selectedIndex]
 
-  const dismiss = useCallback(() => setOpen(false), [])
-  const { side, room } = usePopover({ open, onDismiss: dismiss, rootRef, panelRef: listRef, maxHeight: MAX_HEIGHT })
+  /* Every option once, numbered in order (its id), with its group. */
+  const allGroups = useMemo(() => groups ?? [{ id: '', options: options ?? [] }], [groups, options])
+  const all = useMemo(
+    () =>
+      allGroups.flatMap((group) => group.options.map((option) => ({ option, group }))).map((row, index) => ({ ...row, index })),
+    [allGroups],
+  )
 
-  /* Opened: focus goes to the list (once it is visible). */
+  /* The rows shown: all, or those matching the search (by their own label or their group's). */
+  const shown = useMemo(
+    () =>
+      query.trim()
+        ? all.filter((row) => matchesSearch(row.option.label, query) || matchesSearch(row.group.label ?? '', query))
+        : all,
+    [all, query],
+  )
+
+  const selectedRow = all.find((row) => row.option.value === value)
+  const selected = selectedRow?.option
+  const activeRow = shown[active]
+
+  /* Closing also clears the search, so the next opening shows every option. */
+  const dismiss = useCallback(() => {
+    setOpen(false)
+    setQuery('')
+  }, [])
+  const { side, room } = usePopover({
+    open,
+    onDismiss: dismiss,
+    rootRef,
+    panelRef,
+    maxHeight: searchable ? MAX_HEIGHT_SEARCHABLE : MAX_HEIGHT,
+  })
+
+  /* Opened: focus goes to the search box or the list (once it is shown). */
   useEffect(() => {
     if (open) {
-      listRef.current?.focus({ preventScroll: true })
+      ;(searchable ? searchRef.current : listRef.current)?.focus({ preventScroll: true })
+    } else {
+      typed.current = { text: '', at: 0 }
     }
-  }, [open])
+  }, [open, searchable])
 
   /* Keep the active row in view as the arrows or typing move it. */
+  const activeIndex = activeRow?.index
   useEffect(() => {
-    if (open && active >= 0) {
-      document.getElementById(`${id}-option-${active}`)?.scrollIntoView({ block: 'nearest' })
+    if (open && activeIndex !== undefined) {
+      document.getElementById(`${id}-option-${activeIndex}`)?.scrollIntoView({ block: 'nearest' })
     }
-  }, [open, active, id])
+  }, [open, activeIndex, id])
 
-  function openAt(index: number) {
-    setActive(index)
+  /* Opened with nothing chosen and a group asked for: that group at the top. */
+  useEffect(() => {
+    if (open && !value && openAtGroup) {
+      const heading = document.getElementById(`${headingId}-${openAtGroup}`)
+      if (heading && listRef.current) {
+        listRef.current.scrollTop = heading.parentElement?.offsetTop ?? 0
+      }
+    }
+  }, [open, value, openAtGroup, headingId])
+
+  function openPanel(fallback: 'first' | 'last' = 'first') {
+    const groupStart = openAtGroup && !value ? all.findIndex((row) => row.group.id === openAtGroup) : -1
+    const start = selectedRow?.index ?? (groupStart >= 0 ? groupStart : fallback === 'last' ? all.length - 1 : 0)
+    setActive(start)
     setOpen(true)
   }
 
   function close(returnFocus: boolean) {
-    setOpen(false)
+    dismiss()
     if (returnFocus) {
       triggerRef.current?.focus()
     }
   }
 
-  function choose(index: number) {
-    const option = options[index]
-    if (option) {
-      onChange(option.value)
+  function choose(position: number) {
+    const row = shown[position]
+    if (!row) {
+      return
     }
+    onChange(row.option.value)
     close(true)
-  }
-
-  /** The next option, after `from`, whose label starts with the typed letters. */
-  function typeahead(key: string, from: number) {
-    const now = Date.now()
-    const text = now - typed.current.at < TYPEAHEAD_MS ? typed.current.text + key : key
-    typed.current = { text, at: now }
-
-    const query = text.toLocaleLowerCase()
-    const start = text.length === 1 ? from + 1 : Math.max(from, 0)
-    for (let step = 0; step < options.length; step++) {
-      const index = (start + step) % options.length
-      if (options[index].label.toLocaleLowerCase().startsWith(query)) {
-        return index
-      }
-    }
-    return -1
   }
 
   /* A space typed mid-search ("united a…") belongs to the search, not a choice. */
@@ -144,30 +227,47 @@ export function Select({
   const isLetter = (event: KeyboardEvent) =>
     event.key.length === 1 && (event.key !== ' ' || isSearching()) && !event.ctrlKey && !event.metaKey && !event.altKey
 
+  /** The next shown option, after `from`, whose label starts with the typed letters. */
+  function typeahead(key: string, from: number) {
+    const now = Date.now()
+    const letters = now - typed.current.at < TYPEAHEAD_MS ? typed.current.text + key : key
+    typed.current = { text: letters, at: now }
+
+    const start = letters.length === 1 ? from + 1 : Math.max(from, 0)
+    for (let step = 0; step < shown.length; step++) {
+      const position = (start + step) % shown.length
+      if (matchesSearch(shown[position].option.label, letters, 'start')) {
+        return position
+      }
+    }
+    return -1
+  }
+
   function onTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
-      const fallback = event.key === 'ArrowUp' ? options.length - 1 : 0
-      openAt(selectedIndex >= 0 ? selectedIndex : fallback)
-    } else if (isLetter(event)) {
-      const match = typeahead(event.key, selectedIndex)
-      openAt(match >= 0 ? match : Math.max(selectedIndex, 0))
+      openPanel(event.key === 'ArrowUp' ? 'last' : 'first')
+    } else if (isLetter(event) && !searchable) {
+      const match = typeahead(event.key, selectedRow?.index ?? -1)
+      setActive(match >= 0 ? match : Math.max(selectedRow?.index ?? 0, 0))
+      setOpen(true)
     }
   }
 
-  function onListKeyDown(event: KeyboardEvent<HTMLUListElement>) {
-    const last = options.length - 1
+  /** The panel's keys, from the list or from the search box. */
+  function onPanelKeyDown(event: KeyboardEvent<HTMLElement>) {
+    const last = shown.length - 1
     const moves: Record<string, number> = {
       ArrowDown: Math.min(active + 1, last),
       ArrowUp: Math.max(active - 1, 0),
-      Home: 0,
-      End: last,
+      /* In the search box Home and End move the caret, as in any text box. */
+      ...(searchable ? {} : { Home: 0, End: last }),
     }
 
     if (event.key in moves) {
       event.preventDefault()
       setActive(moves[event.key])
-    } else if (event.key === 'Enter' || (event.key === ' ' && !isSearching())) {
+    } else if (event.key === 'Enter' || (event.key === ' ' && !searchable && !isSearching())) {
       event.preventDefault()
       choose(active)
     } else if (event.key === 'Escape') {
@@ -176,7 +276,7 @@ export function Select({
       close(true)
     } else if (event.key === 'Tab') {
       close(false)
-    } else if (isLetter(event)) {
+    } else if (isLetter(event) && !searchable) {
       const match = typeahead(event.key, active)
       if (match >= 0) {
         setActive(match)
@@ -184,12 +284,49 @@ export function Select({
     }
   }
 
-  /* Each opening starts a fresh search. */
-  useEffect(() => {
-    if (!open) {
-      typed.current = { text: '', at: 0 }
+  function renderOption({ option, index }: (typeof all)[number], position: number) {
+    return (
+      <div
+        key={option.value}
+        id={optionId(index)}
+        role="option"
+        aria-selected={option.value === value}
+        data-active={position === active || undefined}
+        onMouseMove={() => setActive(position)}
+        onClick={() => choose(position)}
+        className={OPTION}
+      >
+        {option.icon}
+        <span className="min-w-0 flex-1">{option.label}</span>
+        {option.value === value ? <CheckIcon aria-hidden="true" className={OPTION_CHECK} /> : null}
+      </div>
+    )
+  }
+
+  /* The shown rows, under their group headings when there are groups. */
+  function renderRows() {
+    if (!groups) {
+      return shown.map(renderOption)
     }
-  }, [open])
+    return allGroups.map((group) => {
+      const rows = shown.filter((row) => row.group === group)
+      if (!rows.length) {
+        return null
+      }
+      const groupHeadingId = `${headingId}-${group.id}`
+      return (
+        <div key={group.id} role="group" aria-labelledby={group.label ? groupHeadingId : undefined}>
+          {group.label ? (
+            <div id={groupHeadingId} role="presentation" className={GROUP_HEADING}>
+              {group.icon}
+              {group.label}
+            </div>
+          ) : null}
+          {rows.map((row) => renderOption(row, shown.indexOf(row)))}
+        </div>
+      )
+    })
+  }
 
   return (
     <div ref={rootRef} className="relative">
@@ -206,7 +343,7 @@ export function Select({
         aria-labelledby={`${labelId} ${id}`}
         aria-describedby={describedBy}
         aria-invalid={invalid || undefined}
-        onClick={() => (open ? close(true) : openAt(selectedIndex >= 0 ? selectedIndex : 0))}
+        onClick={() => (open ? close(true) : openPanel())}
         onKeyDown={onTriggerKeyDown}
         className={triggerClass(invalid, className)}
       >
@@ -221,40 +358,64 @@ export function Select({
         />
       </button>
 
-      <ul
-        ref={listRef}
-        id={listId}
-        role="listbox"
-        tabIndex={-1}
-        aria-labelledby={labelId}
-        aria-required={ariaRequired}
-        aria-activedescendant={open && active >= 0 ? optionId(active) : undefined}
-        onKeyDown={onListKeyDown}
+      <div
+        ref={panelRef}
         onBlur={(event) => {
           if (!rootRef.current?.contains(event.relatedTarget)) {
-            setOpen(false)
+            dismiss()
           }
         }}
         style={{ maxHeight: room }}
-        className={panelClass(open, side, cn('inset-x-0', LIST))}
+        className={panelClass(open, side, PANEL, 'column')}
       >
-        {options.map((option, index) => (
-          <li
-            key={option.value}
-            id={optionId(index)}
-            role="option"
-            aria-selected={option.value === value}
-            data-active={index === active || undefined}
-            onMouseMove={() => setActive(index)}
-            onClick={() => choose(index)}
-            className={OPTION}
-          >
-            {option.icon}
-            <span className="min-w-0 flex-1">{option.label}</span>
-            {option.value === value ? <CheckIcon aria-hidden="true" className={OPTION_CHECK} /> : null}
-          </li>
-        ))}
-      </ul>
+        {searchable ? (
+          <div className={SEARCH}>
+            <SearchIcon aria-hidden="true" className={SEARCH_ICON} />
+            <input
+              ref={searchRef}
+              type="search"
+              role="combobox"
+              aria-expanded={open}
+              aria-controls={listId}
+              aria-autocomplete="list"
+              aria-activedescendant={open && activeRow ? optionId(activeRow.index) : undefined}
+              aria-label={text.search}
+              placeholder={text.search}
+              autoComplete="off"
+              spellCheck={false}
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setActive(0)
+              }}
+              onKeyDown={onPanelKeyDown}
+              className={SEARCH_INPUT}
+            />
+          </div>
+        ) : null}
+
+        <div
+          ref={listRef}
+          id={listId}
+          role="listbox"
+          tabIndex={-1}
+          aria-labelledby={labelId}
+          aria-required={ariaRequired}
+          aria-activedescendant={!searchable && open && activeRow ? optionId(activeRow.index) : undefined}
+          onKeyDown={searchable ? undefined : onPanelKeyDown}
+          /* With a search box, a press on the list leaves focus (and the
+             phone keyboard) in the box. */
+          onMouseDown={searchable ? (event) => event.preventDefault() : undefined}
+          className={LIST}
+        >
+          {renderRows()}
+        </div>
+        {searchable ? (
+          <p role="status" className={shown.length ? 'sr-only' : EMPTY}>
+            {shown.length ? '' : text.noResults}
+          </p>
+        ) : null}
+      </div>
     </div>
   )
 }

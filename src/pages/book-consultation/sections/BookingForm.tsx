@@ -3,13 +3,14 @@ import { useSearchParams } from 'react-router'
 import { DateField } from '@/components/forms/DateField'
 import { FormIncomplete, FormSendError, Honeypot } from '@/components/forms/FormStates'
 import { FORM_COPY } from '@/components/forms/formCopy'
+import { countryOptions } from '@/components/forms/countryOptions'
+import { SectorTile } from '@/components/forms/SectorTile'
 import { RadioCards } from '@/components/forms/RadioCards'
 import { SelectField } from '@/components/forms/SelectField'
 import { SuccessDialog } from '@/components/forms/SuccessDialog'
 import { TextareaField } from '@/components/forms/TextareaField'
 import { TextField } from '@/components/forms/TextField'
 import { Button } from '@/components/ui/Button'
-import { ICONS } from '@/components/ui/iconRegistry'
 import { GlobeIcon, PhoneIcon, UsersIcon } from '@/components/ui/icons'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { CONSULTATION_METHODS } from '@/config/consultation'
@@ -27,7 +28,8 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * What the form says beyond the shared contact labels (formCopy.ts). The
  * Arabic labels, button, note and success message are the storyboard's
  * booking page (English written here, `draft`); the block headings, time
- * words and success title and summary are `proposed`. All are in
+ * words and success summary are `proposed` (the success title is shared,
+ * in formCopy.ts). All are in
  * docs/copy-review.md.
  */
 const COPY = {
@@ -43,7 +45,6 @@ const COPY = {
     'الموعد لا يُعتبر مؤكدًا إلا بعد تواصل فريقنا معك.',
     'Your appointment is confirmed only once our team has contacted you.',
   ),
-  successTitle: proposed('تم إرسال طلبك بنجاح', 'Your request has been sent'),
   success: draft(
     'شكرًا لك، تم استلام طلبك. سيتواصل معك فريقنا خلال يوم عمل لتأكيد موعد الاستشارة.',
     'Thank you, we have received your request. Our team will contact you within one business day to confirm your consultation.',
@@ -87,10 +88,6 @@ const BLOCK_HEADING = 'text-h4 font-extrabold text-heading'
 /* One column held to the card, two from 768; long fields span both. */
 const GRID = 'grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-x-5 md:gap-y-6'
 const WIDE = 'md:col-span-2'
-
-/* A sector's icon tile in the dropdown; white on the highlighted row. */
-const SECTOR_TILE =
-  'grid size-8 shrink-0 place-items-center rounded-lg bg-turquoise-soft text-petrol group-data-active:bg-surface'
 
 /* The button full width on phones, its own width from 640; the note under it. */
 const SUBMIT = 'h-13 w-full sm:w-auto sm:min-w-56'
@@ -140,22 +137,11 @@ export function BookingForm() {
       }),
   })
 
-  const countryOptions = [
-    ...SERVED_COUNTRIES.map((country) => ({ value: country.id, label: resolveCopy(country.name, language) })),
-    { value: 'other', label: text.otherCountry },
-  ]
-  const sectorOptions = SECTOR_INDEX.map((sector) => {
-    const Icon = ICONS[sector.icon]
-    return {
-      value: sector.slug,
-      label: resolveCopy(sector.title, language),
-      icon: (
-        <span aria-hidden="true" className={SECTOR_TILE}>
-          <Icon size={16} />
-        </span>
-      ),
-    }
-  })
+  const sectorOptions = SECTOR_INDEX.map((sector) => ({
+    value: sector.slug,
+    label: resolveCopy(sector.title, language),
+    icon: <SectorTile icon={sector.icon} />,
+  }))
   const timeOptions = HOURS.map((hour) => ({ value: String(hour), label: timeLabel(hour, language) }))
   const methodOptions = CONSULTATION_METHODS.map((method) => ({
     value: method.id,
@@ -210,7 +196,7 @@ export function BookingForm() {
               autoComplete="tel"
               dir="ltr"
             />
-            <SelectField field={field('country')} label={text.country} options={countryOptions} required />
+            <SelectField field={field('country')} label={text.country} options={countryOptions(language)} required />
           </div>
         </div>
 

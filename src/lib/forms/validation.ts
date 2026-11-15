@@ -15,7 +15,8 @@ const MESSAGES = {
     'اكتب رقم الهاتف بالأرقام فقط (7 أرقام على الأقل)، ويمكن أن يبدأ بعلامة +.',
     'Use digits only (at least 7); the number may start with +.',
   ),
-  minLength: proposed('اكتب {n} أحرف على الأقل.', 'Write at least {n} characters.'),
+  /* «حرفًا» suits the counts the forms use (11 and up). */
+  minLength: proposed('اكتب {n} حرفًا على الأقل.', 'Write at least {n} characters.'),
   pastDate: proposed('اختر اليوم أو تاريخًا بعده.', 'Choose today or a later date.'),
   friday: proposed(
     'يوم الجمعة إجازة؛ اختر يومًا من السبت إلى الخميس.',

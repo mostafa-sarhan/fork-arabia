@@ -3,20 +3,36 @@ import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { FieldShell, type FieldBinding } from './Field'
 import { FORM_COPY } from './formCopy'
-import { Select, type SelectOption } from './Select'
+import { Select, type SelectGroup, type SelectOption } from './Select'
 
 type SelectFieldProps = {
   /** From `useForm().field(name)`. */
   field: FieldBinding
   label: string
-  options: readonly SelectOption[]
+  /** A flat list of options, or `groups` of them under headings. */
+  options?: readonly SelectOption[]
+  groups?: readonly SelectGroup[]
+  /** A search box at the top of the list. */
+  searchable?: boolean
+  /** With nothing chosen, the list opens scrolled to this group. */
+  openAtGroup?: string
   required?: boolean
   hint?: string
   className?: string
 }
 
 /** A dropdown field, opening on a muted "Select an option". */
-export function SelectField({ field, label, options, required, hint, className }: SelectFieldProps) {
+export function SelectField({
+  field,
+  label,
+  options,
+  groups,
+  searchable,
+  openAtGroup,
+  required,
+  hint,
+  className,
+}: SelectFieldProps) {
   const id = useId()
   const { language } = useLanguage()
 
@@ -38,6 +54,9 @@ export function SelectField({ field, label, options, required, hint, className }
           value={field.value}
           onChange={field.setValue}
           options={options}
+          groups={groups}
+          searchable={searchable}
+          openAtGroup={openAtGroup}
           placeholder={resolveCopy(FORM_COPY.choose, language)}
         />
       )}

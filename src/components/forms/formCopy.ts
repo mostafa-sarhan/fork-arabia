@@ -16,6 +16,13 @@ export const FORM_COPY = {
   /* The first, empty option of a select. */
   choose: proposed('اختر من القائمة', 'Select an option'),
 
+  /* A searchable dropdown's search box, and its empty result. */
+  search: proposed('اكتب للبحث', 'Type to search'),
+  noResults: proposed('لا توجد نتائج', 'No results'),
+
+  /* The success dialog's title, for every form. */
+  successTitle: proposed('تم إرسال طلبك بنجاح', 'Your request has been sent'),
+
   /* At the top of a form submitted with fields to fix. */
   incomplete: proposed('يرجى استكمال الحقول المطلوبة', 'Please complete the required fields.'),
 
