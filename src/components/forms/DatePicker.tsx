@@ -11,6 +11,7 @@ import {
   todayValue,
   weekdayHeads,
 } from '@/lib/forms/dates'
+import { useIsClient } from '@/lib/useIsClient'
 import { localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import {
@@ -98,6 +99,9 @@ export function DatePicker({
   const panelRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLTableElement>(null)
   const [open, setOpen] = useState(false)
+  /* The month and its days depend on today, which the prerender cannot
+     know: the panel (closed until asked) is filled in the browser only. */
+  const isClient = useIsClient()
   const today = todayValue()
   const [focused, setFocused] = useState(value || today)
   const moveFocus = useRef(false)
@@ -230,6 +234,8 @@ export function DatePicker({
         style={{ insetInlineStart: shift }}
         className={panelClass(open, side, PANEL)}
       >
+        {isClient ? (
+        <>
         <div className={HEADER}>
           <button
             type="button"
@@ -292,6 +298,8 @@ export function DatePicker({
             ))}
           </tbody>
         </table>
+        </>
+        ) : null}
       </div>
     </div>
   )

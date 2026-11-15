@@ -1,4 +1,3 @@
-import { useParams } from 'react-router'
 import { ConsultationCta } from '@/components/sections/ConsultationCta'
 import { MethodologySection } from '@/components/sections/MethodologySection'
 import { CONSULTATION_INVITE } from '@/config/consultation'
@@ -18,13 +17,11 @@ import { SectorServices } from './sections/SectorServices'
 import { WhyForkStrip } from './sections/WhyForkStrip'
 
 /**
- * One sector's page, for every `/services/:slug`. An unknown slug is not a
- * sector with no content, it is a page that does not exist, so it renders
- * the 404. Keyed by slug, so moving to another sector starts its filter
- * afresh.
+ * One sector's page; the router gives each sector in config/routes.ts its
+ * own route and slug. A slug with no sector renders the 404. Keyed by slug,
+ * so moving to another sector starts its filter afresh.
  */
-export default function SectorPage() {
-  const { slug } = useParams()
+export default function SectorPage({ slug }: { slug: string }) {
   const sector = getSectorBySlug(slug)
 
   if (!sector) {

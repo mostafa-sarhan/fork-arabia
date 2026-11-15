@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router'
+import { SITE_ROUTES, type SiteRoute } from '@/config/routes'
 import { SiteLayout } from '@/layouts/SiteLayout'
 import AboutPage from '@/pages/about/AboutPage'
 import BookConsultationPage from '@/pages/book-consultation/BookConsultationPage'
@@ -20,17 +21,44 @@ const ServicesPage = lazy(() => import('@/pages/services/ServicesPage'))
 const SectorPage = lazy(() => import('@/pages/sector/SectorPage'))
 
 
+/** The component that draws each kind of page in config/routes.ts. */
+function pageFor(route: SiteRoute) {
+  switch (route.page) {
+    case 'home':
+      return <HomePage />
+    case 'about':
+      return <AboutPage />
+    case 'services':
+      return <ServicesPage />
+    case 'sector':
+      return <SectorPage slug={route.slug} />
+    case 'presence':
+      return <PresencePage />
+    case 'bookConsultation':
+      return <BookConsultationPage />
+    case 'requestQuote':
+      return <RequestQuotePage />
+    case 'contact':
+      return <ContactPage />
+    case 'privacy':
+      return <PrivacyPage />
+  }
+}
+
+/*
+ * The site's pages from the one routes list, plus two that are not in it:
+ * the design-system reference (never prerendered or listed; it lives in
+ * the browser only) and the 404 for everything else.
+ */
 const pages = (
   <>
-    <Route index element={<HomePage />} />
-    <Route path="about" element={<AboutPage />} />
-    <Route path="services" element={<ServicesPage />} />
-    <Route path="services/:slug" element={<SectorPage />} />
-    <Route path="presence" element={<PresencePage />} />
-    <Route path="contact" element={<ContactPage />} />
-    <Route path="book-consultation" element={<BookConsultationPage />} />
-    <Route path="request-quote" element={<RequestQuotePage />} />
-    <Route path="privacy" element={<PrivacyPage />} />
+    {SITE_ROUTES.map((route) =>
+      route.path === '/' ? (
+        <Route key={route.path} index element={pageFor(route)} />
+      ) : (
+        <Route key={route.path} path={route.path.slice(1)} element={pageFor(route)} />
+      ),
+    )}
     <Route path="design-system" element={<DesignSystemPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </>

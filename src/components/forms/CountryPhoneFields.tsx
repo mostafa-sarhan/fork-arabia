@@ -3,6 +3,7 @@ import { phonePrefix } from '@/lib/forms/phone'
 import { COUNTRY_FIRST } from '@/lib/forms/validation'
 import { localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import { useIsClient } from '@/lib/useIsClient'
 import { countryOptions, rankCountry } from './countryOptions'
 import type { FieldBinding } from './Field'
 import { FORM_COPY } from './formCopy'
@@ -40,13 +41,17 @@ export function CountryPhoneFields({ country, phone }: CountryPhoneFieldsProps) 
   }, [focusRequest])
 
   const isLocked = !country.value
+  /* Country names come from the browser's own Intl data, which the build's
+     differs from ("Hong Kong SAR China" / "Hong Kong"), so the list is
+     filled in the browser only; closed, the field looks the same. */
+  const isClient = useIsClient()
 
   return (
     <>
       <SelectField
         field={country}
         label={text.country}
-        options={countryOptions(language)}
+        options={isClient ? countryOptions(language) : []}
         searchable
         rank={rankCountry}
         required

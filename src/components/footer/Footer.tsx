@@ -28,7 +28,16 @@ import { useLanguageOptions, useLanguageSwap } from '@/lib/i18n/languageSwap'
 import type { TranslationKey } from '@/lib/i18n/translations'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
+/*
+ * The copyright year. The prerendered page carries the build's year; a
+ * visitor's browser after New Year may know a later one, which is the
+ * one difference allowed here (React keeps the prerendered text).
+ */
 const YEAR = new Date().getFullYear()
+
+function Year() {
+  return <span suppressHydrationWarning>{YEAR}</span>
+}
 
 /**
  * One link treatment for the whole footer. The focus ring is turquoise
@@ -314,7 +323,7 @@ function MobileFooter() {
         {/* One line while both halves fit, two neat lines when they do not. */}
         <Container className="flex flex-wrap items-center justify-between gap-x-4 py-3 text-caption">
           <LegalLine>
-            © {YEAR} {t('brand.legal')}
+            © <Year /> {t('brand.legal')}
           </LegalLine>
           <LanguageCodes />
         </Container>
@@ -444,7 +453,7 @@ function WideFooter() {
       <div className="border-t border-white/10">
         <Container className="flex flex-col items-center justify-between gap-2 py-5 text-caption sm:flex-row">
           <LegalLine>
-            © {YEAR} {t('brand.legal')}. {t('footer.rights')}
+            © <Year /> {t('brand.legal')}. {t('footer.rights')}
           </LegalLine>
           <span className="flex items-center gap-5">
             <LanguageFooterLink />
