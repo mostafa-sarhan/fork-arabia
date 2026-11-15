@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { Logo } from '@/components/brand/Logo'
 import { Container } from '@/components/layout/Container'
 import { LocalizedLink } from '@/components/LocalizedLink'
+import { SocialLinks } from '@/components/SocialLinks'
 import {
   ChatIcon,
   MailIcon,
@@ -10,11 +11,7 @@ import {
   type IconProps,
 } from '@/components/ui/icons'
 import { BRAND_DOMAIN } from '@/config/brand'
-import {
-  publishedSocials,
-  SITE_CONTACT,
-  type ContactChannel,
-} from '@/config/contact'
+import { SITE_CONTACT, type ContactChannel } from '@/config/contact'
 import { FOOTER_NAV } from '@/config/navigation'
 import { sectorPath } from '@/config/paths'
 import { SITE_URL } from '@/config/site'
@@ -43,6 +40,11 @@ const footerLink =
 /** The same ring on a filled control, which carries its own radius. */
 const footerFocus =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2 focus-visible:ring-offset-navy'
+
+/* The social icons under the brand description: at the inline start on
+   the wide footer, centred in the mobile footer's centred brand block. */
+const SOCIAL_ROW_WIDE = 'mt-6'
+const SOCIAL_ROW_MOBILE = 'mt-6 justify-center'
 
 /** A contact channel by id, so no number is written twice. */
 function channelById(id: ContactChannel['id']) {
@@ -186,7 +188,6 @@ function LanguageCodes() {
  */
 function MobileFooter() {
   const { t } = useLanguage()
-  const socials = publishedSocials()
 
   return (
     <div className="md:hidden">
@@ -201,6 +202,9 @@ function MobileFooter() {
             value={FOOTER_DESCRIPTION}
             className="mt-4 max-w-measure text-body-sm text-pretty"
           />
+
+          {/* Centred, as the logo and description above it. */}
+          <SocialLinks className={SOCIAL_ROW_MOBILE} />
         </div>
 
         <ul className="mt-6 grid grid-cols-3 gap-2">
@@ -285,25 +289,6 @@ function MobileFooter() {
           <div className="border-t border-white/10" />
         </div>
 
-        {socials.length > 0 ? (
-          <ul className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            {socials.map((network) => (
-              <li key={network.id}>
-                <a
-                  href={network.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    'flex min-h-11 items-center rounded-lg bg-white/10 px-4 text-body-sm font-medium text-on-navy transition-colors duration-200 hover:bg-white/15',
-                    footerFocus,
-                  )}
-                >
-                  {network.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
       </Container>
 
       <div className="border-t border-white/10">
@@ -366,7 +351,6 @@ function LanguageFooterLink() {
 /** The four-column footer, from the tablet breakpoint up. */
 function WideFooter() {
   const { t } = useLanguage()
-  const socials = publishedSocials()
 
   return (
     <div className="hidden md:block">
@@ -386,27 +370,7 @@ function WideFooter() {
               className="mt-5 max-w-measure text-body-sm text-pretty"
             />
 
-            {socials.length > 0 ? (
-              <>
-                <h2 className="mt-6 text-overline tracking-latin-wide text-on-navy">
-                  {t('footer.social')}
-                </h2>
-                <ul className="mt-3 flex flex-wrap items-center gap-4">
-                  {socials.map((network) => (
-                    <li key={network.id}>
-                      <a
-                        href={network.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(footerLink, 'text-body-sm font-medium')}
-                      >
-                        {network.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : null}
+            <SocialLinks className={SOCIAL_ROW_WIDE} />
           </div>
 
           <Column title={t('footer.quickLinks')}>

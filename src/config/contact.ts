@@ -53,27 +53,3 @@ export const SITE_CONTACT = [
     external: false,
   },
 ] as const satisfies ReadonlyArray<ContactChannel>
-
-export type SocialNetwork = {
-  readonly id: 'instagram' | 'facebook' | 'tiktok'
-  /** A brand name, the same in both languages. */
-  readonly label: string
-  /**
-   * The client has not supplied these yet. An empty string is the "not
-   * known" state on purpose: it is required, so the field cannot be
-   * forgotten, and `publishedSocials()` hides any link that still has one
-   * rather than publishing a dead href.
-   */
-  readonly url: string
-}
-
-export const SOCIAL_NETWORKS = [
-  { id: 'instagram', label: 'Instagram', url: '' },
-  { id: 'facebook', label: 'Facebook', url: '' },
-  { id: 'tiktok', label: 'TikTok', url: '' },
-] as const satisfies ReadonlyArray<SocialNetwork>
-
-/** Only the networks whose address is known. */
-export function publishedSocials(): readonly SocialNetwork[] {
-  return SOCIAL_NETWORKS.filter((network) => network.url !== '')
-}

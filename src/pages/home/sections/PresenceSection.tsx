@@ -4,14 +4,15 @@ import { Container } from '@/components/layout/Container'
 import { BUTTON_MOTION } from '@/components/ui/Button'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LinkArrow } from '@/components/ui/LinkArrow'
+import { OFFICES } from '@/config/offices'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
- * Everything this section says. The offices and countries are here
- * because nothing else in the site holds them yet.
+ * Everything this section says. The offices come from config/offices.ts;
+ * the countries are here because nothing else in the site holds them yet.
  *
  * Arabic is transcribed from the client's storyboard and English from the
  * company profile. `draft` marks English written here because the profile
@@ -23,24 +24,21 @@ const COPY = {
   countLine: draft('نقدم خدماتنا في 8 دول', 'We serve clients in 8 countries'),
   link: draft('عناوين المكاتب', 'Office Addresses'),
 
-  offices: [
-    {
-      label: draft('المقر الرئيسي', 'Head Office'),
-      city: draft('الرياض، السعودية', 'Riyadh, Saudi Arabia'),
-      address: draft(
-        'المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110',
-        'Al Murabba, Al Wisham District, Al Washm Tower, Al Rajhi Awqaf Building, Office 110',
-      ),
-    },
-    {
-      label: draft('فرع', 'Branch'),
-      city: draft('طنطا، مصر', 'Tanta, Egypt'),
-      address: draft(
-        'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر',
-        'Station Square, Abdel Moneim Riad Towers, Tower A, 11th Floor',
-      ),
-    },
-  ],
+  /*
+   * The storyboard's short form of each office's address, for this card.
+   * The office's label and city, and its full address, live in
+   * config/offices.ts.
+   */
+  cardAddresses: {
+    riyadh: draft(
+      'المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110',
+      'Al Murabba, Al Wisham District, Al Washm Tower, Al Rajhi Awqaf Building, Office 110',
+    ),
+    tanta: draft(
+      'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر',
+      'Station Square, Abdel Moneim Riad Towers, Tower A, 11th Floor',
+    ),
+  },
 
   /* The three tags a country can carry; each country names one by key. */
   tags: {
@@ -96,7 +94,7 @@ const LINK_MOBILE =
  * The two offices. Stacked below 1024 with a hairline between them; side
  * by side from 1024 with a vertical hairline (divide-x is logical in v4).
  */
-const OFFICES =
+const OFFICE_GRID =
   'mt-10 border-t border-white/12 pt-10 grid lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/12'
 const OFFICE =
   'flex flex-col gap-2 py-6 first:pt-0 last:pb-0 lg:py-0 lg:first:pe-12 lg:last:ps-12'
@@ -156,15 +154,15 @@ export function PresenceSection() {
         </Reveal>
 
         {/* The two offices, after the header. */}
-        <Reveal delay={120} className={OFFICES}>
-          {text.offices.map((office) => (
-            <div key={office.city} className={OFFICE}>
+        <Reveal delay={120} className={OFFICE_GRID}>
+          {OFFICES.map((office) => (
+            <div key={office.id} className={OFFICE}>
               <p className="flex items-center gap-2 text-body-sm font-bold text-turquoise-soft">
                 <Dot />
-                {office.label}
+                {resolveCopy(office.label, language)}
               </p>
-              <h3 className="text-h3 font-extrabold text-white">{office.city}</h3>
-              <address className={ADDRESS}>{office.address}</address>
+              <h3 className="text-h3 font-extrabold text-white">{resolveCopy(office.city, language)}</h3>
+              <address className={ADDRESS}>{text.cardAddresses[office.id]}</address>
             </div>
           ))}
         </Reveal>

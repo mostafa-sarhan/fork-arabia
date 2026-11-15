@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-111 strings await approval.
+113 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -87,6 +87,12 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `method` | استشارة مجانية مدتها 50 دقيقة، من السبت للخميس، 10 صباحًا إلى 6 مساءً بتوقيت السعودية. | A free 50-minute consultation, Saturday to Thursday, 10 am to 6 pm Saudi time. | `consultation.ts` |
 | `method` | احجز استشارة مجانية وفريقنا يحدد معاك الخدمات المناسبة لاحتياجك. | Book a free consultation and our team will help you identify the services that fit your needs. | `consultation.ts` |
 | `method` | استشارة مجانية | free consultation | `consultation.ts` |
+| `riyadh` | المقر الرئيسي | Head Office | `offices.ts` |
+| `riyadh` | الرياض، السعودية | Riyadh, Saudi Arabia | `offices.ts` |
+| `riyadh` | الرياض، المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، المدخل التجاري للشركات، شركة فورك العربية، مكتب 110 | Office 110, FORK ARABIA, Corporate Business Entrance, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham District, Al Murabba, Riyadh | `offices.ts` |
+| `tanta` | فرع | Branch | `offices.ts` |
+| `tanta` | طنطا، مصر | Tanta, Egypt | `offices.ts` |
+| `tanta` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر (أعلى هيئة قضايا الدولة)، طنطا، الغربية | 11th Floor, Tower A, Abdel Moneim Riad Towers (above the State Lawsuits Authority), Station Square, Tanta, Gharbia | `offices.ts` |
 | `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `HeroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `HeroSection.tsx` |
 | `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
@@ -105,11 +111,7 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | تواجدنا | Our Presence | `PresenceSection.tsx` |
 | `—` | نقدم خدماتنا في 8 دول | We serve clients in 8 countries | `PresenceSection.tsx` |
 | `—` | عناوين المكاتب | Office Addresses | `PresenceSection.tsx` |
-| `—` | المقر الرئيسي | Head Office | `PresenceSection.tsx` |
-| `—` | الرياض، السعودية | Riyadh, Saudi Arabia | `PresenceSection.tsx` |
 | `—` | المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110 | Al Murabba, Al Wisham District, Al Washm Tower, Al Rajhi Awqaf Building, Office 110 | `PresenceSection.tsx` |
-| `—` | فرع | Branch | `PresenceSection.tsx` |
-| `—` | طنطا، مصر | Tanta, Egypt | `PresenceSection.tsx` |
 | `—` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر | Station Square, Abdel Moneim Riad Towers, Tower A, 11th Floor | `PresenceSection.tsx` |
 | `—` | مقر رئيسي | Head office | `PresenceSection.tsx` |
 | `—` | فرع | Branch | `PresenceSection.tsx` |

@@ -34,6 +34,7 @@ const FILES = [
   'src/data/siteCopy.ts',
   'src/data/whyFork.ts',
   'src/config/consultation.ts',
+  'src/config/offices.ts',
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
   'src/pages/home/sections/AboutSection.tsx',
