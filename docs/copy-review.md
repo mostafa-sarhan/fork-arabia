@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-211 strings await approval.
+215 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -24,6 +24,10 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | للرد | to reply | `consultation.ts` |
 | خريطة مقر الرياض | Map of the Riyadh head office | `offices.ts` |
 | خريطة فرع طنطا | Map of the Tanta branch | `offices.ts` |
+| مرحبًا، أود الاستفسار عن خدمات فورك العربية. | Hello, I’d like to ask about FORK ARABIA’s services. | `whatsapp.ts` |
+| مرحبًا، أود الاستفسار عن خدماتكم. | Hello, I’d like to ask about your services. | `whatsapp.ts` |
+| مرحبًا، أود الاستفسار عن خدمات {sector}. | Hello, I’d like to ask about {sector}. | `whatsapp.ts` |
+| مرحبًا، أود معرفة المزيد عن مكاتبكم وفروعكم. | Hello, I’d like to know more about your offices and branches. | `whatsapp.ts` |
 | سنة التأسيس | Year founded | `AboutPage.tsx` |
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
@@ -159,6 +163,7 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `ae` | الأردن | Jordan | `countries.ts` |
 | `ae` | الولايات المتحدة | United States | `countries.ts` |
 | `ae` | جنوب أفريقيا | South Africa | `countries.ts` |
+| `—` | راسلنا على واتساب | Message us on WhatsApp | `whatsapp.ts` |
 | `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `HeroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `HeroSection.tsx` |
 | `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
@@ -204,7 +209,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | البريد الإلكتروني | Email | `formCopy.ts` |
 | `—` | رقم الهاتف | Phone number | `formCopy.ts` |
 | `—` | الدولة | Country | `formCopy.ts` |
-| `—` | راسلنا على واتساب | Message us on WhatsApp | `WhatsAppButton.tsx` |
 | `—` | حجز استشارة | Book a consultation | `BookConsultationPage.tsx` |
 | `—` | احجز استشارة مجانية | Book a free consultation | `BookConsultationPage.tsx` |
 | `—` | املأ البيانات وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Fill in your details and our team will contact you within one business day to confirm the appointment. | `BookConsultationPage.tsx` |

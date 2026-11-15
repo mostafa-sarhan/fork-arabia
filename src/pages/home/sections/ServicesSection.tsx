@@ -66,7 +66,7 @@ export function ServicesSection() {
           </Reveal>
 
           <Reveal className={BUTTON_SLOT}>
-            <LocalizedLink to={PATHS.services} className={cn(BUTTON, BUTTON_MOTION)}>
+            <LocalizedLink to={PATHS.services} className={cn(BUTTON, BUTTON_MOTION)} data-cta>
               {text.button}
               <LinkArrow className="size-4.5" />
             </LocalizedLink>

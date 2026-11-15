@@ -129,6 +129,7 @@ export function AboutSection() {
             <LocalizedLink
               to={PATHS.about}
               className={cn(LINK, BUTTON_MOTION, LINK_MOBILE, LINK_DESKTOP)}
+              data-cta
             >
               {text.link}
               <LinkArrow className="size-4.5" />

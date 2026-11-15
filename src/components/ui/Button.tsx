@@ -129,6 +129,10 @@ function buttonClassName({
  * props: `to` for an internal route, `href` for anything else, neither for
  * a button.
  */
+/*
+ * Every button carries `data-cta`, as do the few links drawn as buttons by
+ * hand, so the floating WhatsApp button can step aside rather than cover one.
+ */
 export function Button(props: ButtonProps) {
   const className = buttonClassName(props)
 
@@ -143,7 +147,7 @@ export function Button(props: ButtonProps) {
     } = props
 
     return (
-      <LocalizedLink to={to} className={className} {...rest}>
+      <LocalizedLink to={to} className={className} data-cta {...rest}>
         {props.children}
       </LocalizedLink>
     )
@@ -171,6 +175,7 @@ export function Button(props: ButtonProps) {
          */
         rel={target === '_blank' ? (rel ?? 'noopener noreferrer') : rel}
         className={className}
+        data-cta
         {...rest}
       >
         {props.children}
@@ -196,6 +201,7 @@ export function Button(props: ButtonProps) {
       className={className}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
+      data-cta
       {...rest}
     >
       {loading ? <Spinner className="size-4" /> : null}

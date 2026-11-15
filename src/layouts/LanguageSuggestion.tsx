@@ -120,6 +120,7 @@ export function LanguageSuggestion() {
     <LanguageSuggestionCard
       ref={cardRef}
       onDismiss={dismiss}
+      floating
       className={cn(
         'fixed inset-x-gutter bottom-gutter z-toast ms-auto',
         'motion-safe:animate-fade-up',
@@ -136,16 +137,20 @@ export function LanguageSuggestionCard({
   ref,
   className,
   onDismiss,
+  floating = false,
 }: {
   ref?: React.Ref<HTMLDivElement>
   className?: string
   onDismiss?: () => void
+  /** Fixed in the bottom corner: marked so the floating WhatsApp button steps aside. */
+  floating?: boolean
 }) {
   const swap = useLanguageSwap()
 
   return (
     <div
       ref={ref}
+      data-bottom-overlay={floating || undefined}
       role="region"
       aria-label={swap.suggestion}
       lang={swap.language}

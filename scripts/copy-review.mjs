@@ -36,6 +36,7 @@ const FILES = [
   'src/config/consultation.ts',
   'src/config/offices.ts',
   'src/config/countries.ts',
+  'src/config/whatsapp.ts',
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
   'src/pages/home/sections/AboutSection.tsx',

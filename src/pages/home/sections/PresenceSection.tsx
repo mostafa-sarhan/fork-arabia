@@ -185,7 +185,7 @@ export function PresenceSection() {
 
         {/* Below 1024 the link moves to the foot of the section. */}
         <Reveal className="lg:hidden mt-10">
-          <LocalizedLink to={PATHS.presence} className={cn(LINK_MOBILE, BUTTON_MOTION)}>
+          <LocalizedLink to={PATHS.presence} className={cn(LINK_MOBILE, BUTTON_MOTION)} data-cta>
             {text.link}
             <LinkArrow className="size-4.5" />
           </LocalizedLink>
