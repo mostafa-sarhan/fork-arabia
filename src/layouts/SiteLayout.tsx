@@ -5,6 +5,7 @@ import { InertWhileMenuOpen, Navbar, NavbarProvider } from '@/components/navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { SkipLink } from '@/components/ui/SkipLink'
 import { JsonLd } from '@/components/JsonLd'
+import { Analytics } from '@/lib/analytics'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { organizationJsonLd } from '@/lib/seo/structuredData'
 import { useDocumentHead } from '@/lib/seo/useDocumentHead'
@@ -51,6 +52,9 @@ export function SiteLayout() {
 
       {/* The company, as schema.org data, on every page. */}
       <JsonLd data={organizationJsonLd(language)} />
+
+      {/* Anonymous page views, Web Vitals and contact clicks (lib/analytics.tsx), in the browser only. */}
+      <Analytics />
     </NavbarProvider>
   )
 }

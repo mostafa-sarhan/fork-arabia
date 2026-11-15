@@ -69,6 +69,7 @@ export function ContactForm() {
     },
     send: (sent, botcheck) =>
       submitForm({
+        form: 'contact',
         subject: `رسالة تواصل — ${sent.name.trim()}`,
         replyTo: sent.email.trim(),
         language,

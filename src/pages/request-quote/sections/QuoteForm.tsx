@@ -94,6 +94,7 @@ export function QuoteForm() {
     },
     send: (sent, botcheck) =>
       submitForm({
+        form: 'quote',
         subject: `طلب عرض سعر — ${sent.name.trim()}`,
         replyTo: sent.email.trim(),
         language,

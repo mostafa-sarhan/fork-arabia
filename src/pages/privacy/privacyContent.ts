@@ -70,8 +70,8 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     title: proposed('كيف تُرسل بياناتك وأين تُحفظ', 'How it is sent and stored'),
     paragraphs: [
       proposed(
-        'عند إرسال أي نموذج، تصل بياناتك إلى بريدنا الإلكتروني عبر خدمة نماذج خارجية (Web3Forms). ويُستضاف الموقع على منصة Vercel.',
-        'When you send a form, your information reaches our inbox by email through a form service (Web3Forms). The website is hosted on Vercel.',
+        'عند إرسال أي نموذج، تصل بياناتك إلى بريدنا الإلكتروني عبر خدمة نماذج خارجية (Web3Forms). ويُستضاف الموقع على منصة Vercel، التي توفر أيضًا إحصاءات الزيارة المجهولة (Vercel Web Analytics وSpeed Insights) دون ملفات تعريف الارتباط.',
+        'When you send a form, your information reaches our inbox by email through a form service (Web3Forms). The website is hosted on Vercel, which also provides the anonymous visit statistics (Vercel Web Analytics and Speed Insights), with no cookies.',
       ),
     ],
   },

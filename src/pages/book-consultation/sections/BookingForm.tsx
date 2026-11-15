@@ -126,6 +126,7 @@ export function BookingForm() {
     },
     send: (sent, botcheck) =>
       submitForm({
+        form: 'booking',
         subject: `حجز استشارة — ${sent.name.trim()}`,
         replyTo: sent.email.trim(),
         language,

@@ -45,7 +45,7 @@ for the change. They are approved copy, not a transcription mismatch.
 | لماذا نستخدمها | Why we use it | `privacyContent.ts` |
 | نستخدم بيانات النماذج للرد على طلباتك واستفساراتك، وتحديد مواعيد الاستشارات، وإرسال عروض الأسعار. ونستخدم إحصاءات الزيارة لفهم كيفية استخدام الموقع وتحسينه. | We use what you send in the forms to reply to your requests and questions, schedule consultations and send quotes. We use the visit statistics to understand how the site is used and to improve it. | `privacyContent.ts` |
 | كيف تُرسل بياناتك وأين تُحفظ | How it is sent and stored | `privacyContent.ts` |
-| عند إرسال أي نموذج، تصل بياناتك إلى بريدنا الإلكتروني عبر خدمة نماذج خارجية (Web3Forms). ويُستضاف الموقع على منصة Vercel. | When you send a form, your information reaches our inbox by email through a form service (Web3Forms). The website is hosted on Vercel. | `privacyContent.ts` |
+| عند إرسال أي نموذج، تصل بياناتك إلى بريدنا الإلكتروني عبر خدمة نماذج خارجية (Web3Forms). ويُستضاف الموقع على منصة Vercel، التي توفر أيضًا إحصاءات الزيارة المجهولة (Vercel Web Analytics وSpeed Insights) دون ملفات تعريف الارتباط. | When you send a form, your information reaches our inbox by email through a form service (Web3Forms). The website is hosted on Vercel, which also provides the anonymous visit statistics (Vercel Web Analytics and Speed Insights), with no cookies. | `privacyContent.ts` |
 | مشاركة البيانات | Sharing | `privacyContent.ts` |
 | لا نبيع بياناتك، ولا نشاركها مع أي جهة لأغراض تسويقية. | We do not sell your information, and we do not share it with anyone for marketing. | `privacyContent.ts` |
 | مدة الاحتفاظ | How long we keep it | `privacyContent.ts` |

@@ -1,3 +1,4 @@
+import { track } from '@/lib/analytics'
 import type { Language } from '@/lib/i18n/languageConfig'
 
 /*
@@ -13,6 +14,8 @@ const FROM_NAME = 'FORK ARABIA Website'
 const LANGUAGE_NAMES: Record<Language, string> = { ar: 'العربية', en: 'English' }
 
 export type FormSubmission = {
+  /** Which form, for the anonymous form_submitted event. */
+  form: 'booking' | 'quote' | 'contact'
   /** The email's subject line. */
   subject: string
   /** The visitor's email, so a reply goes straight to them. */
@@ -54,8 +57,12 @@ export async function submitForm(submission: FormSubmission): Promise<boolean> {
       }),
     })
     const result: { success?: boolean } = await response.json()
+    const sent = response.ok && result.success === true
 
-    return response.ok && result.success === true
+    /* Counted only when it really arrived, and never for the honeypot: which form and the page language, nothing the visitor typed. */
+    if (sent && !submission.botcheck) track('form_submitted', { form: submission.form, lang: submission.language })
+
+    return sent
   } catch {
     return false
   }
