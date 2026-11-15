@@ -20,9 +20,15 @@ const WATERMARK = '-end-8 -bottom-10 h-45 lg:-end-12 lg:-bottom-16 lg:h-70'
 /* Text and buttons beside the tiles from 1024; stacked below. */
 const LAYOUT = 'relative grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-14'
 
-/* The six details: 2 × 3 on phones, 3 × 2 from 768. */
-const TILES = 'grid grid-cols-2 md:grid-cols-3 gap-2.5 lg:gap-3'
-const TILE = 'flex flex-col-reverse justify-end rounded-xl bg-surface px-4 py-3.5'
+/*
+ * The six details. Each tile is as wide as its own label and value, which
+ * never wrap; the row wraps instead and the tiles grow to fill each line,
+ * so narrower widths get fewer tiles per line, never squeezed text.
+ */
+const TILES = 'flex flex-wrap gap-2.5 lg:gap-3'
+const TILE = 'flex flex-auto flex-col-reverse justify-end rounded-xl bg-surface px-4 py-3.5'
+const TILE_LABEL = 'mt-1 whitespace-nowrap text-body-sm text-ink-muted'
+const TILE_VALUE = 'whitespace-nowrap text-body font-bold text-heading'
 
 /* Full width and stacked on phones, side by side from 640. */
 const BUTTON = 'h-13 w-full sm:w-auto'
@@ -67,8 +73,8 @@ export function ConsultationCta({ title, text }: { title: string; text: string }
             <dl className={TILES}>
               {details.map((detail) => (
                 <div key={detail.id} className={TILE}>
-                  <dt className="mt-1 text-body-sm text-ink-muted">{detail.label}</dt>
-                  <dd className="text-body font-bold text-heading">{detail.value}</dd>
+                  <dt className={TILE_LABEL}>{detail.label}</dt>
+                  <dd className={TILE_VALUE}>{detail.value}</dd>
                 </div>
               ))}
             </dl>
