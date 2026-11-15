@@ -30,4 +30,7 @@ export async function render(url: string): Promise<string> {
 }
 
 export { localizedRoutes } from './config/routes'
+export { COMPANY_DESCRIPTION } from './data/siteCopy'
 export { DIRECTIONS } from './lib/i18n/languageConfig'
+export { resolveCopy } from './lib/i18n/localized'
+export { headHtml, pageHead } from './lib/seo/pageHead'

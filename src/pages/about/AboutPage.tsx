@@ -4,7 +4,6 @@ import { MethodologySection } from '@/components/sections/MethodologySection'
 import { PartnersSection } from '@/components/sections/PartnersSection'
 import { copy, localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { IntroSection } from './sections/IntroSection'
 import { PhilosophySection } from './sections/PhilosophySection'
 import { ValuesSection } from './sections/ValuesSection'
@@ -39,7 +38,6 @@ const COPY = {
  * and the invitation to book.
  */
 export default function AboutPage() {
-  usePageMeta({ titleKey: 'nav.about', indexable: true })
 
   const { language, t } = useLanguage()
   const text = localizeAll(COPY, language)

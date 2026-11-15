@@ -6,7 +6,6 @@ import { getSectorDetail } from '@/data/sectors'
 import type { SectorDetail } from '@/data/sectors/types'
 import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import NotFoundPage from '@/pages/not-found/NotFoundPage'
 import { ResidencyBenefits } from './sections/ResidencyBenefits'
 import { ResidencyRole } from './sections/ResidencyRole'
@@ -41,12 +40,6 @@ function SectorSections({ sector }: { sector: SectorDetail }) {
   const { language } = useLanguage()
   const ctaTitle = resolveCopy(sector.ctaTitle, language)
   const hasServices = sector.services.length > 0
-
-  usePageMeta({
-    title: resolveCopy(sector.title, language),
-    description: resolveCopy(sector.summary, language),
-    indexable: true,
-  })
 
   return (
     <>

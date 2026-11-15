@@ -5,7 +5,6 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { cn } from '@/lib/cn'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import type { TranslationKey } from '@/lib/i18n/translations'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { ButtonSection } from './ButtonSection'
 import { ColorSection } from './ColorSection'
 import { ComponentSection } from './ComponentSection'
@@ -70,8 +69,6 @@ function useActiveSection(): string {
 export default function DesignSystemPage() {
   const { t, direction } = useLanguage()
   const active = useActiveSection()
-
-  usePageMeta({ titleKey: 'ds.title', indexable: false })
 
   return (
     <div className="min-h-main bg-page">

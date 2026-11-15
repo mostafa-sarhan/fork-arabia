@@ -4,7 +4,6 @@ import { PRIVACY_TITLE, PRIVACY_UPDATED } from '@/config/legal'
 import type { Language } from '@/lib/i18n/languageConfig'
 import { localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { PRIVACY_COPY, PRIVACY_EMAIL, PRIVACY_SECTIONS } from './privacyContent'
 
 /* The body on the plain surface, under the hero. */
@@ -74,8 +73,6 @@ export default function PrivacyPage() {
   const title = resolveCopy(PRIVACY_TITLE, language)
   const sections = localizeAll(PRIVACY_SECTIONS, language)
   const updated = text.updated.replace('{date}', formatUpdated(PRIVACY_UPDATED, language))
-
-  usePageMeta({ title, description: updated, indexable: true })
 
   return (
     <>

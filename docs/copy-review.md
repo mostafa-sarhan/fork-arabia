@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-248 strings await approval.
+265 strings await approval.
 
 ## Changed by client request
 
@@ -68,6 +68,7 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 
 | Proposed Arabic | Proposed English | File |
 | --- | --- | --- |
+| فورك العربية المحدودة شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية. نرافق الشركات والمستثمرين في السعودية ومصر والإمارات وعُمان منذ 2016. | FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman. | `siteCopy.ts` |
 | يوم عمل | 1 business day | `consultation.ts` |
 | للرد | to reply | `consultation.ts` |
 | خريطة مقر الرياض | Map of the Riyadh head office | `offices.ts` |
@@ -133,11 +134,28 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | خدمة واحدة | 1 service | `sectorCounts.ts` |
 | خدمات | services | `sectorCounts.ts` |
 | دول | countries | `sectorCounts.ts` |
-| الصفحة غير موجودة | Page not found | `NotFoundPage.tsx` |
 | ربما تم نقل الصفحة أو أن الرابط غير صحيح. | The page may have moved, or the link may be wrong. | `NotFoundPage.tsx` |
 | العودة إلى الرئيسية | Back to home | `NotFoundPage.tsx` |
 | تصفح خدماتنا | Browse our services | `NotFoundPage.tsx` |
 | روابط سريعة | Quick links | `NotFoundPage.tsx` |
+| الصفحة غير موجودة | Page not found | `seo.ts` |
+| شعار فورك العربية المحدودة وعبارة: خدمات مهنية متكاملة | The FORK ARABIA LIMITED logo and the line: Integrated Professional Services | `seo.ts` |
+| خدمات قانونية متكاملة للشركات والأفراد من فورك العربية في السعودية ومصر. | Legal support for companies and individuals from FORK ARABIA. | `seo.ts` |
+| نؤسس شركتك ونتابع تراخيصها ومتطلباتها الحكومية في السعودية ومصر والإمارات وعُمان. | We set up your company in Saudi Arabia, Egypt, the UAE and Oman. | `seo.ts` |
+| حلول مالية ومحاسبية متكاملة من فورك العربية للشركات في السعودية ومصر والخليج. | Integrated financial and accounting solutions for companies in Saudi Arabia and Egypt. | `seo.ts` |
+| نبني لشركتك حوكمة واضحة وهيكلًا تنظيميًا يدعم القرار والنمو المستدام، مع فورك العربية. | Clear governance and structures that support decisions and growth. | `seo.ts` |
+| نرافق مؤسستك من التخطيط والاعتماد إلى التميز المؤسسي والنمو المستدام، مع فورك العربية. | We guide your organization from planning and certification to lasting excellence. | `seo.ts` |
+| برامج عملية من فورك العربية تبني مهارات فرقكم وتواكب احتياجات سوق العمل. | Practical programs from FORK ARABIA that build your team’s skills. | `seo.ts` |
+| حلول تقنية حديثة من فورك العربية تساعد شركتك على العمل بكفاءة أعلى وتكلفة أقل. | Technology solutions from FORK ARABIA that help your business work faster and more efficiently. | `seo.ts` |
+| نتولى عنك المهام التشغيلية لتتفرغ لإدارة أعمالك، مع فورك العربية في السعودية ومصر والإمارات. | We take on the operational work so you can focus on growing and running your business. | `seo.ts` |
+| نرافقك في كل خطوة من تقديم الطلب حتى الإصدار، مع فورك العربية في الرياض. | We guide you through every step, from application to issue, from Riyadh. | `seo.ts` |
+| تعرّف على فورك العربية: شركة خدمات مهنية تأسست عام 2016، تقدم حلولًا قانونية ومالية وإدارية متكاملة للشركات في السعودية ومصر والإمارات وعُمان. | Meet FORK ARABIA: a professional services company founded in 2016, offering integrated legal, financial and administrative solutions across four countries. | `seo.ts` |
+| تسعة قطاعات تحت سقف واحد: قانونية، تأسيس، مالية، حوكمة، جودة، تدريب، تقنية، دعم تشغيلي، وإقامة مميزة. اختر القطاع واطلب الخدمة التي تحتاجها. | Nine sectors under one roof: legal, business setup, finance, governance, quality, training, technology, operations and premium residency. Find what you need. | `seo.ts` |
+| مقرنا الرئيسي في الرياض وفرعنا في طنطا، ونقدم خدماتنا في 8 دول. تعرّف على مكاتبنا وعناوينها وأرقام هواتفها وطرق التواصل معها، والدول الثماني التي نخدمها. | Our head office is in Riyadh, with a branch in Tanta and services in 8 countries. Find our offices, their addresses and contacts, and the countries we serve. | `seo.ts` |
+| احجز استشارة مجانية مع فريق فورك العربية: اختر القطاع والموعد المناسب، وسيتواصل معك فريقنا خلال يوم عمل واحد لتأكيد موعد الاستشارة وتفاصيلها. | Book a free consultation with FORK ARABIA: choose your sector and a convenient time, and our team will contact you within one working day to confirm it. | `seo.ts` |
+| اطلب عرض سعر من فورك العربية: اختر الخدمة التي تحتاجها واكتب تفاصيل طلبك، وسنرسل إليك عرض السعر المناسب على بريدك الإلكتروني في أقرب وقت ممكن. | Request a quote from FORK ARABIA: choose the service you need and describe your request, and we will email you a price quote as soon as possible. | `seo.ts` |
+| تواصل مع فورك العربية: فريقنا في الرياض وطنطا جاهز للرد على استفساراتك عبر الهاتف أو البريد الإلكتروني أو واتساب، أو أرسل لنا رسالتك من هنا. | Contact FORK ARABIA: our team in Riyadh and Tanta is ready to answer your questions by phone, email or WhatsApp, or you can send us a message here. | `seo.ts` |
+| سياسة الخصوصية لموقع فورك العربية: ما البيانات التي نجمعها عبر النماذج، ولماذا نجمعها، وكيف نرسلها ونحفظها، وحقوقك في الاطلاع عليها وتصحيحها وحذفها. | The FORK ARABIA privacy policy: what our forms collect, why we collect it, how it is sent and stored, and your rights to access, correct and delete your data. | `seo.ts` |
 | القطاع | Sector | `SectorHero.tsx` |
 | الكل | All | `SectorServices.tsx` |
 | تصفية الخدمات حسب الدولة | Filter services by country | `SectorServices.tsx` |
@@ -174,7 +192,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `premiumResidency` | رسوم سنوية | Limited duration | `premium-residency.ts` |
 | `premiumResidency` | رسم لمرة واحدة | Unlimited duration | `premium-residency.ts` |
 | `premiumResidency` | كفاءات | Talent | `premium-residency.ts` |
-| `—` | فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان. | FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman. | `siteCopy.ts` |
 | `—` | من الاستشارة للتنفيذ للمتابعة، مع فريق واحد | From consultation to implementation and follow-up, with one team | `whyFork.ts` |
 | `—` | شريك واحد | One Partner | `whyFork.ts` |
 | `—` | فهم الأسواق | Market Understanding | `whyFork.ts` |

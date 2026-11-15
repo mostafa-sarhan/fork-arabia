@@ -1,6 +1,5 @@
 import { CtaSection } from '@/components/sections/CtaSection'
 import { PartnersSection } from '@/components/sections/PartnersSection'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { AboutSection } from './sections/AboutSection'
 import { HeroSection } from './sections/HeroSection'
 import { PresenceSection } from './sections/PresenceSection'
@@ -17,7 +16,6 @@ import { WhyForkSection } from './sections/WhyForkSection'
  * the one page that takes no brand suffix.
  */
 export default function HomePage() {
-  usePageMeta({ titleKey: 'home.title', brandSuffix: false, indexable: true })
 
   return (
     <>

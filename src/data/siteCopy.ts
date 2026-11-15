@@ -1,4 +1,4 @@
-import { copy, draft, type Localized } from '@/lib/i18n/localized'
+import { copy, proposed, type Localized } from '@/lib/i18n/localized'
 
 /*
  * Standing copy that is the client's words rather than interface wording.
@@ -15,13 +15,14 @@ export const FOOTER_DESCRIPTION: Localized = copy(
 )
 
 /**
- * The site's own description, for the document head and the social card.
- *
- * index.html carries the Arabic of this string as the default a crawler
- * sees before any script runs; `usePageMeta` replaces it per language.
+ * The company in one sentence: the home page's description in search
+ * results and link previews, the default for any page without its own,
+ * and the app manifest's description (written in at build time by
+ * scripts/prerender.mjs). The one place to change how the company's
+ * fields are named («تقنية» awaits the client's confirmation).
  */
-export const SITE_DESCRIPTION: Localized = draft(
-  'فورك العربية شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية في السعودية ومصر والإمارات وعُمان.',
+export const COMPANY_DESCRIPTION: Localized = proposed(
+  'فورك العربية المحدودة شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية. نرافق الشركات والمستثمرين في السعودية ومصر والإمارات وعُمان منذ 2016.',
   'FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman.',
 )
 

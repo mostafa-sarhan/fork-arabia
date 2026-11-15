@@ -2,7 +2,6 @@ import { FormLayout } from '@/components/forms/FormLayout'
 import { PageHero } from '@/components/PageHero'
 import { draft, localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { ContactDetails } from './sections/ContactDetails'
 import { ContactForm } from './sections/ContactForm'
 
@@ -34,8 +33,6 @@ export default function ContactPage() {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
   const steps = localizeAll(STEPS, language)
-
-  usePageMeta({ title: text.title, description: text.lead, indexable: true })
 
   return (
     <>

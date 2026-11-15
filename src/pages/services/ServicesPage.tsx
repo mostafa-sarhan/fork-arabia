@@ -12,7 +12,6 @@ import type { SectorDetail } from '@/data/sectors/types'
 import type { Language } from '@/lib/i18n/languageConfig'
 import { copy, draft, localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { countriesWord, servicesCount } from '@/pages/sector/sectorCounts'
 import { countriesOf } from '@/pages/sector/serviceGroups'
 
@@ -69,8 +68,6 @@ const COUNTRY_PILL =
 export default function ServicesPage() {
   const { language, t } = useLanguage()
   const text = localizeAll(COPY, language)
-
-  usePageMeta({ titleKey: 'nav.services', description: text.lead, indexable: true })
 
   const facts: PageHeroFact[] = [
     { value: String(SECTORS.length), label: text.sectorsWord },

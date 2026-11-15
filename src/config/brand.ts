@@ -7,5 +7,5 @@ import { SITE_URL } from '@/config/site'
  */
 export const BRAND_FULL_NAME = 'FORK ARABIA LIMITED — فورك العربية المحدودة'
 
-/** The bare host, for printing the address. `SITE_URL` is the link itself. */
-export const BRAND_DOMAIN = new URL(SITE_URL).host
+/** The bare host, for printing the address ("forkarabia.sa"). `SITE_URL` is the link itself. */
+export const BRAND_DOMAIN = new URL(SITE_URL).host.replace(/^www\./, '')

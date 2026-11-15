@@ -4,13 +4,13 @@ import { LocalizedLink } from '@/components/LocalizedLink'
 import { Button } from '@/components/ui/Button'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS } from '@/config/paths'
+import { NOT_FOUND_TITLE } from '@/config/seo'
 import { localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 
 /* The page's words (`proposed`, listed in docs/copy-review.md). */
 const COPY = {
-  title: proposed('الصفحة غير موجودة', 'Page not found'),
+  title: NOT_FOUND_TITLE,
   line: proposed('ربما تم نقل الصفحة أو أن الرابط غير صحيح.', 'The page may have moved, or the link may be wrong.'),
   home: proposed('العودة إلى الرئيسية', 'Back to home'),
   services: proposed('تصفح خدماتنا', 'Browse our services'),
@@ -54,8 +54,6 @@ const QUICK_DOT = 'size-1 rounded-full bg-line-strong'
 export default function NotFoundPage() {
   const { language, t } = useLanguage()
   const text = localizeAll(COPY, language)
-
-  usePageMeta({ title: text.title, indexable: false })
 
   const quickLinks = [
     { to: PATHS.about, label: t('nav.about') },

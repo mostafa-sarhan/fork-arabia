@@ -786,7 +786,7 @@
 /*
  * Everything here moves only without prefers-reduced-motion, and touches
  * transform-family properties (or a background's size) — never layout.
- * <Reveal> marks its box data-reveal="pending" | "in"; the rules keyed on
+ * <Reveal> marks its box data-reveal="static" | "pending" | "in"; the rules keyed on
  * that attribute let pieces inside a revealed box run their own beat.
  */
 
@@ -852,12 +852,25 @@
 
 @layer components {
   @media (prefers-reduced-motion: no-preference) {
+    /* A <Reveal> waiting below the screen. Only where the page's script
+       runs (the boot script sets .js on <html>): without it, or in the
+       prerendered HTML before it, every box is simply shown. */
+    .js [data-reveal='pending'] {
+      opacity: 0;
+    }
+
     /* A section title's bar grows from the inline start, or from the
        middle when centred, a beat after its section has come in
-       (<SectionTitle>). Outside a <Reveal> it is simply there. */
-    [data-reveal] .section-title-bar {
+       (<SectionTitle>). Shown, or outside a <Reveal>, it is simply there. */
+    .js [data-reveal='pending'] .section-title-bar {
       scale: 0 1;
+    }
+
+    [data-reveal] .section-title-bar {
       transform-origin: left;
+    }
+
+    [data-reveal='in'] .section-title-bar {
       transition: scale var(--duration-reveal) var(--ease-out-soft) 400ms;
     }
 
@@ -867,10 +880,6 @@
 
     [data-reveal] .section-title-bar[data-align='center'] {
       transform-origin: center;
-    }
-
-    [data-reveal='in'] .section-title-bar {
-      scale: 1;
     }
 
     /* A photograph settles from 104% as its box fades in. The fill is

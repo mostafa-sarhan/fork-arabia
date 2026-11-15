@@ -2,7 +2,6 @@ import { PageHero } from '@/components/PageHero'
 import { FormLayout } from '@/components/forms/FormLayout'
 import { draft, localizeAll, proposed } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { BookingForm } from './sections/BookingForm'
 import { ConsultationDetails } from './sections/ConsultationDetails'
 
@@ -34,8 +33,6 @@ export default function BookConsultationPage() {
   const { language } = useLanguage()
   const text = localizeAll(COPY, language)
   const steps = localizeAll(STEPS, language)
-
-  usePageMeta({ title: text.title, description: text.lead, indexable: true })
 
   return (
     <>

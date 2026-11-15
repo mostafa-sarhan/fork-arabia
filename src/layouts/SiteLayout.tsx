@@ -4,6 +4,8 @@ import { Footer } from '@/components/footer'
 import { InertWhileMenuOpen, Navbar, NavbarProvider } from '@/components/navbar'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { SkipLink } from '@/components/ui/SkipLink'
+import { useDocumentHead } from '@/lib/seo/useDocumentHead'
+import { useNavigationReset } from '@/lib/useNavigationReset'
 import { LanguageSuggestion } from './LanguageSuggestion'
 import { RouteFallback } from './RouteFallback'
 
@@ -18,6 +20,10 @@ import { RouteFallback } from './RouteFallback'
  * scrolled state and replay its transition on every click.
  */
 export function SiteLayout() {
+  /* The page's head tags (config/seo.ts), and the scroll and focus a real navigation would reset. */
+  useDocumentHead()
+  useNavigationReset()
+
   return (
     <NavbarProvider>
       <SkipLink />
@@ -27,7 +33,7 @@ export function SiteLayout() {
         {/* Fixed in the corner; first here so Tab meets it right after the header. */}
         <WhatsAppButton />
 
-        {/* The skip link's target, and where `usePageMeta` puts focus. */}
+        {/* The skip link's target, and where `useNavigationReset` puts focus. */}
         <main id="main" tabIndex={-1} className="focus:outline-none">
           <Suspense fallback={<RouteFallback />}>
             <Outlet />

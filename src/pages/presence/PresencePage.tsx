@@ -7,7 +7,6 @@ import { COUNTRIES } from '@/data/sectors/countries'
 import type { Language } from '@/lib/i18n/languageConfig'
 import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
-import { usePageMeta } from '@/lib/usePageMeta'
 import { countriesWord } from '@/pages/sector/sectorCounts'
 import { CountriesSection } from './sections/CountriesSection'
 import { OfficesSection } from './sections/OfficesSection'
@@ -33,8 +32,6 @@ const COPY = {
 export default function PresencePage() {
   const { language, t } = useLanguage()
   const text = localizeAll(COPY, language)
-
-  usePageMeta({ titleKey: 'nav.presence', description: text.lead, indexable: true })
 
   const facts: PageHeroFact[] = [
     ...OFFICES.map((office) => ({

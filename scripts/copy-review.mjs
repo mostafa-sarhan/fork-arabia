@@ -71,6 +71,7 @@ const FILES = [
   'src/pages/presence/sections/CountriesSection.tsx',
   'src/pages/sector/sectorCounts.ts',
   'src/pages/not-found/NotFoundPage.tsx',
+  'src/config/seo.ts',
   ...SECTOR_PAGE_FILES,
 ]
 
