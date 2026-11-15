@@ -81,6 +81,7 @@ function ChannelLine({ channel }: { channel: ContactChannel }) {
 /* Mobile, below 768px                                                   */
 /* -------------------------------------------------------------------- */
 
+
 /** The three taps worth one each: ring the office, chat, or write. */
 const QUICK_CONTACT = [
   { id: 'riyadh', labelKey: 'footer.call', Icon: PhoneIcon },
