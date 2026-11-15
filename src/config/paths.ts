@@ -15,6 +15,7 @@ export const PATHS = {
   contact: '/contact',
   bookConsultation: '/book-consultation',
   requestQuote: '/request-quote',
+  privacy: '/privacy',
   designSystem: '/design-system',
 } as const
 

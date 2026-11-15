@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 501">
+  <!--
+    The F mark, the source every icon and the share image are drawn from
+    (scripts/brand-assets.mjs). Geometry measured from the client's logo
+    (logo-reference.png, the mark's 474x501 box at x 1662), colours from the
+    client's Brand Guideline, page 7. The same shapes as the site's
+    BrandLockup and BrandMarkWatermark.
+  -->
+  <rect id="bar-1" x="0" y="0" width="474" height="150" rx="75" fill="#182F59" />
+  <rect id="bar-2" x="0" y="175" width="304" height="150" rx="75" fill="#124E69" />
+  <circle id="dot" cx="75" cy="426" r="75" fill="#19AFB0" />
+</svg>

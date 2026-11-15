@@ -10,7 +10,55 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-215 strings await approval.
+248 strings await approval.
+
+## Changed by client request
+
+These differ from `_source/storyboard-ar.md` on purpose: the client asked
+for the change. They are approved copy, not a transcription mismatch.
+
+| Where | Storyboard | Now | Notes |
+| --- | --- | --- | --- |
+| Home hero headline (`HeroSection.tsx`) | قانونية · مالية · إدارية · تقنية | قانونية · مالية · إدارية · جودة | Changed by client request. English: Legal · Financial · Administrative · Quality |
+
+## Privacy Policy — pending client/legal approval
+
+> **The whole Privacy Policy page (`/privacy`, `/en/privacy`) and the
+> forms' consent line are pending client and legal approval.** Every word
+> was written here, in both languages, from what the site actually does;
+> none of it has been reviewed by the client or a lawyer. The policy's
+> date is `PRIVACY_UPDATED` in `src/config/legal.ts`.
+
+| Proposed Arabic | Proposed English | File |
+| --- | --- | --- |
+| سياسة الخصوصية | Privacy Policy | `legal.ts` |
+| سياسة الخصوصية | Privacy Policy | `privacyContent.ts` |
+| آخر تحديث: {date} | Last updated: {date} | `privacyContent.ts` |
+| محتويات الصفحة | On this page | `privacyContent.ts` |
+| من نحن | Who we are | `privacyContent.ts` |
+| هذا الموقع تابع لشركة فورك العربية المحدودة (FORK ARABIA LIMITED)، شركة خدمات مهنية متكاملة. توضح هذه السياسة كيف نتعامل مع البيانات التي تشاركها معنا عبر الموقع. | This website belongs to FORK ARABIA LIMITED, an integrated professional services company. This policy explains how we handle the information you share with us through the website. | `privacyContent.ts` |
+| لأي سؤال عن خصوصيتك، راسلنا على info@forkarabia.sa. | For any question about your privacy, email us at info@forkarabia.sa. | `privacyContent.ts` |
+| البيانات التي نجمعها | What we collect | `privacyContent.ts` |
+| نجمع نوعين فقط من البيانات: | We collect two kinds of information only: | `privacyContent.ts` |
+| ما تكتبه بنفسك في نماذج حجز الاستشارة وطلب عرض السعر والتواصل: الاسم، والبريد الإلكتروني، ورقم الهاتف، والدولة، وتفاصيل طلبك. | What you type yourself into the booking, quote and contact forms: your name, email, phone number, country and the details of your request. | `privacyContent.ts` |
+| إحصاءات زيارة مجهولة الهوية لا تكشف هويتك، دون استخدام ملفات تعريف الارتباط (الكوكيز). | Anonymous visit statistics that do not identify you, with no cookies. | `privacyContent.ts` |
+| لماذا نستخدمها | Why we use it | `privacyContent.ts` |
+| نستخدم بيانات النماذج للرد على طلباتك واستفساراتك، وتحديد مواعيد الاستشارات، وإرسال عروض الأسعار. ونستخدم إحصاءات الزيارة لفهم كيفية استخدام الموقع وتحسينه. | We use what you send in the forms to reply to your requests and questions, schedule consultations and send quotes. We use the visit statistics to understand how the site is used and to improve it. | `privacyContent.ts` |
+| كيف تُرسل بياناتك وأين تُحفظ | How it is sent and stored | `privacyContent.ts` |
+| عند إرسال أي نموذج، تصل بياناتك إلى بريدنا الإلكتروني عبر خدمة نماذج خارجية (Web3Forms). ويُستضاف الموقع على منصة Vercel. | When you send a form, your information reaches our inbox by email through a form service (Web3Forms). The website is hosted on Vercel. | `privacyContent.ts` |
+| مشاركة البيانات | Sharing | `privacyContent.ts` |
+| لا نبيع بياناتك، ولا نشاركها مع أي جهة لأغراض تسويقية. | We do not sell your information, and we do not share it with anyone for marketing. | `privacyContent.ts` |
+| مدة الاحتفاظ | How long we keep it | `privacyContent.ts` |
+| نحتفظ ببياناتك طوال المدة اللازمة للتعامل مع طلبك فقط. | We keep your information only as long as we need it to handle your request. | `privacyContent.ts` |
+| حقوقك | Your rights | `privacyContent.ts` |
+| وفق نظام حماية البيانات الشخصية في المملكة العربية السعودية، يحق لك: | Under the Saudi Personal Data Protection Law (PDPL), you have the right to: | `privacyContent.ts` |
+| الاطلاع على بياناتك التي لدينا. | Access the information we hold about you. | `privacyContent.ts` |
+| تصحيح أي بيانات غير دقيقة. | Correct any information that is wrong. | `privacyContent.ts` |
+| طلب حذف بياناتك. | Ask us to delete your information. | `privacyContent.ts` |
+| لأي من هذه الطلبات، راسلنا على info@forkarabia.sa وسنرد عليك في أقرب وقت. | For any of these requests, email us at info@forkarabia.sa and we will reply as soon as we can. | `privacyContent.ts` |
+| تحديثات هذه السياسة | Updates to this policy | `privacyContent.ts` |
+| قد نحدّث هذه السياسة من وقت لآخر، ويظهر تاريخ آخر تحديث أعلى الصفحة. | We may update this policy from time to time; the date of the last update is shown at the top of the page. | `privacyContent.ts` |
+| بإرسال النموذج، أنت توافق على معالجة بياناتك وفق {privacy}. | By sending this form, you agree to the processing of your data under our {privacy}. | `FormSubmit.tsx` |
 
 ## Arabic and English both proposed
 
@@ -85,6 +133,11 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | خدمة واحدة | 1 service | `sectorCounts.ts` |
 | خدمات | services | `sectorCounts.ts` |
 | دول | countries | `sectorCounts.ts` |
+| الصفحة غير موجودة | Page not found | `NotFoundPage.tsx` |
+| ربما تم نقل الصفحة أو أن الرابط غير صحيح. | The page may have moved, or the link may be wrong. | `NotFoundPage.tsx` |
+| العودة إلى الرئيسية | Back to home | `NotFoundPage.tsx` |
+| تصفح خدماتنا | Browse our services | `NotFoundPage.tsx` |
+| روابط سريعة | Quick links | `NotFoundPage.tsx` |
 | القطاع | Sector | `SectorHero.tsx` |
 | الكل | All | `SectorServices.tsx` |
 | تصفية الخدمات حسب الدولة | Filter services by country | `SectorServices.tsx` |

@@ -70,6 +70,7 @@ const FILES = [
   'src/pages/presence/sections/OfficesSection.tsx',
   'src/pages/presence/sections/CountriesSection.tsx',
   'src/pages/sector/sectorCounts.ts',
+  'src/pages/not-found/NotFoundPage.tsx',
   ...SECTOR_PAGE_FILES,
 ]
 
@@ -98,9 +99,9 @@ function sectorAt(source, offset) {
 
 const PROPOSED = /proposed\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*,?\s*\)/gs
 
-function collect(pattern) {
+function collect(pattern, files = FILES) {
   const found = []
-  for (const file of FILES) {
+  for (const file of files) {
     const source = readFileSync(file, 'utf8')
     for (const match of source.matchAll(pattern)) {
       found.push({
@@ -114,8 +115,19 @@ function collect(pattern) {
   return found
 }
 
+/*
+ * The privacy policy and its consent line: listed apart, as a whole
+ * page pending client and legal approval.
+ */
+const LEGAL_FILES = [
+  'src/config/legal.ts',
+  'src/pages/privacy/privacyContent.ts',
+  'src/components/forms/FormSubmit.tsx',
+]
+
 const rows = collect(DRAFT)
 const bothRows = collect(PROPOSED)
+const legalRows = collect(PROPOSED, LEGAL_FILES)
 
 const fileName = (row) => `\`${row.file.split('/').pop()}\``
 
@@ -132,7 +144,28 @@ const lines = [
   'changing the English string in place. Re-run `node scripts/copy-review.mjs`',
   'afterwards to regenerate this list.',
   '',
-  `${rows.length + bothRows.length} strings await approval.`,
+  `${rows.length + bothRows.length + legalRows.length} strings await approval.`,
+  '',
+  '## Changed by client request',
+  '',
+  'These differ from `_source/storyboard-ar.md` on purpose: the client asked',
+  'for the change. They are approved copy, not a transcription mismatch.',
+  '',
+  '| Where | Storyboard | Now | Notes |',
+  '| --- | --- | --- | --- |',
+  "| Home hero headline (`HeroSection.tsx`) | قانونية · مالية · إدارية · تقنية | قانونية · مالية · إدارية · جودة | Changed by client request. English: Legal · Financial · Administrative · Quality |",
+  '',
+  '## Privacy Policy — pending client/legal approval',
+  '',
+  '> **The whole Privacy Policy page (`/privacy`, `/en/privacy`) and the',
+  '> forms\' consent line are pending client and legal approval.** Every word',
+  '> was written here, in both languages, from what the site actually does;',
+  '> none of it has been reviewed by the client or a lawyer. The policy\'s',
+  '> date is `PRIVACY_UPDATED` in `src/config/legal.ts`.',
+  '',
+  '| Proposed Arabic | Proposed English | File |',
+  '| --- | --- | --- |',
+  ...legalRows.map((row) => `| ${row.ar} | ${row.en} | ${fileName(row)} |`),
   '',
   '## Arabic and English both proposed',
   '',
@@ -156,4 +189,4 @@ const lines = [
 ]
 
 writeFileSync('docs/copy-review.md', lines.join('\n'))
-console.log(`docs/copy-review.md: ${rows.length + bothRows.length} proposed strings`)
+console.log(`docs/copy-review.md: ${rows.length + bothRows.length} proposed strings, plus ${legalRows.length} privacy strings pending legal approval`)

@@ -7,6 +7,7 @@ import ContactPage from '@/pages/contact/ContactPage'
 import HomePage from '@/pages/home/HomePage'
 import NotFoundPage from '@/pages/not-found/NotFoundPage'
 import PresencePage from '@/pages/presence/PresencePage'
+import PrivacyPage from '@/pages/privacy/PrivacyPage'
 import RequestQuotePage from '@/pages/request-quote/RequestQuotePage'
 
 /* The heaviest pages are loaded on demand — the services page and the
@@ -29,6 +30,7 @@ const pages = (
     <Route path="contact" element={<ContactPage />} />
     <Route path="book-consultation" element={<BookConsultationPage />} />
     <Route path="request-quote" element={<RequestQuotePage />} />
+    <Route path="privacy" element={<PrivacyPage />} />
     <Route path="design-system" element={<DesignSystemPage />} />
     <Route path="*" element={<NotFoundPage />} />
   </>

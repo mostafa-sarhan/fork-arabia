@@ -13,7 +13,8 @@ import {
 import { BRAND_DOMAIN } from '@/config/brand'
 import { SITE_CONTACT, type ContactChannel } from '@/config/contact'
 import { FOOTER_NAV } from '@/config/navigation'
-import { sectorPath } from '@/config/paths'
+import { PRIVACY_TITLE } from '@/config/legal'
+import { PATHS, sectorPath } from '@/config/paths'
 import { SITE_URL } from '@/config/site'
 import { getSectorById } from '@/data/sectorIndex'
 import {
@@ -22,6 +23,7 @@ import {
 } from '@/data/siteCopy'
 import { cn } from '@/lib/cn'
 import { Copy } from '@/lib/i18n/Copy'
+import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguageOptions, useLanguageSwap } from '@/lib/i18n/languageSwap'
 import type { TranslationKey } from '@/lib/i18n/translations'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -36,6 +38,22 @@ const YEAR = new Date().getFullYear()
  */
 const footerLink =
   'rounded-sm text-on-navy-muted transition-colors duration-200 hover:text-on-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2 focus-visible:ring-offset-navy'
+
+/** The copyright and, beside it, the privacy policy link: one group in the bottom bars. */
+function LegalLine({ children }: { children: ReactNode }) {
+  const { language } = useLanguage()
+  return (
+    <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span>{children}</span>
+      <span aria-hidden="true" className="text-on-navy-muted/50">
+        ·
+      </span>
+      <LocalizedLink to={PATHS.privacy} className={footerLink}>
+        {resolveCopy(PRIVACY_TITLE, language)}
+      </LocalizedLink>
+    </p>
+  )
+}
 
 /** The same ring on a filled control, which carries its own radius. */
 const footerFocus =
@@ -295,9 +313,9 @@ function MobileFooter() {
       <div className="border-t border-white/10">
         {/* One line while both halves fit, two neat lines when they do not. */}
         <Container className="flex flex-wrap items-center justify-between gap-x-4 py-3 text-caption">
-          <p>
+          <LegalLine>
             © {YEAR} {t('brand.legal')}
-          </p>
+          </LegalLine>
           <LanguageCodes />
         </Container>
       </div>
@@ -425,9 +443,9 @@ function WideFooter() {
 
       <div className="border-t border-white/10">
         <Container className="flex flex-col items-center justify-between gap-2 py-5 text-caption sm:flex-row">
-          <p>
+          <LegalLine>
             © {YEAR} {t('brand.legal')}. {t('footer.rights')}
-          </p>
+          </LegalLine>
           <span className="flex items-center gap-5">
             <LanguageFooterLink />
             <a

@@ -1,20 +1,17 @@
 {
-  "name": "FORK ARABIA LIMITED",
-  "short_name": "FORK ARABIA",
-  "description": "Integrated professional services: legal, financial, administrative and technology.",
+  "name": "فورك العربية المحدودة",
+  "short_name": "فورك",
+  "description": "خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية.",
+  "lang": "ar",
+  "dir": "rtl",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#F5F7FA",
+  "background_color": "#FFFFFF",
   "theme_color": "#182F59",
   "icons": [
-    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
-    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" },
-    {
-      "src": "/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    }
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" }
   ]
 }

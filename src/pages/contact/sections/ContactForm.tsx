@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
-import { FormIncomplete, FormSendError, Honeypot } from '@/components/forms/FormStates'
+import { FormIncomplete, Honeypot } from '@/components/forms/FormStates'
+import { FormSubmit } from '@/components/forms/FormSubmit'
 import { FORM_COPY } from '@/components/forms/formCopy'
 import { SuccessDialog } from '@/components/forms/SuccessDialog'
 import { TextareaField } from '@/components/forms/TextareaField'
 import { TextField } from '@/components/forms/TextField'
-import { Button } from '@/components/ui/Button'
-import { LinkArrow } from '@/components/ui/LinkArrow'
 import { CONTACT_PHONE_PLACEHOLDER, fullPhone } from '@/lib/forms/phone'
 import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
@@ -47,8 +46,6 @@ const HEADING = 'mb-5 text-h4 font-extrabold text-heading'
 const GRID = 'grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-x-5 md:gap-y-6'
 const WIDE = 'md:col-span-2'
 
-/* The button full width on phones, its own width from 640. */
-const SUBMIT = 'h-13 w-full sm:w-auto sm:min-w-56'
 
 /**
  * The contact form: name, email, an optional phone and the message. Sent,
@@ -123,16 +120,11 @@ export function ContactForm() {
           <TextareaField field={field('message')} label={text.message} required rows={5} className={WIDE} />
         </div>
 
-        <div className="mt-8 flex flex-col gap-4">
-          {status === 'error' ? <FormSendError onRetry={retry} /> : null}
-
-          <div>
-            <Button type="submit" variant="primary" size="lg" loading={status === 'sending'} className={SUBMIT}>
-              {text.submit}
-              <LinkArrow className="size-4" />
-            </Button>
-          </div>
-        </div>
+        <FormSubmit
+          label={text.submit}
+          sending={status === 'sending'}
+          onRetry={status === 'error' ? retry : undefined}
+        />
       </form>
 
       <SuccessDialog

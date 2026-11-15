@@ -1,7 +1,8 @@
 import { useId, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { DateField } from '@/components/forms/DateField'
-import { FormIncomplete, FormSendError, Honeypot } from '@/components/forms/FormStates'
+import { FormIncomplete, Honeypot } from '@/components/forms/FormStates'
+import { FormSubmit } from '@/components/forms/FormSubmit'
 import { FORM_COPY } from '@/components/forms/formCopy'
 import { CountryPhoneFields } from '@/components/forms/CountryPhoneFields'
 import { SectorTile } from '@/components/forms/SectorTile'
@@ -10,9 +11,7 @@ import { SelectField } from '@/components/forms/SelectField'
 import { SuccessDialog } from '@/components/forms/SuccessDialog'
 import { TextareaField } from '@/components/forms/TextareaField'
 import { TextField } from '@/components/forms/TextField'
-import { Button } from '@/components/ui/Button'
 import { GlobeIcon, PhoneIcon, UsersIcon } from '@/components/ui/icons'
-import { LinkArrow } from '@/components/ui/LinkArrow'
 import { CONSULTATION_METHODS } from '@/config/consultation'
 import { getSectorBySlug, SECTOR_INDEX } from '@/data/sectorIndex'
 import { addDays, formatDate, isFriday, todayValue } from '@/lib/forms/dates'
@@ -90,9 +89,6 @@ const BLOCK_HEADING = 'text-h4 font-extrabold text-heading'
 const GRID = 'grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-x-5 md:gap-y-6'
 const WIDE = 'md:col-span-2'
 
-/* The button full width on phones, its own width from 640; the note under it. */
-const SUBMIT = 'h-13 w-full sm:w-auto sm:min-w-56'
-const NOTE = 'text-body-sm text-ink-muted'
 
 /**
  * The booking form. `?sector=<slug>` opens it with that sector chosen.
@@ -211,17 +207,12 @@ export function BookingForm() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4">
-          {status === 'error' ? <FormSendError onRetry={retry} /> : null}
-
-          <div>
-            <Button type="submit" variant="primary" size="lg" loading={status === 'sending'} className={SUBMIT}>
-              {text.submit}
-              <LinkArrow className="size-4" />
-            </Button>
-          </div>
-          <p className={NOTE}>{text.note}</p>
-        </div>
+        <FormSubmit
+          label={text.submit}
+          sending={status === 'sending'}
+          onRetry={status === 'error' ? retry : undefined}
+          note={text.note}
+        />
       </form>
 
       <SuccessDialog

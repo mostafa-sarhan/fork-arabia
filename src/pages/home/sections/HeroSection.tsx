@@ -25,9 +25,11 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
 const COPY = {
   badge: copy('خدمات مهنية متكاملة', 'Integrated Professional Services'),
 
+  /* Changed by client request: the storyboard's fourth word «تقنية»
+     (Technology) is «جودة» (Quality). Approved; see docs/copy-review.md. */
   title: copy(
-    'قانونية · مالية · إدارية · تقنية',
-    'Legal · Financial · Administrative · Technology',
+    'قانونية · مالية · إدارية · جودة',
+    'Legal · Financial · Administrative · Quality',
   ),
 
   /* The English opens with the profile's own sentence from "Who We Are";
@@ -280,8 +282,8 @@ function TitleSeparator({ className }: { className?: string }) {
  * set as two pairs, each pair on its own line, and the dot between the
  * pairs is dropped so no line ends on a separator.
  *
- * The English is always two lines. "Administrative · Technology" is about
- * 11.6em wide, wider than the column at the hero size, so its size is
+ * The English is always two lines. "Administrative · Quality" can be
+ * wider than the column at the hero size, so its size is
  * capped at 1/12 of the column (100cqi; the column is a size container).
  * It is set inline so the text-hero class keeps its weight and leading.
  *
