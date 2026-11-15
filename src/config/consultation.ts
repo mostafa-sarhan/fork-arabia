@@ -49,3 +49,15 @@ export const CONSULTATION_FACTS = {
   duration: { value: DURATION, label: draft('استشارة مجانية', 'free consultation') },
   reply: { value: proposed('يوم عمل', '1 business day'), label: proposed('للرد', 'to reply') },
 }
+
+/**
+ * The three ways to hold the consultation, in the booking form's order
+ * (online first, its default). Arabic from the storyboard's booking page.
+ */
+export const CONSULTATION_METHODS = [
+  { id: 'online', label: draft('أونلاين', 'Online') },
+  { id: 'phone', label: draft('تليفون', 'Phone') },
+  { id: 'in-person', label: draft('حضوري', 'In person') },
+] as const
+
+export type ConsultationMethodId = (typeof CONSULTATION_METHODS)[number]['id']

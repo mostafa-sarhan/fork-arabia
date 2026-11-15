@@ -26,6 +26,14 @@ export function sectorPath(slug: SectorSlug): SectorPath {
 }
 
 /**
+ * The booking page's query for one sector: its form opens with that sector
+ * chosen. Pass it as a link's `search`.
+ */
+export function bookingQuery(slug: SectorSlug) {
+  return `?sector=${slug}`
+}
+
+/**
  * Every path a link may point at. Typed, so a link to a page that does not
  * exist — or a typo in a sector slug — fails to compile.
  */

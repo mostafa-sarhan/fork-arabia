@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Select } from '@/components/forms/Select'
 import { Button } from '@/components/ui/Button'
 import { Checkbox, Radio } from '@/components/ui/Choice'
 import {
@@ -6,13 +8,18 @@ import {
   HelperText,
 } from '@/components/ui/FormField'
 import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { DocSection } from './DocSection'
 
 export function FormSection() {
   const { t } = useLanguage()
+  const [country, setCountry] = useState('')
+  const countries = [
+    { value: 'sa', label: t('form.country.sa') },
+    { value: 'ae', label: t('form.country.ae') },
+    { value: 'other', label: t('form.country.other') },
+  ]
 
   return (
     <DocSection
@@ -55,29 +62,31 @@ export function FormSection() {
           </div>
 
           <div className="space-y-2">
-            <FormLabel htmlFor="ds-country">{t('form.country')}</FormLabel>
-            <Select id="ds-country" name="country" defaultValue="">
-              <option value="" disabled>
-                {t('form.selectPlaceholder')}
-              </option>
-              <option value="sa">{t('form.country.sa')}</option>
-              <option value="ae">{t('form.country.ae')}</option>
-              <option value="other">{t('form.country.other')}</option>
-            </Select>
+            <FormLabel id="ds-country-label">{t('form.country')}</FormLabel>
+            <Select
+              id="ds-country"
+              labelId="ds-country-label"
+              name="country"
+              value={country}
+              onChange={setCountry}
+              options={countries}
+              placeholder={t('form.selectPlaceholder')}
+            />
           </div>
 
           <div className="space-y-2">
-            <FormLabel htmlFor="ds-country-disabled">
+            <FormLabel id="ds-country-disabled-label">
               {t('form.country')} — {t('btn.disabled')}
             </FormLabel>
             <Select
               id="ds-country-disabled"
-              name="country-disabled"
-              defaultValue="sa"
+              labelId="ds-country-disabled-label"
+              value="sa"
+              onChange={() => {}}
+              options={countries.slice(0, 1)}
+              placeholder={t('form.selectPlaceholder')}
               disabled
-            >
-              <option value="sa">{t('form.country.sa')}</option>
-            </Select>
+            />
           </div>
 
           <div className="space-y-2">

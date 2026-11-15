@@ -101,7 +101,7 @@ export function SectorServices({ sector }: { sector: SectorDetail }) {
         </div>
 
         <aside className={ASIDE}>
-          <SectorBookingCard title={resolveCopy(sector.ctaTitle, language)} />
+          <SectorBookingCard title={resolveCopy(sector.ctaTitle, language)} slug={sector.slug} />
           <SectorOthers slug={sector.slug} className="max-lg:hidden" />
         </aside>
       </Container>

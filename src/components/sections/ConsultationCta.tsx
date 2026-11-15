@@ -3,7 +3,8 @@ import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { CONSULTATION_DETAILS } from '@/config/consultation'
-import { PATHS } from '@/config/paths'
+import { bookingQuery, PATHS } from '@/config/paths'
+import type { SectorSlug } from '@/data/sectorIndex'
 import { localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
@@ -38,7 +39,16 @@ const BUTTON = 'h-13 w-full sm:w-auto'
  * two buttons and the consultation's six details. Used by the services
  * page and every sector page, each with its own question.
  */
-export function ConsultationCta({ title, text }: { title: string; text: string }) {
+export function ConsultationCta({
+  title,
+  text,
+  sector,
+}: {
+  title: string
+  text: string
+  /** On a sector page: its slug, so the booking link preselects it. */
+  sector?: SectorSlug
+}) {
   const { language, t } = useLanguage()
   const details = localizeAll(CONSULTATION_DETAILS, language)
 
@@ -59,7 +69,13 @@ export function ConsultationCta({ title, text }: { title: string; text: string }
               </p>
 
               <div className="mt-7 flex flex-col sm:flex-row gap-2.5 lg:gap-3">
-                <Button to={PATHS.bookConsultation} variant="primary" size="lg" className={BUTTON}>
+                <Button
+                  to={PATHS.bookConsultation}
+                  search={sector ? bookingQuery(sector) : undefined}
+                  variant="primary"
+                  size="lg"
+                  className={BUTTON}
+                >
                   {t('nav.bookConsultation')}
                 </Button>
                 <Button to={PATHS.requestQuote} variant="outline-navy" size="lg" className={BUTTON}>

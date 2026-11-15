@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/Button'
 import { CONSULTATION_TIMING } from '@/config/consultation'
-import { PATHS } from '@/config/paths'
+import { bookingQuery, PATHS } from '@/config/paths'
+import type { SectorSlug } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
 import { resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
@@ -16,9 +17,10 @@ const BUTTON = 'h-11.5'
 
 /**
  * The booking card beside a sector's services: the sector's own question,
- * the consultation's timing and the two calls to action.
+ * the consultation's timing and the two calls to action. The booking link
+ * opens the form with this sector chosen.
  */
-export function SectorBookingCard({ title }: { title: string }) {
+export function SectorBookingCard({ title, slug }: { title: string; slug: SectorSlug }) {
   const { language, t } = useLanguage()
 
   return (
@@ -31,6 +33,7 @@ export function SectorBookingCard({ title }: { title: string }) {
       <div className="mt-5 flex flex-col gap-3">
         <Button
           to={PATHS.bookConsultation}
+          search={bookingQuery(slug)}
           variant="secondary"
           size="lg"
           fullWidth

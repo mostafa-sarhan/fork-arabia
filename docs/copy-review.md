@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-127 strings await approval.
+171 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -28,6 +28,31 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
 | خدمة | services | `ServicesPage.tsx` |
+| دولة أخرى | Other country | `formCopy.ts` |
+| اختر من القائمة | Select an option | `formCopy.ts` |
+| يرجى استكمال الحقول المطلوبة | Please complete the required fields. | `formCopy.ts` |
+| تعذّر إرسال الطلب. تحقق من اتصالك بالإنترنت وحاول مرة أخرى. | We couldn’t send your request. Check your connection and try again. | `formCopy.ts` |
+| إعادة المحاولة | Try again | `formCopy.ts` |
+| العودة إلى الرئيسية | Back to home | `formCopy.ts` |
+| اختر التاريخ | Choose a date | `DatePicker.tsx` |
+| الشهر السابق | Previous month | `DatePicker.tsx` |
+| الشهر التالي | Next month | `DatePicker.tsx` |
+| إغلاق | Close | `SuccessDialog.tsx` |
+| تصفح خدماتنا | Browse our services | `SuccessDialog.tsx` |
+| هذا الحقل مطلوب. | This field is required. | `validation.ts` |
+| اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com. | Enter a valid email address, like name@example.com. | `validation.ts` |
+| اكتب رقم الهاتف بالأرقام فقط (7 أرقام على الأقل)، ويمكن أن يبدأ بعلامة +. | Use digits only (at least 7); the number may start with +. | `validation.ts` |
+| اكتب {n} أحرف على الأقل. | Write at least {n} characters. | `validation.ts` |
+| اختر اليوم أو تاريخًا بعده. | Choose today or a later date. | `validation.ts` |
+| يوم الجمعة إجازة؛ اختر يومًا من السبت إلى الخميس. | Friday is a day off; choose a day from Saturday to Thursday. | `validation.ts` |
+| بياناتك | Your details | `BookingForm.tsx` |
+| تفاصيل الاستشارة | Consultation details | `BookingForm.tsx` |
+| تم إرسال طلبك بنجاح | Your request has been sent | `BookingForm.tsx` |
+| المجال | Area | `BookingForm.tsx` |
+| الموعد | Appointment | `BookingForm.tsx` |
+| الطريقة | Format | `BookingForm.tsx` |
+| صباحًا | am | `BookingForm.tsx` |
+| مساءً | pm | `BookingForm.tsx` |
 | تواجدنا | Our Presence | `OfficesSection.tsx` |
 | مكاتبنا | Our Offices | `OfficesSection.tsx` |
 | السبت للخميس، 10 صباحًا إلى 6 مساءً | Saturday to Thursday, 10 am to 6 pm | `OfficesSection.tsx` |
@@ -94,6 +119,9 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `method` | استشارة مجانية مدتها 50 دقيقة، من السبت للخميس، 10 صباحًا إلى 6 مساءً بتوقيت السعودية. | A free 50-minute consultation, Saturday to Thursday, 10 am to 6 pm Saudi time. | `consultation.ts` |
 | `method` | احجز استشارة مجانية وفريقنا يحدد معاك الخدمات المناسبة لاحتياجك. | Book a free consultation and our team will help you identify the services that fit your needs. | `consultation.ts` |
 | `method` | استشارة مجانية | free consultation | `consultation.ts` |
+| `method` | أونلاين | Online | `consultation.ts` |
+| `method` | تليفون | Phone | `consultation.ts` |
+| `method` | حضوري | In person | `consultation.ts` |
 | `riyadh` | المقر الرئيسي | Head Office | `offices.ts` |
 | `riyadh` | الرياض | Riyadh | `offices.ts` |
 | `riyadh` | الرياض، السعودية | Riyadh, Saudi Arabia | `offices.ts` |
@@ -148,6 +176,22 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | تفاصيل القطاع | Sector details | `ServicesPage.tsx` |
 | `—` | مش متأكد أنهي خدمة تناسبك؟ | Not sure which service fits you? | `ServicesPage.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `PresencePage.tsx` |
+| `—` | الاسم الكامل | Full name | `formCopy.ts` |
+| `—` | البريد الإلكتروني | Email | `formCopy.ts` |
+| `—` | رقم الهاتف | Phone number | `formCopy.ts` |
+| `—` | الدولة | Country | `formCopy.ts` |
+| `—` | حجز استشارة | Book a consultation | `BookConsultationPage.tsx` |
+| `—` | احجز استشارة مجانية | Book a free consultation | `BookConsultationPage.tsx` |
+| `—` | املأ البيانات وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد. | Fill in your details and our team will contact you within one business day to confirm the appointment. | `BookConsultationPage.tsx` |
+| `—` | مجال الاستشارة المطلوبة | Consultation area | `BookingForm.tsx` |
+| `—` | التاريخ المفضل | Preferred date | `BookingForm.tsx` |
+| `—` | الوقت المفضل (بتوقيت السعودية) | Preferred time (Saudi time) | `BookingForm.tsx` |
+| `—` | طريقة الاستشارة | Consultation format | `BookingForm.tsx` |
+| `—` | تفاصيل إضافية عن الطلب | Additional details about your request | `BookingForm.tsx` |
+| `—` | إرسال طلب الحجز | Send booking request | `BookingForm.tsx` |
+| `—` | الموعد لا يُعتبر مؤكدًا إلا بعد تواصل فريقنا معك. | Your appointment is confirmed only once our team has contacted you. | `BookingForm.tsx` |
+| `—` | شكرًا لك، تم استلام طلبك. سيتواصل معك فريقنا خلال يوم عمل لتأكيد موعد الاستشارة. | Thank you, we have received your request. Our team will contact you within one business day to confirm your consultation. | `BookingForm.tsx` |
+| `—` | تفاصيل الاستشارة | Consultation details | `ConsultationDetails.tsx` |
 | `—` | نقدم خدماتنا في 8 دول | We serve clients in 8 countries | `CountriesSection.tsx` |
 | `—` | خدمات | Services | `CountriesSection.tsx` |
 | `—` | قطاعات أخرى | Other sectors | `SectorOthers.tsx` |

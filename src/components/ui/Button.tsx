@@ -87,6 +87,8 @@ type AsButton = SharedProps &
 /** A link to another page of this site, by canonical path. */
 type AsInternalLink = SharedProps & {
   to: SitePath
+  /** An optional query for the link, such as `bookingQuery(slug)`. */
+  search?: string
   href?: never
   ref?: Ref<HTMLAnchorElement>
   'aria-label'?: string

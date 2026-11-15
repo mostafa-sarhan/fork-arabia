@@ -60,14 +60,18 @@ function SectorSections({ sector }: { sector: SectorDetail }) {
       {sector.extras ? (
         <>
           <ResidencyTracks tracks={sector.extras.tracks} disclaimer={sector.extras.disclaimer} />
-          <ResidencyRole steps={sector.extras.steps} ctaTitle={ctaTitle} />
+          <ResidencyRole steps={sector.extras.steps} ctaTitle={ctaTitle} slug={sector.slug} />
           <ResidencyBenefits benefits={sector.extras.benefits} />
         </>
       ) : null}
 
       <MethodologySection tone="light" />
       <WhyForkStrip />
-      <ConsultationCta title={ctaTitle} text={resolveCopy(CONSULTATION_INVITE, language)} />
+      <ConsultationCta
+        title={ctaTitle}
+        text={resolveCopy(CONSULTATION_INVITE, language)}
+        sector={sector.slug}
+      />
       <SectorOthersSection slug={sector.slug} othersInAside={hasServices} />
     </>
   )

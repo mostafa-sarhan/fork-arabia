@@ -13,12 +13,12 @@ export function FormLabel({
 }: FormLabelProps) {
   return (
     <label
-      className={cn('block text-label font-medium text-ink', className)}
+      className={cn('block text-label font-semibold text-heading', className)}
       {...props}
     >
       {children}
       {required ? (
-        <span className="ms-1 text-danger" aria-hidden="true">
+        <span className="ms-1 text-danger-strong" aria-hidden="true">
           *
         </span>
       ) : null}

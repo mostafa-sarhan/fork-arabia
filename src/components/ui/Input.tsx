@@ -10,7 +10,7 @@ export function Input({ className, invalid = false, ...props }: InputProps) {
   return (
     <input
       aria-invalid={invalid || undefined}
-      className={cn(fieldBase, 'h-11', invalid && fieldInvalid, className)}
+      className={cn(fieldBase, 'h-13', invalid && fieldInvalid, className)}
       {...props}
     />
   )

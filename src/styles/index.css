@@ -282,6 +282,11 @@
   --animate-dot: dot 1.4s ease-in-out infinite;
   /* The partners strip. A strip may set its own animation-duration. */
   --animate-marquee: marquee 40s linear infinite;
+  /* A modal dialog: the dimmed page fades in, the card rises and settles,
+     and the success check pops in a beat later. */
+  --animate-fade-in: fade-in 250ms var(--ease-out-soft) both;
+  --animate-dialog-in: dialog-in 350ms var(--ease-out-soft) both;
+  --animate-pop-in: pop-in 450ms var(--ease-emphasized) 150ms both;
 }
 
 :root {
@@ -832,6 +837,26 @@
     .animate-marquee {
       animation: none;
     }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
   }
 }
 

@@ -6,6 +6,8 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
 export type LocalizedLinkProps = Omit<LinkProps, 'to'> & {
   /** A path from `src/config/paths.ts`. The `/en` prefix is added here. */
   to: SitePath
+  /** An optional query, such as `bookingQuery(slug)`. */
+  search?: string
 }
 
 /**
@@ -16,8 +18,8 @@ export type LocalizedLinkProps = Omit<LinkProps, 'to'> & {
  * other language, which a hand-written `href="/about"` would do on an
  * English page.
  */
-export function LocalizedLink({ to, ...props }: LocalizedLinkProps) {
+export function LocalizedLink({ to, search, ...props }: LocalizedLinkProps) {
   const { language } = useLanguage()
 
-  return <Link to={localizePath(to, language)} {...props} />
+  return <Link to={{ pathname: localizePath(to, language), search }} {...props} />
 }

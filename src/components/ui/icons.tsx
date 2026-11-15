@@ -92,6 +92,28 @@ export function InfoIcon(props: IconProps) {
   )
 }
 
+/** A circled exclamation: a form error. */
+export function AlertIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5.5" />
+      <path d="M12 16.5h.01" />
+    </IconBase>
+  )
+}
+
+/** An hourglass: how long something lasts. */
+export function HourglassIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M6 3h12M6 21h12" />
+      <path d="M7 3v3a5 5 0 0 0 5 5 5 5 0 0 0 5-5V3" />
+      <path d="M7 21v-3a5 5 0 0 1 5-5 5 5 0 0 1 5 5v3" />
+    </IconBase>
+  )
+}
+
 export function MailIcon(props: IconProps) {
   return (
     <IconBase {...props}>

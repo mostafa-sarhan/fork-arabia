@@ -4,12 +4,15 @@ import { SectionTitle } from '@/components/ui/SectionTitle'
 import type { SectorExtras } from '@/data/sectors/types'
 import { localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
+import type { SectorSlug } from '@/data/sectorIndex'
 import { SectorBookingCard } from './SectorBookingCard'
 
 type ResidencyRoleProps = {
   steps: SectorExtras['steps']
   /** The sector's question, for the booking card beside the steps. */
   ctaTitle: string
+  /** The sector's slug, so its booking link preselects it. */
+  slug: SectorSlug
 }
 
 /* Steps beside a 340px booking card from 1024, as the services section. */
@@ -27,7 +30,7 @@ const STEP_NUMBER =
  * order, with the booking card beside them (the storyboard puts the
  * sector's question here, as this page has no services list).
  */
-export function ResidencyRole({ steps, ctaTitle }: ResidencyRoleProps) {
+export function ResidencyRole({ steps, ctaTitle, slug }: ResidencyRoleProps) {
   const { language } = useLanguage()
   const text = localizeAll(steps, language)
 
@@ -55,7 +58,7 @@ export function ResidencyRole({ steps, ctaTitle }: ResidencyRoleProps) {
         </div>
 
         <aside className={ASIDE}>
-          <SectorBookingCard title={ctaTitle} />
+          <SectorBookingCard title={ctaTitle} slug={slug} />
         </aside>
       </Container>
     </section>
