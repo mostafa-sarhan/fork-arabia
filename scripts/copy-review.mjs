@@ -35,6 +35,7 @@ const FILES = [
   'src/data/whyFork.ts',
   'src/config/consultation.ts',
   'src/config/offices.ts',
+  'src/config/countries.ts',
   'src/pages/home/sections/HeroSection.tsx',
   'src/pages/home/sections/StatsSection.tsx',
   'src/pages/home/sections/AboutSection.tsx',
@@ -50,6 +51,9 @@ const FILES = [
   'src/pages/about/sections/PhilosophySection.tsx',
   'src/components/sections/MethodologySection.tsx',
   'src/pages/services/ServicesPage.tsx',
+  'src/pages/presence/PresencePage.tsx',
+  'src/pages/presence/sections/OfficesSection.tsx',
+  'src/pages/presence/sections/CountriesSection.tsx',
   'src/pages/sector/sectorCounts.ts',
   ...SECTOR_PAGE_FILES,
 ]

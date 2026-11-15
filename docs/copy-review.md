@@ -10,7 +10,7 @@ changing that call to `copy('…', '…')` in the file named; editing one means
 changing the English string in place. Re-run `node scripts/copy-review.mjs`
 afterwards to regenerate this list.
 
-113 strings await approval.
+127 strings await approval.
 
 ## Arabic and English both proposed
 
@@ -22,10 +22,17 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | --- | --- | --- |
 | يوم عمل | 1 business day | `consultation.ts` |
 | للرد | to reply | `consultation.ts` |
+| خريطة مقر الرياض | Map of the Riyadh head office | `offices.ts` |
+| خريطة فرع طنطا | Map of the Tanta branch | `offices.ts` |
 | سنة التأسيس | Year founded | `AboutPage.tsx` |
 | دول نقدم فيها خدماتنا | Countries we serve | `AboutPage.tsx` |
 | قطاعات خدمات | Service sectors | `AboutPage.tsx` |
 | خدمة | services | `ServicesPage.tsx` |
+| تواجدنا | Our Presence | `OfficesSection.tsx` |
+| مكاتبنا | Our Offices | `OfficesSection.tsx` |
+| السبت للخميس، 10 صباحًا إلى 6 مساءً | Saturday to Thursday, 10 am to 6 pm | `OfficesSection.tsx` |
+| افتح في خرائط Google | Open in Google Maps | `OfficesSection.tsx` |
+| مكتب | Office | `CountriesSection.tsx` |
 | خدمة واحدة | 1 service | `sectorCounts.ts` |
 | خدمات | services | `sectorCounts.ts` |
 | دول | countries | `sectorCounts.ts` |
@@ -88,11 +95,18 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `method` | احجز استشارة مجانية وفريقنا يحدد معاك الخدمات المناسبة لاحتياجك. | Book a free consultation and our team will help you identify the services that fit your needs. | `consultation.ts` |
 | `method` | استشارة مجانية | free consultation | `consultation.ts` |
 | `riyadh` | المقر الرئيسي | Head Office | `offices.ts` |
+| `riyadh` | الرياض | Riyadh | `offices.ts` |
 | `riyadh` | الرياض، السعودية | Riyadh, Saudi Arabia | `offices.ts` |
+| `riyadh` | الرياض، المملكة العربية السعودية | Riyadh, Kingdom of Saudi Arabia | `offices.ts` |
 | `riyadh` | الرياض، المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، المدخل التجاري للشركات، شركة فورك العربية، مكتب 110 | Office 110, FORK ARABIA, Corporate Business Entrance, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham District, Al Murabba, Riyadh | `offices.ts` |
 | `tanta` | فرع | Branch | `offices.ts` |
+| `tanta` | طنطا | Tanta | `offices.ts` |
 | `tanta` | طنطا، مصر | Tanta, Egypt | `offices.ts` |
+| `tanta` | طنطا، جمهورية مصر العربية | Tanta, Arab Republic of Egypt | `offices.ts` |
 | `tanta` | ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر (أعلى هيئة قضايا الدولة)، طنطا، الغربية | 11th Floor, Tower A, Abdel Moneim Riad Towers (above the State Lawsuits Authority), Station Square, Tanta, Gharbia | `offices.ts` |
+| `ae` | الأردن | Jordan | `countries.ts` |
+| `ae` | الولايات المتحدة | United States | `countries.ts` |
+| `ae` | جنوب أفريقيا | South Africa | `countries.ts` |
 | `—` | نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى. | We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets. | `HeroSection.tsx` |
 | `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `HeroSection.tsx` |
 | `—` | فريق فورك العربية في اجتماع عمل بمكتب الرياض | The FORK ARABIA team in a business meeting at the Riyadh office | `HeroSection.tsx` |
@@ -116,9 +130,6 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | مقر رئيسي | Head office | `PresenceSection.tsx` |
 | `—` | فرع | Branch | `PresenceSection.tsx` |
 | `—` | خدمات | Services | `PresenceSection.tsx` |
-| `—` | الأردن | Jordan | `PresenceSection.tsx` |
-| `—` | الولايات المتحدة | United States | `PresenceSection.tsx` |
-| `—` | جنوب أفريقيا | South Africa | `PresenceSection.tsx` |
 | `—` | شركاؤنا وعملاؤنا | Our Partners & Clients | `PartnersSection.tsx` |
 | `—` | آفاق | Afaq | `PartnersSection.tsx` |
 | `—` | الخبراء المحترفون للاستشارات المالية | Professional Experts Financial Consulting | `PartnersSection.tsx` |
@@ -136,5 +147,8 @@ written here, with `proposed('…', '…')`. Approving one means changing it to
 | `—` | قطاعات | sectors | `ServicesPage.tsx` |
 | `—` | تفاصيل القطاع | Sector details | `ServicesPage.tsx` |
 | `—` | مش متأكد أنهي خدمة تناسبك؟ | Not sure which service fits you? | `ServicesPage.tsx` |
+| `—` | مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول. | Head office in Riyadh, a branch in Tanta, and services across 8 countries. | `PresencePage.tsx` |
+| `—` | نقدم خدماتنا في 8 دول | We serve clients in 8 countries | `CountriesSection.tsx` |
+| `—` | خدمات | Services | `CountriesSection.tsx` |
 | `—` | قطاعات أخرى | Other sectors | `SectorOthers.tsx` |
 | `—` | خدمات القطاع | Sector services | `SectorServices.tsx` |

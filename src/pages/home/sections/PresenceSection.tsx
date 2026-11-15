@@ -4,15 +4,17 @@ import { Container } from '@/components/layout/Container'
 import { BUTTON_MOTION } from '@/components/ui/Button'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { LinkArrow } from '@/components/ui/LinkArrow'
-import { OFFICES } from '@/config/offices'
+import { SERVED_COUNTRIES, type ServedCountry } from '@/config/countries'
+import { getOffice, OFFICES } from '@/config/offices'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
- * Everything this section says. The offices come from config/offices.ts;
- * the countries are here because nothing else in the site holds them yet.
+ * Everything this section says. The offices come from config/offices.ts
+ * and the eight countries from config/countries.ts, shared with the
+ * Presence page; the tag words here are this card's own.
  *
  * Arabic is transcribed from the client's storyboard and English from the
  * company profile. `draft` marks English written here because the profile
@@ -46,20 +48,17 @@ const COPY = {
     branch: draft('فرع', 'Branch'),
     services: draft('خدمات', 'Services'),
   },
-
-  countries: [
-    { name: copy('السعودية', 'Saudi Arabia'), tag: 'head' },
-    { name: copy('مصر', 'Egypt'), tag: 'branch' },
-    { name: copy('الإمارات', 'UAE'), tag: 'services' },
-    { name: copy('عُمان', 'Oman'), tag: 'services' },
-    { name: draft('الأردن', 'Jordan'), tag: 'services' },
-    { name: copy('المملكة المتحدة', 'United Kingdom'), tag: 'services' },
-    { name: draft('الولايات المتحدة', 'United States'), tag: 'services' },
-    { name: draft('جنوب أفريقيا', 'South Africa'), tag: 'services' },
-  ],
 } as const
 
 type TagKey = keyof typeof COPY.tags
+
+/* A country's tag: its office's kind, or services. */
+function tagOf(country: ServedCountry): TagKey {
+  if (!country.office) {
+    return 'services'
+  }
+  return getOffice(country.office)?.kind === 'headquarters' ? 'head' : 'branch'
+}
 
 /* Navy with the hero's faint grid. 72px foot below 1024, 112px from it. */
 const SECTION = 'pt-16 pb-18 lg:py-28 bg-navy bg-grid-on-navy'
@@ -139,7 +138,7 @@ export function PresenceSection() {
 
             <p className="flex items-center gap-4">
               <span aria-hidden="true" dir="ltr" className={BIG_NUMBER}>
-                {text.countries.length}
+                {SERVED_COUNTRIES.length}
               </span>
               <span className="text-body-lg text-white/80">{text.countLine}</span>
             </p>
@@ -169,15 +168,15 @@ export function PresenceSection() {
 
         {/* The eight countries, 40ms apart after the offices. */}
         <ul className={COUNTRY_GRID}>
-          {text.countries.map((country, index) => (
-            <li key={country.name}>
+          {SERVED_COUNTRIES.map((country, index) => (
+            <li key={country.id}>
               <Reveal delay={240 + index * 40} className={TILE}>
                 <span className="flex items-center gap-2 text-body font-bold text-white">
                   <Dot />
-                  {country.name}
+                  {resolveCopy(country.name, language)}
                 </span>
-                <span className={cn(PILL, PILL_TONES[country.tag])}>
-                  {text.tags[country.tag]}
+                <span className={cn(PILL, PILL_TONES[tagOf(country)])}>
+                  {text.tags[tagOf(country)]}
                 </span>
               </Reveal>
             </li>
