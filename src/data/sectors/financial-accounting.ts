@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -7,12 +7,12 @@ import { defineSector } from './defineSector'
  * docs/copy-review.md.
  */
 export default defineSector('financialAccounting', {
-  lead: draft(
+  lead: copy(
     'الاستشارات المالية، ومحاسبة الزكاة والضرائب، والقوائم المالية، ونقل الوظيفة المحاسبية التقليدية إلى إدارة مالية تدعم القرار والنمو.',
     'Financial advisory, Zakat and tax accounting and financial statements — moving from a traditional accounting function to financial management that supports decisions and growth.',
   ),
 
-  ctaTitle: draft('محتاج استشارة مالية؟', 'Need financial advice?'),
+  ctaTitle: copy('محتاج استشارة مالية؟', 'Need financial advice?'),
 
   services: [
     {

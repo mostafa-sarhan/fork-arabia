@@ -6,11 +6,11 @@ import { LinkArrow } from '@/components/ui/LinkArrow'
 import { sectorPath } from '@/config/paths'
 import { getOtherSectors, type SectorSlug } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
-import { draft, resolveCopy } from '@/lib/i18n/localized'
+import { copy, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /* The storyboard's words; listed in docs/copy-review.md. */
-const HEADING = draft('قطاعات أخرى', 'Other sectors')
+const HEADING = copy('قطاعات أخرى', 'Other sectors')
 
 /* White on the page tone, a hairline round it, 20px radius, 20px in. */
 const CARD = 'rounded-2xl border border-line bg-surface p-5'

@@ -56,7 +56,7 @@ function WithEmailLink({ text }: { text: string }) {
 /**
  * The privacy policy: the hero with its last update, then the policy as a
  * readable article with its contents beside it (above it on phones).
- * Every word is proposed and awaits client and legal approval.
+ * Approved by the client (copy and legal) on 2026-11-16.
  */
 export default function PrivacyPage() {
   const { language } = useLanguage()

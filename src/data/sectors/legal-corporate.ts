@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -7,12 +7,12 @@ import { defineSector } from './defineSector'
  * docs/copy-review.md.
  */
 export default defineSector('legalCorporate', {
-  lead: draft(
+  lead: copy(
     'التقاضي والتحكيم، والعقود، والملكية الفكرية، والتراخيص، والإدارات القانونية، في مصر والسعودية.',
     'Litigation and arbitration, contracts, intellectual property, licensing and legal departments, in Egypt and Saudi Arabia.',
   ),
 
-  ctaTitle: draft('محتاج استشارة قانونية؟', 'Need legal advice?'),
+  ctaTitle: copy('محتاج استشارة قانونية؟', 'Need legal advice?'),
 
   services: [
     {

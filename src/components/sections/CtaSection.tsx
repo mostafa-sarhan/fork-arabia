@@ -4,29 +4,29 @@ import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { ClockIcon, GiftIcon, UsersIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
-import { draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * Everything this section says.
  *
  * Arabic is transcribed from the client's storyboard; the three facts come
- * from its booking page. `draft` marks English written here; it is listed
- * in `docs/copy-review.md` for approval. The two button labels are not
+ * from its booking page. English written here was approved by the client
+ * on 2026-11-16. The two button labels are not
  * here: they are interface wording shared with the navbar and the hero,
  * so they stay in the translation table.
  */
 const COPY = {
-  heading: draft('جاهز تبدأ؟', 'Ready to get started?'),
+  heading: copy('جاهز تبدأ؟', 'Ready to get started?'),
 
-  text: draft(
+  text: copy(
     'احجز استشارة مجانية مدتها 50 دقيقة، حضوريًا أو أونلاين أو بالتليفون، وسيتواصل معك فريقنا خلال يوم عمل لتأكيد الموعد.',
     'Book a free 50-minute consultation — in person, online or by phone — and our team will contact you within one business day to confirm the time.',
   ),
 
-  duration: draft('50 دقيقة', '50 minutes'),
-  price: draft('مجانية', 'Free'),
-  formats: draft('حضوري · أونلاين · تليفون', 'In person · Online · Phone'),
+  duration: copy('50 دقيقة', '50 minutes'),
+  price: copy('مجانية', 'Free'),
+  formats: copy('حضوري · أونلاين · تليفون', 'In person · Online · Phone'),
 }
 
 /*

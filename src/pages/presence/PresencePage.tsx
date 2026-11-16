@@ -2,7 +2,7 @@ import { PageHero, type PageHeroFact } from '@/components/PageHero'
 import { CtaSection } from '@/components/sections/CtaSection'
 import { SERVED_COUNTRIES } from '@/config/countries'
 import { OFFICES } from '@/config/offices'
-import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { countriesWord } from '@/pages/sector/sectorCounts'
 import { CountriesSection } from './sections/CountriesSection'
@@ -16,7 +16,7 @@ import { OfficesSection } from './sections/OfficesSection'
  * number of countries.
  */
 const COPY = {
-  lead: draft(
+  lead: copy(
     'مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول.',
     'Head office in Riyadh, a branch in Tanta, and services across 8 countries.',
   ),

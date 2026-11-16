@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -12,7 +12,7 @@ export default defineSector('operationalSupport', {
     'Procurement, supply chains and provision of specialized talent',
   ),
 
-  ctaTitle: draft('محتاج دعم تشغيلي؟', 'Need operational support?'),
+  ctaTitle: copy('محتاج دعم تشغيلي؟', 'Need operational support?'),
 
   services: [
     {

@@ -5,16 +5,16 @@ import { Button } from '@/components/ui/Button'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS } from '@/config/paths'
 import { NOT_FOUND_TITLE } from '@/config/seo'
-import { localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /* The page's words (`proposed`, listed in docs/copy-review.md). */
 const COPY = {
   title: NOT_FOUND_TITLE,
-  line: proposed('ربما تم نقل الصفحة أو أن الرابط غير صحيح.', 'The page may have moved, or the link may be wrong.'),
-  home: proposed('العودة إلى الرئيسية', 'Back to home'),
-  services: proposed('تصفح خدماتنا', 'Browse our services'),
-  quickLinks: proposed('روابط سريعة', 'Quick links'),
+  line: copy('ربما تم نقل الصفحة أو أن الرابط غير صحيح.', 'The page may have moved, or the link may be wrong.'),
+  home: copy('العودة إلى الرئيسية', 'Back to home'),
+  services: copy('تصفح خدماتنا', 'Browse our services'),
+  quickLinks: copy('روابط سريعة', 'Quick links'),
 }
 
 /* The page tone, the block centred in the space between header and footer. */

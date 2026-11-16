@@ -9,16 +9,15 @@ import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PinIcon, ShieldIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * Everything this section says.
  *
  * Arabic is transcribed from the client's storyboard and English from the
- * company profile. `draft` marks English written here because the profile
- * had no equivalent; it renders like any other copy and is listed in
- * `docs/copy-review.md` for the client to approve. The two button labels
+ * company profile. English written here because the profile had no
+ * equivalent was approved by the client on 2026-11-16. The two button labels
  * are not here: they are interface wording the navbar and footer share,
  * so they stay in the translation table.
  */
@@ -34,25 +33,25 @@ const COPY = {
 
   /* The English opens with the profile's own sentence from "Who We Are";
      only the closing clause naming the markets is ours. */
-  lead: draft(
+  lead: copy(
     'نرافق شركاءنا من الفكرة والتأسيس إلى التشغيل والحوكمة والنمو، في مصر والسعودية والإمارات وعُمان وأسواق أخرى.',
     'We accompany our partners from idea and incorporation through operation, governance and growth — in Egypt, Saudi Arabia, the UAE, Oman and other markets.',
   ),
 
-  trust: draft(
+  trust: copy(
     'مقر رئيسي في الرياض، وفرع في طنطا، وخدمات في 8 دول.',
     'Head office in Riyadh, a branch in Tanta, and services across 8 countries.',
   ),
 
   /* Not in the storyboard: both languages proposed. */
-  imageAlt: proposed(
+  imageAlt: copy(
     'فريق فورك العربية في اجتماع عمل بمكتب الرياض',
     'The FORK ARABIA team in a business meeting at the Riyadh office',
   ),
 
-  cardTitle: draft('شريك مهني واحد منذ 2016', 'One professional partner since 2016'),
+  cardTitle: copy('شريك مهني واحد منذ 2016', 'One professional partner since 2016'),
 
-  cardSubtitle: draft(
+  cardSubtitle: copy(
     'من الاستشارة للتنفيذ للمتابعة',
     'From consultation to implementation and follow-up',
   ),

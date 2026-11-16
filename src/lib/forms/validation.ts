@@ -1,4 +1,4 @@
-import { proposed, type Localized } from '@/lib/i18n/localized'
+import { copy, type Localized } from '@/lib/i18n/localized'
 import { isFriday, parseDateValue, todayValue } from './dates'
 
 /*
@@ -6,21 +6,21 @@ import { isFriday, parseDateValue, todayValue } from './dates'
  * `proposed` (docs/copy-review.md). `{n}` is filled in by the rule.
  */
 const MESSAGES = {
-  required: proposed('هذا الحقل مطلوب.', 'This field is required.'),
-  email: proposed(
+  required: copy('هذا الحقل مطلوب.', 'This field is required.'),
+  email: copy(
     'اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com.',
     'Enter a valid email address, like name@example.com.',
   ),
-  phone: proposed(
+  phone: copy(
     'اكتب رقم الهاتف بالأرقام فقط (7 أرقام على الأقل)، ويمكن أن يبدأ بعلامة +.',
     'Use digits only (at least 7); the number may start with +.',
   ),
   /* Arabic counts 3 to 10 with a plural noun («10 أحرف»), 11 and up with a singular one («20 حرفًا»). */
-  minLengthFew: proposed('اكتب {n} أحرف على الأقل.', 'Write at least {n} characters.'),
-  minLength: proposed('اكتب {n} حرفًا على الأقل.', 'Write at least {n} characters.'),
-  pastDate: proposed('اختر اليوم أو تاريخًا بعده.', 'Choose today or a later date.'),
-  countryFirst: proposed('اختر الدولة أولًا', 'Choose the country first'),
-  friday: proposed(
+  minLengthFew: copy('اكتب {n} أحرف على الأقل.', 'Write at least {n} characters.'),
+  minLength: copy('اكتب {n} حرفًا على الأقل.', 'Write at least {n} characters.'),
+  pastDate: copy('اختر اليوم أو تاريخًا بعده.', 'Choose today or a later date.'),
+  countryFirst: copy('اختر الدولة أولًا', 'Choose the country first'),
+  friday: copy(
     'يوم الجمعة إجازة؛ اختر يومًا من السبت إلى الخميس.',
     'Friday is a day off; choose a day from Saturday to Thursday.',
   ),

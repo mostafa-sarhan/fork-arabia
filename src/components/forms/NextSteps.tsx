@@ -1,9 +1,9 @@
-import { localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /* The block's heading, the same on every form (`proposed`, docs/copy-review.md). */
 const COPY = {
-  heading: proposed('بعد إرسال طلبك', 'After you send'),
+  heading: copy('بعد إرسال طلبك', 'After you send'),
 }
 
 /* A white card, as the asides' other cards. */

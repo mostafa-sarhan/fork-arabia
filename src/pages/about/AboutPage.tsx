@@ -2,7 +2,7 @@ import { PageHero } from '@/components/PageHero'
 import { CtaSection } from '@/components/sections/CtaSection'
 import { MethodologySection } from '@/components/sections/MethodologySection'
 import { PartnersSection } from '@/components/sections/PartnersSection'
-import { copy, localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { IntroSection } from './sections/IntroSection'
 import { PhilosophySection } from './sections/PhilosophySection'
@@ -24,9 +24,9 @@ const COPY = {
   ),
 
   facts: [
-    { value: '2016', label: proposed('سنة التأسيس', 'Year founded') },
-    { value: '8', label: proposed('دول نقدم فيها خدماتنا', 'Countries we serve') },
-    { value: '9', label: proposed('قطاعات خدمات', 'Service sectors') },
+    { value: '2016', label: copy('سنة التأسيس', 'Year founded') },
+    { value: '8', label: copy('دول نقدم فيها خدماتنا', 'Countries we serve') },
+    { value: '9', label: copy('قطاعات خدمات', 'Service sectors') },
   ],
 
   partnersHeading: copy('شركاؤنا', 'Our Partners'),

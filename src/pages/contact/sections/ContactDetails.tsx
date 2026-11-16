@@ -7,12 +7,12 @@ import { GlobeIcon, MailIcon, PinIcon } from '@/components/ui/icons'
 import { SITE_CONTACT } from '@/config/contact'
 import { OFFICES, SERVICE_CONTACTS, type OfficePhone } from '@/config/offices'
 import { PATHS } from '@/config/paths'
-import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /* The aside's own words: the storyboard's contact page (English written here, `draft`). */
 const COPY = {
-  enquiries: draft('للاستفسارات والطلبات', 'Enquiries and requests'),
+  enquiries: copy('للاستفسارات والطلبات', 'Enquiries and requests'),
 }
 
 /* The enquiries address, from config/contact.ts. */

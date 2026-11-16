@@ -1,6 +1,6 @@
 import type { OfficeId } from '@/config/offices'
 import { COUNTRIES } from '@/data/sectors/countries'
-import { copy, draft, type Localized } from '@/lib/i18n/localized'
+import { copy, type Localized } from '@/lib/i18n/localized'
 
 /**
  * The eight countries the company serves, in the storyboard's order. The
@@ -32,8 +32,8 @@ export const SERVED_COUNTRIES: readonly ServedCountry[] = [
     dialCode: '+971',
   },
   { id: 'om', name: COUNTRIES.om.name, dialCode: '+968' },
-  { id: 'jo', name: draft('الأردن', 'Jordan'), dialCode: '+962' },
+  { id: 'jo', name: copy('الأردن', 'Jordan'), dialCode: '+962' },
   { id: 'gb', name: copy('المملكة المتحدة', 'United Kingdom'), dialCode: '+44' },
-  { id: 'us', name: draft('الولايات المتحدة', 'United States'), dialCode: '+1' },
-  { id: 'za', name: draft('جنوب أفريقيا', 'South Africa'), dialCode: '+27' },
+  { id: 'us', name: copy('الولايات المتحدة', 'United States'), dialCode: '+1' },
+  { id: 'za', name: copy('جنوب أفريقيا', 'South Africa'), dialCode: '+27' },
 ]

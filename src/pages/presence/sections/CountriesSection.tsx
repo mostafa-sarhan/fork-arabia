@@ -4,7 +4,7 @@ import { SectionTitle } from '@/components/ui/SectionTitle'
 import { SERVED_COUNTRIES, type ServedCountry } from '@/config/countries'
 import { getOffice } from '@/config/offices'
 import { cn } from '@/lib/cn'
-import { draft, localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -13,9 +13,9 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * `proposed`. The countries themselves are config/countries.ts.
  */
 const COPY = {
-  heading: draft('نقدم خدماتنا في 8 دول', 'We serve clients in 8 countries'),
-  office: proposed('مكتب', 'Office'),
-  services: draft('خدمات', 'Services'),
+  heading: copy('نقدم خدماتنا في 8 دول', 'We serve clients in 8 countries'),
+  office: copy('مكتب', 'Office'),
+  services: copy('خدمات', 'Services'),
 }
 
 /* White; the closing call to action follows on the same white. */

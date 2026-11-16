@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -7,12 +7,12 @@ import { defineSector } from './defineSector'
  * docs/copy-review.md.
  */
 export default defineSector('businessSetup', {
-  lead: draft(
+  lead: copy(
     'تأسيس الشركات وخدمات المستثمرين وإدارة المتطلبات الحكومية في مصر والسعودية والإمارات وعُمان، بمسار متكامل يبدأ باختيار الهيكل المناسب وينتهي بجاهزية المنشأة للتشغيل.',
     'Company formation, investor services and management of government requirements in Egypt, Saudi Arabia, the UAE and Oman — a complete path that begins with choosing the right structure and ends with the entity ready to operate.',
   ),
 
-  ctaTitle: draft('عايز تؤسس شركتك؟', 'Ready to set up your company?'),
+  ctaTitle: copy('عايز تؤسس شركتك؟', 'Ready to set up your company?'),
 
   services: [
     {

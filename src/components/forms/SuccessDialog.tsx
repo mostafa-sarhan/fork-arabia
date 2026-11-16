@@ -3,14 +3,14 @@ import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
 import { CheckIcon, CloseIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
-import { localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { FORM_COPY } from './formCopy'
 
 /* The dialog's own words (`proposed`, docs/copy-review.md). */
 const COPY = {
-  close: proposed('إغلاق', 'Close'),
-  services: proposed('تصفح خدماتنا', 'Browse our services'),
+  close: copy('إغلاق', 'Close'),
+  services: copy('تصفح خدماتنا', 'Browse our services'),
 }
 
 /*

@@ -10,7 +10,7 @@ import { getSectorDetail } from '@/data/sectors'
 import { COUNTRIES } from '@/data/sectors/countries'
 import type { SectorDetail } from '@/data/sectors/types'
 import type { Language } from '@/lib/i18n/languageConfig'
-import { copy, draft, localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { countriesWord, servicesCount } from '@/pages/sector/sectorCounts'
 import { countriesOf } from '@/pages/sector/serviceGroups'
@@ -26,19 +26,19 @@ import { countriesOf } from '@/pages/sector/serviceGroups'
  */
 const COPY = {
   title: copy('منظومة خدمات متكاملة', 'An Integrated Service Ecosystem'),
-  lead: draft(
+  lead: copy(
     'احتياجات متعددة تُدار من خلال شريك واحد ورؤية واحدة، عبر 9 قطاعات.',
     'Multiple needs, managed through one partner and one vision, across 9 sectors.',
   ),
 
   /* The words under the hero's three figures. */
-  sectorsWord: draft('قطاعات', 'sectors'),
-  servicesWord: proposed('خدمة', 'services'),
+  sectorsWord: copy('قطاعات', 'sectors'),
+  servicesWord: copy('خدمة', 'services'),
 
   /* Heard, not seen: names the grid, so the cards' h3 sit under an h2. */
-  gridHeading: proposed('جميع القطاعات', 'All sectors'),
-  cardLink: draft('تفاصيل القطاع', 'Sector details'),
-  ctaTitle: draft('مش متأكد أنهي خدمة تناسبك؟', 'Not sure which service fits you?'),
+  gridHeading: copy('جميع القطاعات', 'All sectors'),
+  cardLink: copy('تفاصيل القطاع', 'Sector details'),
+  ctaTitle: copy('مش متأكد أنهي خدمة تناسبك؟', 'Not sure which service fits you?'),
   partnersHeading: copy('شركاؤنا', 'Our Partners'),
 }
 

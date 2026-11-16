@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -7,12 +7,12 @@ import { defineSector } from './defineSector'
  * docs/copy-review.md.
  */
 export default defineSector('qualityExcellence', {
-  lead: draft(
+  lead: copy(
     'الأيزو، والتميز المؤسسي، والاستراتيجية، والمخاطر والاستدامة، ومطابقة المنتجات، ضمن حلول CASCO المتكاملة.',
     'ISO, institutional excellence, strategy, risk and sustainability, and product conformity, within CASCO integrated solutions.',
   ),
 
-  ctaTitle: draft('محتاج شهادة أو مطابقة؟', 'Need certification or product conformity?'),
+  ctaTitle: copy('محتاج شهادة أو مطابقة؟', 'Need certification or product conformity?'),
 
   services: [
     {
@@ -49,8 +49,8 @@ export default defineSector('qualityExcellence', {
     },
     {
       id: 'excellence-strategy-risk',
-      title: draft('التميز المؤسسي والاستراتيجية والمخاطر', 'Institutional Excellence, Strategy & Risk'),
-      body: draft(
+      title: copy('التميز المؤسسي والاستراتيجية والمخاطر', 'Institutional Excellence, Strategy & Risk'),
+      body: copy(
         'خدمات التميز المؤسسي والاستراتيجية وإدارة المخاطر والاستدامة.',
         'Institutional excellence, strategy, risk management and sustainability services.',
       ),

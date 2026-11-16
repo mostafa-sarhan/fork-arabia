@@ -12,7 +12,7 @@ import {
   weekdayHeads,
 } from '@/lib/forms/dates'
 import { useIsClient } from '@/lib/useIsClient'
-import { localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import {
   panelClass,
@@ -25,9 +25,9 @@ import {
 
 /* The calendar's own words, not in the storyboard (`proposed`, docs/copy-review.md). */
 const COPY = {
-  placeholder: proposed('اختر التاريخ', 'Choose a date'),
-  previous: proposed('الشهر السابق', 'Previous month'),
-  next: proposed('الشهر التالي', 'Next month'),
+  placeholder: copy('اختر التاريخ', 'Choose a date'),
+  previous: copy('الشهر السابق', 'Previous month'),
+  next: copy('الشهر التالي', 'Next month'),
 }
 
 /*

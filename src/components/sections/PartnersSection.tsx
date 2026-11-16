@@ -5,18 +5,18 @@ import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { useState, type CSSProperties } from 'react'
-import { copy, draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
+import { copy, localizeAll, type Localized, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * Everything this section says, apart from the partners' names.
  *
- * Arabic is transcribed from the client's storyboard. `draft` marks
- * English written here; it is listed in `docs/copy-review.md` for approval.
+ * Arabic is transcribed from the client's storyboard. English
+ * written here was approved by the client on 2026-11-16.
  * The storyboard's note that logos will be added later is not rendered.
  */
 const COPY = {
-  heading: draft('شركاؤنا وعملاؤنا', 'Our Partners & Clients'),
+  heading: copy('شركاؤنا وعملاؤنا', 'Our Partners & Clients'),
 }
 
 /*
@@ -32,8 +32,8 @@ const COPY = {
  */
 const PARTNERS: { src: string; width: number; height: number; name: Localized; logoHeight?: number }[] = [
   { src: cascoLogo, width: 277, height: 88, name: copy('CASCO', 'CASCO'), logoHeight: 44 },
-  { src: afaqLogo, width: 120, height: 156, name: proposed('آفاق', 'Afaq'), logoHeight: 78 },
-  { src: professionalExpertsLogo, width: 216, height: 144, name: proposed('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting'), logoHeight: 72 },
+  { src: afaqLogo, width: 120, height: 156, name: copy('آفاق', 'Afaq'), logoHeight: 78 },
+  { src: professionalExpertsLogo, width: 216, height: 144, name: copy('الخبراء المحترفون للاستشارات المالية', 'Professional Experts Financial Consulting'), logoHeight: 72 },
 ]
 
 const DEFAULT_LOGO_HEIGHT = 56

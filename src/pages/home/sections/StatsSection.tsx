@@ -1,21 +1,21 @@
 import { StatCounter } from '@/components/StatCounter'
 import { Container } from '@/components/layout/Container'
 import { cn } from '@/lib/cn'
-import { draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * The four numbers the storyboard puts under the hero, in its order. The
- * Arabic labels are the storyboard's; the English is ours and awaits
- * approval in `docs/copy-review.md`. `plus` is the turquoise "+" the
+ * Arabic labels are the storyboard's; the English is ours, approved by
+ * the client on 2026-11-16. `plus` is the turquoise "+" the
  * single card shows after the number.
  */
 const COPY = {
   stats: [
-    { value: 10, plus: true, label: draft('سنوات خبرة', 'Years of experience') },
-    { value: 2000, plus: true, label: draft('عميل', 'Clients') },
-    { value: 3000, plus: true, label: draft('مشروع', 'Projects') },
-    { value: 8, plus: false, label: draft('دول', 'Countries') },
+    { value: 10, plus: true, label: copy('سنوات خبرة', 'Years of experience') },
+    { value: 2000, plus: true, label: copy('عميل', 'Clients') },
+    { value: 3000, plus: true, label: copy('مشروع', 'Projects') },
+    { value: 8, plus: false, label: copy('دول', 'Countries') },
   ],
 }
 

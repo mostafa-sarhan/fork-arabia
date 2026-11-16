@@ -9,13 +9,13 @@ import {
   type IconProps,
 } from '@/components/ui/icons'
 import { CONSULTATION_DETAILS } from '@/config/consultation'
-import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import type { ReactNode } from 'react'
 
 /* The aside's heading, from the storyboard (English written here, `draft`). */
 const COPY = {
-  heading: draft('تفاصيل الاستشارة', 'Consultation details'),
+  heading: copy('تفاصيل الاستشارة', 'Consultation details'),
 }
 
 /* Each detail's icon, by its id in config/consultation.ts. */

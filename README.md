@@ -26,7 +26,7 @@ npm run preview
 > **Before launch the site is hidden from search engines. On launch day,
 > this MUST be undone, or Google will never index the site.**
 
-- [ ] **Remove the `X-Robots-Tag: noindex, nofollow` header** from
+- [x] **Remove the `X-Robots-Tag: noindex, nofollow` header** (done 2026-11-16) from
       `vercel.json` (the `"source": "/(.*)"` block). It is sent with every
       page and file, so while it is there no search engine indexes or
       follows anything on the site. After deploying, check that it is gone:

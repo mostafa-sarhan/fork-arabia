@@ -8,7 +8,7 @@ import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PATHS } from '@/config/paths'
 import { SECTOR_INDEX } from '@/data/sectorIndex'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -16,8 +16,8 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * icon, title and summary come from `src/data/sectorIndex.ts`.
  *
  * Arabic is transcribed from the client's storyboard and English from the
- * company profile. `draft` marks English written here because the profile
- * had no equivalent; it is listed in `docs/copy-review.md` for approval.
+ * company profile. English written here because the profile had no
+ * equivalent was approved by the client on 2026-11-16.
  */
 const COPY = {
   eyebrow: copy('خدماتنا', 'Our Services'),
@@ -26,8 +26,8 @@ const COPY = {
     'احتياجات متعددة تُدار من خلال شريك واحد ورؤية واحدة',
     'Multiple needs, managed through one partner and one vision',
   ),
-  button: draft('كل الخدمات', 'All Services'),
-  cardLink: draft('التفاصيل', 'Details'),
+  button: copy('كل الخدمات', 'All Services'),
+  cardLink: copy('التفاصيل', 'Details'),
 }
 
 /*

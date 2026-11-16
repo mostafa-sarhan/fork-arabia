@@ -11,7 +11,7 @@ import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
 import { email, minLength, phone, required } from '@/lib/forms/validation'
 import type { Language } from '@/lib/i18n/languageConfig'
-import { draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
+import { copy, localizeAll, type Localized, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -21,12 +21,12 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * docs/copy-review.md.
  */
 const COPY = {
-  heading: draft('أرسل رسالة', 'Send a message'),
-  name: draft('الاسم', 'Name'),
-  message: draft('رسالتك', 'Your message'),
-  submit: draft('إرسال', 'Send'),
-  successTitle: proposed('تم إرسال رسالتك بنجاح', 'Your message has been sent'),
-  success: proposed(
+  heading: copy('أرسل رسالة', 'Send a message'),
+  name: copy('الاسم', 'Name'),
+  message: copy('رسالتك', 'Your message'),
+  submit: copy('إرسال', 'Send'),
+  successTitle: copy('تم إرسال رسالتك بنجاح', 'Your message has been sent'),
+  success: copy(
     'شكرًا لتواصلك معنا، سيرد عليك فريقنا خلال يوم عمل.',
     'Thank you for getting in touch. Our team will reply within one business day.',
   ),

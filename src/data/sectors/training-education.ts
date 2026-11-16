@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -7,17 +7,17 @@ import { defineSector } from './defineSector'
  * docs/copy-review.md.
  */
 export default defineSector('trainingEducation', {
-  lead: draft(
+  lead: copy(
     'برامج متخصصة ورحلات تعليمية تفاعلية في المجالات المالية والمحاسبية، ودورات كبير المراجعين.',
     'Specialized programs and interactive learning journeys in finance and accounting, and Lead Auditor courses.',
   ),
 
-  ctaTitle: draft('عايز تطوّر فريقك؟', 'Ready to develop your team?'),
+  ctaTitle: copy('عايز تطوّر فريقك؟', 'Ready to develop your team?'),
 
   services: [
     {
       id: 'finance-accounting-programs',
-      title: draft('البرامج المالية والمحاسبية', 'Financial & Accounting Programs'),
+      title: copy('البرامج المالية والمحاسبية', 'Financial & Accounting Programs'),
       body: copy(
         'برامج متخصصة ورحلات تعليمية تفاعلية في المجالات المالية والمحاسبية.',
         'Specialized programs and interactive learning journeys in finance and accounting',

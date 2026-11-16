@@ -8,21 +8,21 @@ import { LinkArrow } from '@/components/ui/LinkArrow'
 import { EyeIcon, TargetIcon } from '@/components/ui/icons'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { copy, draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * Everything this section says.
  *
  * Arabic is transcribed from the client's storyboard and English from the
- * company profile. `draft` marks English written here because the profile
- * had no equivalent; it is listed in `docs/copy-review.md` for approval.
+ * company profile. English written here because the profile had no
+ * equivalent was approved by the client on 2026-11-16.
  */
 const COPY = {
   eyebrow: copy('من نحن', 'Who We Are'),
 
   /* The heading in two parts, so the year can be drawn petrol. */
-  headingLead: draft(
+  headingLead: copy(
     'شريك مهني واحد لكل مراحل أعمالك منذ',
     'One professional partner for every stage of your business since',
   ),
@@ -51,12 +51,12 @@ const COPY = {
 
   missionLabel: copy('رسالتنا', 'Our Mission'),
 
-  mission: draft(
+  mission: copy(
     'حلول مترابطة تتحول من توصيات إلى إجراءات واضحة ومخرجات عملية تدعم القرار.',
     'Interconnected solutions that turn recommendations into clear actions and practical outputs that support decision-making.',
   ),
 
-  link: draft('اعرف أكثر عن فورك', 'Learn more about FORK'),
+  link: copy('اعرف أكثر عن فورك', 'Learn more about FORK'),
 }
 
 /*

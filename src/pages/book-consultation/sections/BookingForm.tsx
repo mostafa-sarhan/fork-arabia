@@ -21,7 +21,7 @@ import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
 import { countryFirst, email, notFriday, notPast, phone, required } from '@/lib/forms/validation'
 import type { Language } from '@/lib/i18n/languageConfig'
-import { draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
+import { copy, localizeAll, type Localized, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -33,27 +33,27 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * docs/copy-review.md.
  */
 const COPY = {
-  yourDetails: proposed('بياناتك', 'Your details'),
-  consultation: proposed('تفاصيل الاستشارة', 'Consultation details'),
-  sector: draft('مجال الاستشارة المطلوبة', 'Consultation area'),
-  date: draft('التاريخ المفضل', 'Preferred date'),
-  time: draft('الوقت المفضل (بتوقيت السعودية)', 'Preferred time (Saudi time)'),
-  method: draft('طريقة الاستشارة', 'Consultation format'),
-  details: draft('تفاصيل إضافية عن الطلب', 'Additional details about your request'),
-  submit: draft('إرسال طلب الحجز', 'Send booking request'),
-  note: draft(
+  yourDetails: copy('بياناتك', 'Your details'),
+  consultation: copy('تفاصيل الاستشارة', 'Consultation details'),
+  sector: copy('مجال الاستشارة المطلوبة', 'Consultation area'),
+  date: copy('التاريخ المفضل', 'Preferred date'),
+  time: copy('الوقت المفضل (بتوقيت السعودية)', 'Preferred time (Saudi time)'),
+  method: copy('طريقة الاستشارة', 'Consultation format'),
+  details: copy('تفاصيل إضافية عن الطلب', 'Additional details about your request'),
+  submit: copy('إرسال طلب الحجز', 'Send booking request'),
+  note: copy(
     'الموعد لا يُعتبر مؤكدًا إلا بعد تواصل فريقنا معك.',
     'Your appointment is confirmed only once our team has contacted you.',
   ),
-  success: draft(
+  success: copy(
     'شكرًا لك، تم استلام طلبك. سيتواصل معك فريقنا خلال يوم عمل لتأكيد موعد الاستشارة.',
     'Thank you, we have received your request. Our team will contact you within one business day to confirm your consultation.',
   ),
-  summaryArea: proposed('المجال', 'Area'),
-  summaryWhen: proposed('الموعد', 'Appointment'),
-  summaryMethod: proposed('الطريقة', 'Format'),
-  am: proposed('صباحًا', 'am'),
-  pm: proposed('مساءً', 'pm'),
+  summaryArea: copy('المجال', 'Area'),
+  summaryWhen: copy('الموعد', 'Appointment'),
+  summaryMethod: copy('الطريقة', 'Format'),
+  am: copy('صباحًا', 'am'),
+  pm: copy('مساءً', 'pm'),
 }
 
 /*

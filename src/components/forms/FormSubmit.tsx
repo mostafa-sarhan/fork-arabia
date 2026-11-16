@@ -3,15 +3,15 @@ import { Button } from '@/components/ui/Button'
 import { LinkArrow } from '@/components/ui/LinkArrow'
 import { PRIVACY_TITLE } from '@/config/legal'
 import { PATHS } from '@/config/paths'
-import { proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { FormSendError } from './FormStates'
 
 /*
- * The consent line under every form's button (`proposed`, pending client
- * and legal approval). {privacy} is the policy's name, linked.
+ * The consent line under every form's button (approved with the privacy
+ * policy, 2026-11-16). {privacy} is the policy's name, linked.
  */
-const CONSENT = proposed(
+const CONSENT = copy(
   'بإرسال النموذج، أنت توافق على معالجة بياناتك وفق {privacy}.',
   'By sending this form, you agree to the processing of your data under our {privacy}.',
 )

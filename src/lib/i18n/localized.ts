@@ -1,5 +1,12 @@
 import type { Language } from './languageConfig'
 
+/*
+ * All of the site's copy was approved by the client on 2026-11-16, and
+ * every string is now `copy()`. `draft()` and `proposed()` stay for new
+ * wording that will need approval; comments elsewhere that call a string
+ * `draft` or `proposed` say where its wording came from.
+ */
+
 /**
  * English this project wrote, waiting for the client to approve it.
  *

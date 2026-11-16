@@ -1,5 +1,5 @@
 import type { Language } from '@/lib/i18n/languageConfig'
-import { proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, resolveCopy } from '@/lib/i18n/localized'
 
 /*
  * The count words on a sector page: "9 خدمات", "خدمة واحدة", "4 دول".
@@ -7,9 +7,9 @@ import { proposed, resolveCopy } from '@/lib/i18n/localized'
  * docs/copy-review.md.
  */
 const COPY = {
-  oneService: proposed('خدمة واحدة', '1 service'),
-  services: proposed('خدمات', 'services'),
-  countries: proposed('دول', 'countries'),
+  oneService: copy('خدمة واحدة', '1 service'),
+  services: copy('خدمات', 'services'),
+  countries: copy('دول', 'countries'),
 }
 
 /** The word after a services count: "خدمات" / "services". */

@@ -8,7 +8,7 @@ import { SERVED_COUNTRIES, type ServedCountry } from '@/config/countries'
 import { getOffice, OFFICES } from '@/config/offices'
 import { PATHS } from '@/config/paths'
 import { cn } from '@/lib/cn'
-import { draft, localizeAll, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -17,14 +17,14 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * Presence page; the tag words here are this card's own.
  *
  * Arabic is transcribed from the client's storyboard and English from the
- * company profile. `draft` marks English written here because the profile
- * had no equivalent; it is listed in `docs/copy-review.md` for approval.
+ * company profile. English written here because the profile had no
+ * equivalent was approved by the client on 2026-11-16.
  * The big number is not copy: it is the length of the country list.
  */
 const COPY = {
-  heading: draft('تواجدنا', 'Our Presence'),
-  countLine: draft('نقدم خدماتنا في 8 دول', 'We serve clients in 8 countries'),
-  link: draft('عناوين المكاتب', 'Office Addresses'),
+  heading: copy('تواجدنا', 'Our Presence'),
+  countLine: copy('نقدم خدماتنا في 8 دول', 'We serve clients in 8 countries'),
+  link: copy('عناوين المكاتب', 'Office Addresses'),
 
   /*
    * The storyboard's short form of each office's address, for this card.
@@ -32,11 +32,11 @@ const COPY = {
    * config/offices.ts.
    */
   cardAddresses: {
-    riyadh: draft(
+    riyadh: copy(
       'المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110',
       'Al Murabba, Al Wisham District, Al Washm Tower, Al Rajhi Awqaf Building, Office 110',
     ),
-    tanta: draft(
+    tanta: copy(
       'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر',
       'Station Square, Abdel Moneim Riad Towers, Tower A, 11th Floor',
     ),
@@ -44,9 +44,9 @@ const COPY = {
 
   /* The three tags a country can carry; each country names one by key. */
   tags: {
-    head: draft('مقر رئيسي', 'Head office'),
-    branch: draft('فرع', 'Branch'),
-    services: draft('خدمات', 'Services'),
+    head: copy('مقر رئيسي', 'Head office'),
+    branch: copy('فرع', 'Branch'),
+    services: copy('خدمات', 'Services'),
   },
 } as const
 

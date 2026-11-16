@@ -6,7 +6,7 @@ import { Container } from '@/components/layout/Container'
 import { ICONS } from '@/components/ui/iconRegistry'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { WHY_FORK } from '@/data/whyFork'
-import { draft, localizeAll } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
@@ -16,7 +16,7 @@ import { useLanguage } from '@/lib/i18n/useLanguage'
  * `docs/copy-review.md` for approval.
  */
 const COPY = {
-  imageAlt: draft(
+  imageAlt: copy(
     'مستشار من فورك العربية في اجتماع مع عميل بمكتب الرياض',
     'A FORK ARABIA consultant meeting a client at the Riyadh office',
   ),

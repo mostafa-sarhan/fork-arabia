@@ -4,7 +4,7 @@ import { Container } from '@/components/layout/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { COUNTRIES } from '@/data/sectors/countries'
 import type { SectorDetail } from '@/data/sectors/types'
-import { draft, localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { groupServices } from '../serviceGroups'
 import { SectorBookingCard } from './SectorBookingCard'
@@ -17,9 +17,9 @@ import { ServiceGroup } from './ServiceGroup'
  * in it, so they are `proposed`. All listed in docs/copy-review.md.
  */
 const COPY = {
-  heading: draft('خدمات القطاع', 'Sector services'),
-  all: proposed('الكل', 'All'),
-  filterLabel: proposed('تصفية الخدمات حسب الدولة', 'Filter services by country'),
+  heading: copy('خدمات القطاع', 'Sector services'),
+  all: copy('الكل', 'All'),
+  filterLabel: copy('تصفية الخدمات حسب الدولة', 'Filter services by country'),
 }
 
 /*

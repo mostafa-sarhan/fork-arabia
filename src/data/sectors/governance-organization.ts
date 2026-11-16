@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -12,7 +12,7 @@ export default defineSector('governanceOrganization', {
     'Boards of directors, general assemblies, organizational structuring and policies',
   ),
 
-  ctaTitle: draft('محتاج تنظّم منشأتك؟', 'Looking to structure your organization?'),
+  ctaTitle: copy('محتاج تنظّم منشأتك؟', 'Looking to structure your organization?'),
 
   services: [
     {

@@ -1,7 +1,7 @@
 import { FormLayout } from '@/components/forms/FormLayout'
 import { WhatsAppButton } from '@/components/forms/WhatsAppButton'
 import { PageHero } from '@/components/PageHero'
-import { draft, localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { QuoteForm } from './sections/QuoteForm'
 
@@ -10,9 +10,9 @@ import { QuoteForm } from './sections/QuoteForm'
  * here, `draft`, listed in docs/copy-review.md).
  */
 const COPY = {
-  crumb: draft('طلب عرض سعر', 'Request a quote'),
-  title: draft('اطلب عرض سعر', 'Request a quote'),
-  lead: draft(
+  crumb: copy('طلب عرض سعر', 'Request a quote'),
+  title: copy('اطلب عرض سعر', 'Request a quote'),
+  lead: copy(
     'اختر الخدمة واكتب تفاصيل طلبك، وسنرسل لك عرض السعر على بريدك الإلكتروني.',
     'Choose the service and describe your request, and we will email you a quote.',
   ),
@@ -20,9 +20,9 @@ const COPY = {
 
 /* What happens after sending, at the top of the aside (`proposed`). */
 const STEPS = [
-  proposed('نستلم طلبك', 'We receive your request'),
-  proposed('ندرس تفاصيل طلبك', 'We study the details of your request'),
-  proposed('نرسل لك عرض السعر على بريدك الإلكتروني', 'We email you the quote'),
+  copy('نستلم طلبك', 'We receive your request'),
+  copy('ندرس تفاصيل طلبك', 'We study the details of your request'),
+  copy('نرسل لك عرض السعر على بريدك الإلكتروني', 'We email you the quote'),
 ]
 
 /**

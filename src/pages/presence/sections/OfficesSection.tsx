@@ -9,7 +9,7 @@ import { mapEmbedSrc, OFFICES, type Office } from '@/config/offices'
 import { PATHS } from '@/config/paths'
 import { COUNTRIES } from '@/data/sectors/countries'
 import { cn } from '@/lib/cn'
-import { localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { useEffect, useState, type ReactNode } from 'react'
 
@@ -19,10 +19,10 @@ import { useEffect, useState, type ReactNode } from 'react'
  * (docs/copy-review.md).
  */
 const COPY = {
-  eyebrow: proposed('تواجدنا', 'Our Presence'),
-  heading: proposed('مكاتبنا', 'Our Offices'),
-  hours: proposed('السبت للخميس، 10 صباحًا إلى 6 مساءً', 'Saturday to Thursday, 10 am to 6 pm'),
-  openMap: proposed('افتح في خرائط Google', 'Open in Google Maps'),
+  eyebrow: copy('تواجدنا', 'Our Presence'),
+  heading: copy('مكاتبنا', 'Our Offices'),
+  hours: copy('السبت للخميس، 10 صباحًا إلى 6 مساءً', 'Saturday to Thursday, 10 am to 6 pm'),
+  openMap: copy('افتح في خرائط Google', 'Open in Google Maps'),
 }
 
 /* The page tone, so the white office cards stand off it. */

@@ -16,7 +16,7 @@ import { submitForm } from '@/lib/forms/submitForm'
 import { useForm } from '@/lib/forms/useForm'
 import { countryFirst, email, minLength, phone, required } from '@/lib/forms/validation'
 import type { Language } from '@/lib/i18n/languageConfig'
-import { draft, localizeAll, proposed, resolveCopy, type Localized } from '@/lib/i18n/localized'
+import { copy, localizeAll, type Localized, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { findQuoteService, OTHER_SERVICE, QUOTE_SERVICES, serviceLabel } from '../quoteServices'
 
@@ -28,19 +28,19 @@ import { findQuoteService, OTHER_SERVICE, QUOTE_SERVICES, serviceLabel } from '.
  * `proposed`. All are in docs/copy-review.md.
  */
 const COPY = {
-  yourDetails: proposed('بياناتك', 'Your details'),
-  service: draft('الخدمة المطلوبة', 'Service required'),
-  details: draft('تفاصيل الطلب', 'Request details'),
-  otherService: proposed('خدمة أخرى', 'Another service'),
+  yourDetails: copy('بياناتك', 'Your details'),
+  service: copy('الخدمة المطلوبة', 'Service required'),
+  details: copy('تفاصيل الطلب', 'Request details'),
+  otherService: copy('خدمة أخرى', 'Another service'),
   /* The details' hint; the count typed so far is added after it. */
-  lengthHint: proposed('20 حرفًا على الأقل', 'At least 20 characters'),
-  submit: draft('إرسال الطلب', 'Send request'),
-  success: draft(
+  lengthHint: copy('20 حرفًا على الأقل', 'At least 20 characters'),
+  submit: copy('إرسال الطلب', 'Send request'),
+  success: copy(
     'شكرًا لك، تم استلام طلبك وسيتواصل معك فريقنا قريبًا.',
     'Thank you, we have received your request and our team will contact you soon.',
   ),
-  summaryService: proposed('الخدمة', 'Service'),
-  summarySector: proposed('القطاع', 'Sector'),
+  summaryService: copy('الخدمة', 'Service'),
+  summarySector: copy('القطاع', 'Sector'),
 }
 
 /* The details must say enough to price: 20 characters at least (lengthHint says so). */

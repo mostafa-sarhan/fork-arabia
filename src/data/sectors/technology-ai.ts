@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -12,7 +12,7 @@ export default defineSector('technologyAi', {
     'Smart systems, AI-powered content and technical support',
   ),
 
-  ctaTitle: draft('محتاج حل تقني؟', 'Need a technology solution?'),
+  ctaTitle: copy('محتاج حل تقني؟', 'Need a technology solution?'),
 
   services: [
     {
@@ -25,16 +25,16 @@ export default defineSector('technologyAi', {
     },
     {
       id: 'government-platforms',
-      title: draft('إدارة المنصات الحكومية الإلكترونية', 'Government E-Platform Management'),
-      body: draft(
+      title: copy('إدارة المنصات الحكومية الإلكترونية', 'Government E-Platform Management'),
+      body: copy(
         'إدارة المنصات الإلكترونية الحكومية في السعودية.',
         'Managing government e-platforms in Saudi Arabia.',
       ),
     },
     {
       id: 'ai-content',
-      title: draft('المحتوى والعروض بالذكاء الاصطناعي', 'AI-Powered Content & Presentations'),
-      body: draft(
+      title: copy('المحتوى والعروض بالذكاء الاصطناعي', 'AI-Powered Content & Presentations'),
+      body: copy(
         'إعداد العروض التقديمية وتصميم المحتوى بالاستفادة من تقنيات الذكاء الاصطناعي.',
         'Preparing presentations and designing content leveraging AI technologies.',
       ),

@@ -1,11 +1,11 @@
-import { proposed } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 
 /*
  * The privacy policy's name and its last update, shared by its page, the
- * footer's bottom bar and the forms' consent line. `proposed`, pending
- * client and legal approval (docs/copy-review.md).
+ * footer's bottom bar and the forms' consent line. Approved by the client
+ * (copy and legal) on 2026-11-16.
  */
-export const PRIVACY_TITLE = proposed('سياسة الخصوصية', 'Privacy Policy')
+export const PRIVACY_TITLE = copy('سياسة الخصوصية', 'Privacy Policy')
 
 /**
  * When the policy last changed, shown under its title. Update both with

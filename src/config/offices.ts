@@ -1,7 +1,7 @@
 import { SITE_CONTACT, type ContactChannel } from '@/config/contact'
 import type { CountryCode } from '@/data/sectors/countries'
 import type { Language } from '@/lib/i18n/languageConfig'
-import { draft, proposed, type Localized } from '@/lib/i18n/localized'
+import { copy, type Localized } from '@/lib/i18n/localized'
 
 /**
  * The company's two offices, head office first. The home page's presence
@@ -58,15 +58,15 @@ export const OFFICES = [
     id: 'riyadh',
     kind: 'headquarters',
     country: 'sa',
-    label: draft('المقر الرئيسي', 'Head Office'),
-    name: draft('الرياض', 'Riyadh'),
-    city: draft('الرياض، السعودية', 'Riyadh, Saudi Arabia'),
-    location: draft('الرياض، المملكة العربية السعودية', 'Riyadh, Kingdom of Saudi Arabia'),
-    address: draft(
+    label: copy('المقر الرئيسي', 'Head Office'),
+    name: copy('الرياض', 'Riyadh'),
+    city: copy('الرياض، السعودية', 'Riyadh, Saudi Arabia'),
+    location: copy('الرياض، المملكة العربية السعودية', 'Riyadh, Kingdom of Saudi Arabia'),
+    address: copy(
       'الرياض، المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، المدخل التجاري للشركات، شركة فورك العربية، مكتب 110',
       'Office 110, FORK ARABIA, Corporate Business Entrance, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham District, Al Murabba, Riyadh',
     ),
-    shortAddress: draft(
+    shortAddress: copy(
       'المربع، حي الوشام، برج الوشم، مبنى أوقاف الراجحي، مكتب 110',
       'Office 110, Al Rajhi Awqaf Building, Al Washm Tower, Al Wisham, Al Murabba',
     ),
@@ -74,21 +74,21 @@ export const OFFICES = [
     mapUrl: 'https://maps.app.goo.gl/hVCk5aJ1frFbZuiy6',
     mapEmbed:
       'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3626.3238083681126!2d46.7023185!3d24.6469802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f05866980f8bb%3A0x30b4d35e73b1f496!2sFORK%20BUSINESS%20Arabia%20ltd!5e0!3m2!1sar!2seg!4v1794726087038!5m2!1sar!2seg',
-    mapTitle: proposed('خريطة مقر الرياض', 'Map of the Riyadh head office'),
+    mapTitle: copy('خريطة مقر الرياض', 'Map of the Riyadh head office'),
   },
   {
     id: 'tanta',
     kind: 'branch',
     country: 'eg',
-    label: draft('فرع', 'Branch'),
-    name: draft('طنطا', 'Tanta'),
-    city: draft('طنطا، مصر', 'Tanta, Egypt'),
-    location: draft('طنطا، جمهورية مصر العربية', 'Tanta, Arab Republic of Egypt'),
-    address: draft(
+    label: copy('فرع', 'Branch'),
+    name: copy('طنطا', 'Tanta'),
+    city: copy('طنطا، مصر', 'Tanta, Egypt'),
+    location: copy('طنطا، جمهورية مصر العربية', 'Tanta, Arab Republic of Egypt'),
+    address: copy(
       'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور الحادي عشر (أعلى هيئة قضايا الدولة)، طنطا، الغربية',
       '11th Floor, Tower A, Abdel Moneim Riad Towers (above the State Lawsuits Authority), Station Square, Tanta, Gharbia',
     ),
-    shortAddress: draft(
+    shortAddress: copy(
       'ميدان المحطة، أبراج عبد المنعم رياض، برج A، الدور 11',
       '11th Floor, Tower A, Abdel Moneim Riad Towers, Station Square',
     ),
@@ -96,7 +96,7 @@ export const OFFICES = [
     mapUrl: 'https://maps.app.goo.gl/VUsii9iMvnivJg256',
     mapEmbed:
       'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3427.669291273134!2d30.995142984866806!3d30.783859981619276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzDCsDQ3JzAxLjkiTiAzMMKwNTknMzQuNiJF!5e0!3m2!1sar!2seg!4v1794726113705!5m2!1sar!2seg',
-    mapTitle: proposed('خريطة فرع طنطا', 'Map of the Tanta branch'),
+    mapTitle: copy('خريطة فرع طنطا', 'Map of the Tanta branch'),
   },
 ] as const satisfies ReadonlyArray<Office>
 
@@ -117,8 +117,8 @@ export type ServiceContact = {
 export const SERVICE_CONTACTS = [
   {
     id: 'uae',
-    name: draft('الإمارات', 'United Arab Emirates'),
-    note: draft('خدمات في دبي والشارقة وأبوظبي', 'Services in Dubai, Sharjah and Abu Dhabi'),
+    name: copy('الإمارات', 'United Arab Emirates'),
+    note: copy('خدمات في دبي والشارقة وأبوظبي', 'Services in Dubai, Sharjah and Abu Dhabi'),
     phones: [{ display: '+971 52 225 5402', href: 'tel:+971522255402' }],
   },
 ] as const satisfies ReadonlyArray<ServiceContact>

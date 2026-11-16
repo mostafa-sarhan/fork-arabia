@@ -1,4 +1,4 @@
-import { copy, draft } from '@/lib/i18n/localized'
+import { copy } from '@/lib/i18n/localized'
 import { defineSector } from './defineSector'
 
 /*
@@ -16,20 +16,20 @@ export default defineSector('premiumResidency', {
     'We guide investors, entrepreneurs and property owners through obtaining Saudi Premium Residency — from eligibility assessment and choosing the right track, to residency issuance, business setup and enjoying its benefits.',
   ),
 
-  ctaTitle: draft('عايز تحصل على الإقامة المميزة؟', 'Interested in Saudi Premium Residency?'),
+  ctaTitle: copy('عايز تحصل على الإقامة المميزة؟', 'Interested in Saudi Premium Residency?'),
 
   services: [],
 
   extras: {
     tracks: {
       title: copy('مسارات الإقامة المميزة', 'Premium Residency Tracks'),
-      intro: draft(
+      intro: copy(
         'ستة مسارات، ونساعدك تختار الأنسب لوضعك الاستثماري.',
         'Six tracks — we help you choose the one that best fits your investment profile.',
       ),
       items: [
         {
-          tag: draft('استثمار', 'Investment'),
+          tag: copy('استثمار', 'Investment'),
           title: copy('إقامة مستثمر الأعمال', 'Business Investor'),
           body: copy(
             'استثمار لا يقل عن 7 ملايين ريال برخصة استثمار سارية، مع توفير 10 وظائف خلال سنتين.',
@@ -37,7 +37,7 @@ export default defineSector('premiumResidency', {
           ),
         },
         {
-          tag: draft('تملّك', 'Ownership'),
+          tag: copy('تملّك', 'Ownership'),
           title: copy('إقامة مالك العقار', 'Real Estate Owner'),
           body: copy(
             'تملّك عقار سكني مطوّر وغير مرهون بقيمة لا تقل عن 4 ملايين ريال.',
@@ -45,7 +45,7 @@ export default defineSector('premiumResidency', {
           ),
         },
         {
-          tag: draft('ريادة', 'Entrepreneurship'),
+          tag: copy('ريادة', 'Entrepreneurship'),
           title: copy('إقامة رائد الأعمال', 'Entrepreneur'),
           body: copy(
             'لمؤسسي الشركات الناشئة والمبتكرين، وفق اشتراطات الاستثمار والملكية المعتمدة.',
@@ -53,7 +53,7 @@ export default defineSector('premiumResidency', {
           ),
         },
         {
-          tag: draft('رسوم سنوية', 'Limited duration'),
+          tag: copy('رسوم سنوية', 'Limited duration'),
           title: copy('الإقامة محددة المدة', 'Limited Duration'),
           body: copy(
             'برسوم سنوية قدرها 100 ألف ريال، قابلة للتجديد.',
@@ -61,7 +61,7 @@ export default defineSector('premiumResidency', {
           ),
         },
         {
-          tag: draft('رسم لمرة واحدة', 'Unlimited duration'),
+          tag: copy('رسم لمرة واحدة', 'Unlimited duration'),
           title: copy('الإقامة غير محددة المدة', 'Unlimited Duration'),
           body: copy(
             'إقامة دائمة برسم لمرة واحدة قدره 800 ألف ريال.',
@@ -69,7 +69,7 @@ export default defineSector('premiumResidency', {
           ),
         },
         {
-          tag: draft('كفاءات', 'Talent'),
+          tag: copy('كفاءات', 'Talent'),
           title: copy('الكفاءات الاستثنائية والموهوبون', 'Special Talent & Gifted'),
           body: copy(
             'للكفاءات في القطاعات الصحية والعلمية والقيادية، والموهوبين في الثقافة والرياضة.',

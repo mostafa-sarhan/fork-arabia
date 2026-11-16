@@ -1,4 +1,4 @@
-import { copy, proposed, type Localized } from '@/lib/i18n/localized'
+import { copy, type Localized } from '@/lib/i18n/localized'
 
 /*
  * Standing copy that is the client's words rather than interface wording.
@@ -21,7 +21,7 @@ export const FOOTER_DESCRIPTION: Localized = copy(
  * scripts/prerender.mjs). The one place to change how the company's
  * fields are named («تقنية» awaits the client's confirmation).
  */
-export const COMPANY_DESCRIPTION: Localized = proposed(
+export const COMPANY_DESCRIPTION: Localized = copy(
   'فورك العربية المحدودة شركة خدمات مهنية متكاملة: قانونية، مالية، إدارية، وتقنية. نرافق الشركات والمستثمرين في السعودية ومصر والإمارات وعُمان منذ 2016.',
   'FORK ARABIA is an integrated professional services firm — legal, financial, administrative and technology — in Saudi Arabia, Egypt, the UAE and Oman.',
 )

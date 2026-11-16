@@ -4,7 +4,7 @@ import { ICONS } from '@/components/ui/iconRegistry'
 import { CONSULTATION_FACTS } from '@/config/consultation'
 import { bookingQuery, PATHS, quoteQuery } from '@/config/paths'
 import type { SectorDetail } from '@/data/sectors/types'
-import { localizeAll, proposed, resolveCopy } from '@/lib/i18n/localized'
+import { copy, localizeAll, resolveCopy } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { countriesOf } from '../serviceGroups'
 import { countriesWord, servicesWord } from '../sectorCounts'
@@ -14,7 +14,7 @@ import { countriesWord, servicesWord } from '../sectorCounts'
  * storyboard, so both languages are `proposed` (docs/copy-review.md).
  */
 const COPY = {
-  kicker: proposed('القطاع', 'Sector'),
+  kicker: copy('القطاع', 'Sector'),
 }
 
 /*

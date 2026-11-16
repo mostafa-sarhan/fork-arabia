@@ -1,6 +1,6 @@
 import { FormLayout } from '@/components/forms/FormLayout'
 import { PageHero } from '@/components/PageHero'
-import { draft, localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 import { ContactDetails } from './sections/ContactDetails'
 import { ContactForm } from './sections/ContactForm'
@@ -10,9 +10,9 @@ import { ContactForm } from './sections/ContactForm'
  * written here, `draft`, listed in docs/copy-review.md).
  */
 const COPY = {
-  crumb: draft('تواصل معنا', 'Contact us'),
-  title: draft('تواصل معنا', 'Contact us'),
-  lead: draft(
+  crumb: copy('تواصل معنا', 'Contact us'),
+  title: copy('تواصل معنا', 'Contact us'),
+  lead: copy(
     'فريقنا في الرياض وطنطا جاهز يرد على استفساراتك.',
     'Our team in Riyadh and Tanta is ready to answer your questions.',
   ),
@@ -20,9 +20,9 @@ const COPY = {
 
 /* What happens after sending, at the top of the aside (`proposed`). */
 const STEPS = [
-  proposed('نستلم رسالتك', 'We receive your message'),
-  proposed('نراجعها', 'We review it'),
-  proposed('نرد عليك خلال يوم عمل', 'We reply within one business day'),
+  copy('نستلم رسالتك', 'We receive your message'),
+  copy('نراجعها', 'We review it'),
+  copy('نرد عليك خلال يوم عمل', 'We reply within one business day'),
 ]
 
 /**

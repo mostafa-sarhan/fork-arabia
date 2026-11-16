@@ -5,26 +5,26 @@ import { Reveal } from '@/components/Reveal'
 import { Container } from '@/components/layout/Container'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { PinIcon } from '@/components/ui/icons'
-import { copy, draft, localizeAll, proposed } from '@/lib/i18n/localized'
+import { copy, localizeAll } from '@/lib/i18n/localized'
 import { useLanguage } from '@/lib/i18n/useLanguage'
 
 /*
  * Everything this section says.
  *
  * Arabic is transcribed from the storyboard's About page and English from
- * the company profile. `draft` marks English written here; it is listed in
- * `docs/copy-review.md` for approval.
+ * the company profile. English written here was approved by the client
+ * on 2026-11-16.
  */
 const COPY = {
-  badge: draft('منذ 2016', 'Since 2016'),
+  badge: copy('منذ 2016', 'Since 2016'),
 
-  heading: draft(
+  heading: copy(
     'شركة خدمات مهنية رائدة في مصر والخليج',
     'A leading professional services company in Egypt and the Gulf',
   ),
 
   /* The profile's sentence; the founding year after it is ours. */
-  paragraph: draft(
+  paragraph: copy(
     'فورك شركة خدمات مهنية رائدة، تقدم منظومة حلول متكاملة من الحلول القانونية والمالية والمحاسبية والإدارية والتقنية لقطاع الأعمال في مصر والسعودية والإمارات وعُمان. تأسست الشركة عام 2016.',
     'FORK is a leading professional services company offering an integrated suite of legal, financial, accounting, administrative and technology solutions for the business sector in Egypt, Saudi Arabia, the UAE and Oman. The company was founded in 2016.',
   ),
@@ -37,12 +37,12 @@ const COPY = {
   ],
 
   /* Not in the storyboard: both languages proposed. */
-  imageAlt: proposed(
+  imageAlt: copy(
     'فريق فورك العربية في اجتماع عمل بمكتب الرياض',
     'The FORK ARABIA team in a business meeting at the Riyadh office',
   ),
 
-  offices: draft(
+  offices: copy(
     'مقر رئيسي في الرياض، وفرع في طنطا',
     'Head office in Riyadh, and a branch in Tanta',
   ),
