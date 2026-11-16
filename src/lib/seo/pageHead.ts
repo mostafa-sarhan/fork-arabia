@@ -1,6 +1,6 @@
 import { SITE_ROUTES, type SiteRoute } from '@/config/routes'
 import { PATHS } from '@/config/paths'
-import { BRAND_TAGLINE, NOT_FOUND_TITLE, PAGE_SEO, SECTOR_DESCRIPTION_ENDINGS, SHARE_IMAGE, type PageLabel } from '@/config/seo'
+import { BRAND_TAGLINE, GOOGLE_SITE_VERIFICATION, NOT_FOUND_TITLE, PAGE_SEO, SECTOR_DESCRIPTION_ENDINGS, SHARE_IMAGE, type PageLabel } from '@/config/seo'
 import { SITE_URL } from '@/config/site'
 import { getSectorBySlug } from '@/data/sectorIndex'
 import { COMPANY_DESCRIPTION } from '@/data/siteCopy'
@@ -81,8 +81,16 @@ function unlistedHead(name: string, language: Language): HeadTag[] {
   ]
 }
 
+/** Search Console's ownership tag (config/seo.ts), on every page, the 404 included. */
+const VERIFICATION_TAG: HeadTag = { tag: 'meta', name: 'google-site-verification', content: GOOGLE_SITE_VERIFICATION }
+
 /** Every head tag that belongs to the page at `pathname`. */
 export function pageHead(pathname: string): HeadTag[] {
+  return [...pageTags(pathname), VERIFICATION_TAG]
+}
+
+/** The page's own tags: title, description, and, for a real page, its links and sharing tags. */
+function pageTags(pathname: string): HeadTag[] {
   const language = languageFromPathname(pathname)
   const route = routeAt(pathname)
 

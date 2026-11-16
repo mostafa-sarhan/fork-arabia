@@ -22,6 +22,13 @@ export const BRAND_TAGLINE = copy('خدمات مهنية متكاملة', 'Integ
 /** The 404's name, shared with its heading (NotFoundPage). */
 export const NOT_FOUND_TITLE = copy('الصفحة غير موجودة', 'Page not found')
 
+/*
+ * Google Search Console's ownership token for https://www.forkarabia.sa
+ * (HTML-tag method). pageHead() puts it in every page's head; it must stay
+ * there for as long as the property should remain verified.
+ */
+export const GOOGLE_SITE_VERIFICATION = 'lrFpxoNhi_X_xR-2oWbHqLyj7EeS3YouKvuSS2w_9Lk'
+
 /** The share image (scripts/brand-assets.mjs) and what it shows, for og:image:alt. */
 export const SHARE_IMAGE = {
   path: '/og/default.png',
